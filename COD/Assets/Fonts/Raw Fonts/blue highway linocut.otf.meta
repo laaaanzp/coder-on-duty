@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 6f16c7420591c224482d71a22e522bbe
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Blue Highway
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 972c720a7ce6d0d4a85a78dd1e37b26c, type: 3}
+  - {fileID: 12800000, guid: f6c898ff476436648b675c07122c8a81, type: 3}
+  - {fileID: 12800000, guid: 585c7ecdb0921b84891441e9fc1e387d, type: 3}
+  - {fileID: 12800000, guid: 89f578cf46068b546965c03f569bce74, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
