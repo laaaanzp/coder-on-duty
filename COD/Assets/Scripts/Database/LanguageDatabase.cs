@@ -22,6 +22,20 @@ public class AttemptData
     }
 }
 
+public class UserData
+{
+    public int level;
+    public int time;
+    public int score;
+
+    public UserData(int level, int time, int score)
+    {
+        this.level = level;
+        this.time = time;
+        this.score = score;
+    }
+}
+
 
 public class LanguageDatabase : MonoBehaviour
 {
@@ -29,13 +43,8 @@ public class LanguageDatabase : MonoBehaviour
     [SerializeField] public SceneReference[] scenes;
 
     [HideInInspector] public int currentLevel;
-    public AttemptData userCurrentData;
-    public AttemptData userFirstData;
-    public AttemptData userLatestData;
-
-    // Average Datas
-    public AttemptData averageFirstData;
-    public AttemptData averageLatestData;
+    [HideInInspector] public int currentTime;
+    [HideInInspector] public int currentScore;
 
     // Instances
     public static Dictionary<string, LanguageDatabase> instances = new Dictionary<string, LanguageDatabase>();
@@ -44,6 +53,10 @@ public class LanguageDatabase : MonoBehaviour
     void Awake()
     {
         instances.TryAdd(languageName, this);
+    }
+
+    void Start()
+    {
     }
 
     public static LanguageDatabase GetInstance(string languageName)
@@ -60,12 +73,7 @@ public class LanguageDatabase : MonoBehaviour
 
     public bool isPlayingTheLastLevel
     {
-        get 
-        {
-            Debug.Log(currentLevel);
-            Debug.Log(scenes.Length);
-            return currentLevel == scenes.Length;
-        }
+        get => currentLevel == scenes.Length;
     }
 
     public float progressPercentage
@@ -88,111 +96,60 @@ public class LanguageDatabase : MonoBehaviour
         }
     }
 
-    public void ReloadData()
+    public void LoadUserData()
     {
-        // Basically, saving the data to cache for offline use.
-        FetchCurrentLevel(value => currentLevel = value);
-        FetchCurrentScore(value => userCurrentData.score = value);
-        FetchCurrentTime(value => userCurrentData.time = value);
-
-        FetchFirstAverageAttempt(result =>
+        FetchUserData(userData =>
         {
-            averageFirstData = result;
-        }, null);
-
-        FetchLatestAverageAttempt(result =>
-        {
-            averageLatestData = result;
-        }, null);
-
-        FetchUserFirstAttempt(result =>
-        {
-            userFirstData = result;
-        }, null);
-
-        FetchUserLatestAttempt(result =>
-        {
-            userLatestData = result;
-        }, null);
+            currentLevel = userData.level;
+            currentTime = userData.time;
+            currentScore = userData.score;
+        });
     }
 
     public void OnLogin()
     {
-        ReloadData();
+        LoadUserData();
     }
 
     public void OnSignout()
     {
     }
 
-    public void FetchCurrentLevel(Action<int> onCallback)
+    public void FetchUserData(Action<UserData> onCallback)
     {
         DatabaseManager.instance.dbReference
             .Child("users")
             .Child(AuthManager.user.UserId)
             .Child("progression")
             .Child(languageName)
-            .Child("current-level")
             .GetValueAsync()
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
                 {
-                    int currentLevel = Convert.ToInt32(task.Result.Value);
-                    onCallback(currentLevel);
+                    DataSnapshot userDataSnapshot = task.Result;
+
+                    if (userDataSnapshot.Exists)
+                    {
+                        int currentLevel = Convert.ToInt32(userDataSnapshot.Child("current-level").Value);
+                        int currentScore = Convert.ToInt32(userDataSnapshot.Child("current-score").Value);
+                        int currentTime = Convert.ToInt32(userDataSnapshot.Child("current-time").Value);
+
+                        UserData userData = new UserData(currentLevel, currentTime, currentScore);
+                        onCallback?.Invoke(userData);
+                    }
+                    else
+                    {
+                        onCallback?.Invoke(new UserData(1, 0, 0));
+                    }
                 }
                 else
                 {
-                    onCallback(1);
+                    onCallback?.Invoke(new UserData(1, 0, 0));
                 }
             });
     }
 
-    public void FetchCurrentTime(Action<int> onCallback)
-    {
-        DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .Child("current-time")
-            .GetValueAsync()
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    int currentTime = Convert.ToInt32(task.Result.Value);
-                    onCallback(currentTime);
-                }
-                else
-                {
-                    onCallback(0);
-                }
-            });
-    }
-
-    public void FetchCurrentScore(Action<int> onCallback)
-    {
-        DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .Child("current-score")
-            .GetValueAsync()
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    int currentScore = Convert.ToInt32(task.Result.Value);
-                    onCallback(currentScore);
-                }
-                else
-                {
-                    onCallback(0);
-                }
-            });
-    }
 
     public static void Play(string languageName)
     {
@@ -202,42 +159,30 @@ public class LanguageDatabase : MonoBehaviour
         SceneSwitcher.LoadScene(currentScene);
     }
 
-    public void AddCurrentTime(int time)
+    public void UpdateCurrentTime(int time)
     {
-        userCurrentData.time += time;
-        StartCoroutine(_AddCurrentTime());
+        currentTime = time;
+        DatabaseReference db = DatabaseManager.instance.dbReference
+            .Child("users")
+            .Child(AuthManager.user.UserId)
+            .Child("progression")
+            .Child(languageName)
+            .Child("current-time");
+
+        db.SetValueAsync(currentTime);
     }
 
-    private IEnumerator _AddCurrentTime()
+    public void UpdateCurrentScore(int score)
     {
-        DatabaseReference db =
-            DatabaseManager.instance.dbReference
-                .Child("users")
-                .Child(AuthManager.user.UserId)
-                .Child("progression")
-                .Child(languageName)
-                .Child("current-time");
+        currentScore = score;
+        DatabaseReference db = DatabaseManager.instance.dbReference
+            .Child("users")
+            .Child(AuthManager.user.UserId)
+            .Child("progression")
+            .Child(languageName)
+            .Child("current-score");
 
-        yield return db.SetValueAsync(userCurrentData.time);
-    }
-
-    public void AddCurrentScore(int score)
-    {
-        userCurrentData.score += score;
-        StartCoroutine(_AddCurrentScore());
-    }
-
-    private IEnumerator _AddCurrentScore()
-    {
-        DatabaseReference db =
-            DatabaseManager.instance.dbReference
-                .Child("users")
-                .Child(AuthManager.user.UserId)
-                .Child("progression")
-                .Child(languageName)
-                .Child("current-score");
-
-        yield return db.SetValueAsync(userCurrentData.score);
+        db.SetValueAsync(currentScore);
     }
 
     public void LevelUp()
@@ -250,93 +195,65 @@ public class LanguageDatabase : MonoBehaviour
         else
         {
             currentLevel++;
-            StartCoroutine(_LevelUp());
+            _LevelUp();
         }
     }
 
-    private IEnumerator _LevelUp()
+    private void _LevelUp()
     {
-        DatabaseReference db =
-            DatabaseManager.instance.dbReference
-                .Child("users")
-                .Child(AuthManager.user.UserId)
-                .Child("progression")
-                .Child(languageName)
-                .Child("current-level");
+        DatabaseReference db = DatabaseManager.instance.dbReference
+            .Child("users")
+            .Child(AuthManager.user.UserId)
+            .Child("progression")
+            .Child(languageName)
+            .Child("current-level");
 
-        yield return db.SetValueAsync(currentLevel);
+        db.SetValueAsync(currentLevel);
     }
 
     public void ResetProgress()
     {
-        StartCoroutine(_ResetProgress());
-    }
-
-    public IEnumerator _ResetProgress()
-    {
         currentLevel = 1;
-        userCurrentData.time = 0;
-        userCurrentData.score = 0;
+        currentTime = 0;
+        currentScore = 0;
 
         DatabaseReference db = DatabaseManager.instance.dbReference
-                                .Child("users")
-                                .Child(AuthManager.user.UserId)
-                                .Child("progression")
-                                .Child(languageName);
+            .Child("users")
+            .Child(AuthManager.user.UserId)
+            .Child("progression")
+            .Child(languageName);
 
-        yield return db.Child("current-level").SetValueAsync(1);
-        yield return db.Child("current-time").SetValueAsync(0);
-        yield return db.Child("current-score").SetValueAsync(0);
+        db.Child("current-level").SetValueAsync(currentLevel);
+        db.Child("current-time").SetValueAsync(currentTime);
+        db.Child("current-score").SetValueAsync(currentScore);
     }
 
     public void AddAttempt()
     {
-        StartCoroutine(_AddAttempt());
-    }
-
-    private IEnumerator _AddAttempt()
-    {
         Dictionary<string, int> attemptInformation = new Dictionary<string, int>
         {
-            { "time", userCurrentData.time },
-            { "score", userCurrentData.score }
+            { "time", currentTime },
+            { "score", currentScore }
         };
 
-        yield return DatabaseManager.instance.dbReference
-                                        .Child("users")
-                                        .Child(AuthManager.user.UserId)
-                                        .Child("progression")
-                                        .Child(languageName)
-                                        .Child("attempts").Push()
-                                        .SetValueAsync(attemptInformation);
+        DatabaseManager.instance.dbReference
+            .Child("users")
+            .Child(AuthManager.user.UserId)
+            .Child("progression")
+            .Child(languageName)
+            .Child("attempts").Push()
+            .SetValueAsync(attemptInformation);
     }
 
     public void UpdateCurrentLevel(int level)
     {
-        StartCoroutine(_UpdateCurrentLevel(level));
-    }
-
-    private IEnumerator _UpdateCurrentLevel(int level)
-    {
-        Task dbTask =
-            DatabaseManager.instance.dbReference
-                .Child("users")
-                .Child(AuthManager.user.UserId)
-                .Child("progression")
-                .Child(languageName)
-                .Child("current-level")
-                .SetValueAsync(level);
-
-        yield return new WaitUntil(() => dbTask.IsCompleted);
-
-        if (dbTask.Exception != null)
-        {
-            Debug.LogError($"Failed to update database progression level: {dbTask.Exception}");
-        }
-        else
-        {
-            Debug.Log("Update database progression level successful.");
-        }
+        DatabaseManager.instance.dbReference
+            .Child("users")
+            .Child(AuthManager.user.UserId)
+            .Child("progression")
+            .Child(languageName)
+            .Child("current-level")
+            .SetValueAsync(level);
     }
 
     public void FetchUserFirstAttempt(Action<AttemptData> onCallback, Action<string> onError)

@@ -34,6 +34,6 @@ public class LevelCompleteModal : MonoBehaviour
 
     public void ShowStatistics()
     {
-        DatabaseManager.instance.currentLanguage.ReloadData();
+        DatabaseManager.instance.currentLanguage.LoadUserData();
     }
 }

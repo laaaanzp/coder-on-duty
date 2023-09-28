@@ -9336,21 +9336,8 @@ MonoBehaviour:
   - sceneAsset: {fileID: 102900000, guid: b0908c9076c5fc3408b9d65a05fa557b, type: 3}
     scenePath: Assets/Scenes/CSharp Levels/Introduction to C#.unity
   currentLevel: 0
-  userCurrentData:
-    time: 0
-    score: 0
-  userFirstData:
-    time: 0
-    score: 0
-  userLatestData:
-    time: 0
-    score: 0
-  averageFirstData:
-    time: 0
-    score: 0
-  averageLatestData:
-    time: 0
-    score: 0
+  currentTime: 0
+  currentScore: 0
 --- !u!1001 &210079570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23628,21 +23615,8 @@ MonoBehaviour:
   languageName: java
   scenes: []
   currentLevel: 0
-  userCurrentData:
-    time: 0
-    score: 0
-  userFirstData:
-    time: 0
-    score: 0
-  userLatestData:
-    time: 0
-    score: 0
-  averageFirstData:
-    time: 0
-    score: 0
-  averageLatestData:
-    time: 0
-    score: 0
+  currentTime: 0
+  currentScore: 0
 --- !u!1001 &557771016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30314,8 +30288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageBoxType: 1
   title: EXIT GAME
-  message: " adfasd fasd fsadf sadd  adfasd fasd fsadf sadd  adfasd fasd fsadf sadd
-    \nasdfasfas\nfasd\nfsda\nfssasdffasfasdfas"
+  message: :(
   yesAction:
     m_PersistentCalls:
       m_Calls:

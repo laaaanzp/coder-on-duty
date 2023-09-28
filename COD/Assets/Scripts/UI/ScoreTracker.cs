@@ -11,8 +11,12 @@ public class ScoreTracker : MonoBehaviour
 
     void Awake()
     {
-        score = 0;
         instance = this;
+    }
+
+    void Start()
+    {
+        score = DatabaseManager.instance.currentLanguage.currentScore;
         UpdateTotalScoreDisplay();
     }
 
