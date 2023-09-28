@@ -9,9 +9,6 @@ public class TooltipControl : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null)
-            return;
-
         instance = tooltip;
     }
 

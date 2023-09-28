@@ -9,9 +9,6 @@ public class SettingsModalControl : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null)
-            return;
-
         instance = settingsModal;
     }
 

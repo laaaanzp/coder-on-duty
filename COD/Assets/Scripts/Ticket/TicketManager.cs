@@ -65,6 +65,7 @@ public class TicketManager : MonoBehaviour
 
         isLevelCompleted = true;
         instance.LevelComplete();
+
         DatabaseManager.instance.currentLanguage.AddCurrentTime(LevelTimer.GetTimeInSeconds());
         DatabaseManager.instance.currentLanguage.AddCurrentScore(ScoreTracker.score);
         DatabaseManager.instance.currentLanguage.LevelUp();

@@ -13,9 +13,6 @@ public class MessageBoxControl : MonoBehaviour
 
     void Awake()
     {
-        if (_messageBoxParent != null)
-            return;
-
         _messageBoxPrefab = messageBoxPrefab;
         _messageBoxParent = messageBoxParent;
     }

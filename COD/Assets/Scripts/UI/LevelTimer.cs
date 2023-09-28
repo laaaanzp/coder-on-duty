@@ -33,21 +33,14 @@ public class LevelTimer : MonoBehaviour
 
     public static string GetTimeAsString()
     {
-        float currentTotalTime = totalTime;
-        int totalMinutes = 0;
+        int totalSeconds = (int)totalTime;
 
-        if (currentTotalTime >= 60)
-        {
-            totalMinutes = (int)currentTotalTime / 60;
-            currentTotalTime -= totalMinutes * 60;
-        }
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
 
-        int totalSeconds = (int)Math.Round(currentTotalTime);
+        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        string seconds = totalSeconds <= 9 ? $"0{totalSeconds}" : totalSeconds.ToString();
-        string minutes = totalMinutes <= 9 ? $"0{totalMinutes}" : totalMinutes.ToString();
-
-        return $"{minutes}:{seconds}";
+        return timeString;
     }
 
     void UpdateTimeDisplay()
