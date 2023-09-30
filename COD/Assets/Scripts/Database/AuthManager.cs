@@ -1,5 +1,6 @@
 using Firebase;
 using Firebase.Auth;
+using Firebase.Extensions;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ public class AuthManager : MonoBehaviour
             instance = this;
         }
 
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             dependencyStatus = task.Result;
 
@@ -62,13 +63,12 @@ public class AuthManager : MonoBehaviour
 
         if (auth.CurrentUser == null)
         {
-            MultithreadControl.RunOnMainThread(loginModalControl.Open);
+            loginModalControl.Open();
         }
         else
         {
             user = auth.CurrentUser;
-            MultithreadControl.RunOnMainThread(() => onLogin?.Invoke());
-            MultithreadControl.RunOnMainThread(() => signOutButton.SetActive(true));
+            signOutButton.SetActive(true);
         }
     }
 

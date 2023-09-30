@@ -42,9 +42,42 @@ public class LanguageDatabase : MonoBehaviour
     [SerializeField] public string languageName;
     [SerializeField] public SceneReference[] scenes;
 
-    [HideInInspector] public int currentLevel;
-    [HideInInspector] public int currentTime;
-    [HideInInspector] public int currentScore;
+    [HideInInspector] public int currentLevel
+    {
+        get
+        {
+            return SecurePlayerPrefs.GetInt($"{languageName}-level", 1);
+        }
+        set
+        {
+            SecurePlayerPrefs.SetInt($"{languageName}-level", value);
+            SecurePlayerPrefs.Save();
+        }
+    }
+    [HideInInspector] public int currentTime
+    {
+        get
+        {
+            return SecurePlayerPrefs.GetInt($"{languageName}-time", 0);
+        }
+        set
+        {
+            SecurePlayerPrefs.SetInt($"{languageName}-time", value);
+            SecurePlayerPrefs.Save();
+        }
+    }
+    [HideInInspector] public int currentScore
+    {
+        get
+        {
+            return SecurePlayerPrefs.GetInt($"{languageName}-score", 0);
+        }
+        set
+        {
+            SecurePlayerPrefs.SetInt($"{languageName}-score", value);
+            SecurePlayerPrefs.Save();
+        }
+    }
 
     // Instances
     public static Dictionary<string, LanguageDatabase> instances = new Dictionary<string, LanguageDatabase>();
@@ -53,10 +86,6 @@ public class LanguageDatabase : MonoBehaviour
     void Awake()
     {
         instances.TryAdd(languageName, this);
-    }
-
-    void Start()
-    {
     }
 
     public static LanguageDatabase GetInstance(string languageName)
@@ -108,7 +137,7 @@ public class LanguageDatabase : MonoBehaviour
 
     public void OnLogin()
     {
-        LoadUserData();
+        ResetProgress();
     }
 
     public void OnSignout()
@@ -150,39 +179,12 @@ public class LanguageDatabase : MonoBehaviour
             });
     }
 
-
     public static void Play(string languageName)
     {
         LanguageDatabase languageDatabase = GetInstance(languageName);
         DatabaseManager.instance.currentLanguage = languageDatabase;
-        SceneReference currentScene = languageDatabase.scenes[languageDatabase.currentLevel - 1];
-        SceneSwitcher.LoadScene(currentScene);
-    }
-
-    public void UpdateCurrentTime(int time)
-    {
-        currentTime = time;
-        DatabaseReference db = DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .Child("current-time");
-
-        db.SetValueAsync(currentTime);
-    }
-
-    public void UpdateCurrentScore(int score)
-    {
-        currentScore = score;
-        DatabaseReference db = DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .Child("current-score");
-
-        db.SetValueAsync(currentScore);
+        SceneReference scene = languageDatabase.scenes[languageDatabase.currentLevel - 1];
+        SceneSwitcher.LoadScene(scene);
     }
 
     public void LevelUp()
@@ -195,20 +197,7 @@ public class LanguageDatabase : MonoBehaviour
         else
         {
             currentLevel++;
-            _LevelUp();
         }
-    }
-
-    private void _LevelUp()
-    {
-        DatabaseReference db = DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .Child("current-level");
-
-        db.SetValueAsync(currentLevel);
     }
 
     public void ResetProgress()
@@ -216,16 +205,6 @@ public class LanguageDatabase : MonoBehaviour
         currentLevel = 1;
         currentTime = 0;
         currentScore = 0;
-
-        DatabaseReference db = DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName);
-
-        db.Child("current-level").SetValueAsync(currentLevel);
-        db.Child("current-time").SetValueAsync(currentTime);
-        db.Child("current-score").SetValueAsync(currentScore);
     }
 
     public void AddAttempt()
@@ -243,17 +222,6 @@ public class LanguageDatabase : MonoBehaviour
             .Child(languageName)
             .Child("attempts").Push()
             .SetValueAsync(attemptInformation);
-    }
-
-    public void UpdateCurrentLevel(int level)
-    {
-        DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .Child("current-level")
-            .SetValueAsync(level);
     }
 
     public void FetchUserFirstAttempt(Action<AttemptData> onCallback, Action<string> onError)

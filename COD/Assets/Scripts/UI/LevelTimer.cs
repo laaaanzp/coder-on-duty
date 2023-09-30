@@ -15,14 +15,10 @@ public class LevelTimer : MonoBehaviour
 
     void Awake()
     {
+        totalTime = DatabaseManager.instance.currentLanguage.currentTime;
         totalMinutes = totalSeconds = 0;
         InvokeRepeating("UpdateTimeDisplay", 1f, 1f);
         isStarted = false;
-    }
-
-    void Start()
-    {
-        totalTime = DatabaseManager.instance.currentLanguage.currentTime;
     }
 
     public void StartTimer()

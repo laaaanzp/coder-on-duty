@@ -8,6 +8,7 @@ public class ProblemSolving : MonoBehaviour
 
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI timeRemainingText;
+    [SerializeField] private TextMeshProUGUI bonusOnTimeScoreText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI scoreDeductionPerMistakeText;
 
@@ -16,7 +17,7 @@ public class ProblemSolving : MonoBehaviour
     [Header("Score")]
     [SerializeField] private int baseScore = 500;               // Score when the device is fixed
     [SerializeField] private int scoreDeductedPerMistake = 50;  // Score when the user submitted with wrong answer
-    [SerializeField] private int bonusOnTimeScore = 100;        // Bonus score they get when they fixed the problem on time (targetTime).
+    [SerializeField] private int bonusOnTimeScore = 1000;       // Bonus score they get when they fixed the problem on time (targetTime).
 
     public Action onFix;
 
@@ -25,7 +26,8 @@ public class ProblemSolving : MonoBehaviour
     {
         UpdateTimeDisplay();
         UpdateScoreDisplay();
-        scoreDeductionPerMistakeText.text = $"<b>Deduction Per Mistake:</b> {scoreDeductedPerMistake}";
+        bonusOnTimeScoreText.text = $"<b>Bonus On-Time Score:</b> {bonusOnTimeScore}";
+        scoreDeductionPerMistakeText.text = $"<b>Additional Score Deduction Per Mistake:</b> {scoreDeductedPerMistake}";
 
         InvokeRepeating("DeductTime", 1f, 1f);
     }
@@ -49,7 +51,7 @@ public class ProblemSolving : MonoBehaviour
 
     private void UpdateScoreDisplay()
     {
-        scoreText.text = $"<b>Score:</b> {baseScore}";
+        scoreText.text = $"<b>Additional Score:</b> {baseScore}";
     }
 
     private void DeductScore()

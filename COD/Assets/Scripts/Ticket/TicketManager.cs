@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TicketManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class TicketManager : MonoBehaviour
 
     [SerializeField] private GameObject taskPrefab;
     [SerializeField] private LevelCompleteModal levelCompleteModalControl;
+    [SerializeField] private StatisticsModal statisticsModalControl;
     [SerializeField] private TextMeshProUGUI ticketCounterText;
 
     private static List<Ticket> tickets;
@@ -22,16 +24,15 @@ public class TicketManager : MonoBehaviour
         instance = this;
     }
 
-    public static Ticket RegisterTask(GameObject owner, string ticketTitle)
+    public static Ticket RegisterTask(GameObject owner, string ticketTitle, int score)
     {
         GameObject taskInstance = Instantiate(instance.taskPrefab, instance.transform);
 
         Ticket task = taskInstance.GetComponent<Ticket>();
         tickets.Add(task);
 
-        task.Initialize(owner, ticketTitle, OnFix);
+        task.Initialize(owner, ticketTitle, score, OnFix);
         instance.UpdateRemainingActiveTicketsDisplay();
-
 
         return task;
     }
@@ -46,7 +47,7 @@ public class TicketManager : MonoBehaviour
             ObjectNavigation.StopNavigate();
         }
 
-        ScoreTracker.AddScore(500);
+        ScoreTracker.AddScore(ticket.score);
         CheckTasks();
     }
 
@@ -64,15 +65,26 @@ public class TicketManager : MonoBehaviour
         }
 
         isLevelCompleted = true;
-        instance.LevelComplete();
 
-        DatabaseManager.instance.currentLanguage.UpdateCurrentTime(LevelTimer.GetTimeInSeconds());
-        DatabaseManager.instance.currentLanguage.UpdateCurrentScore(ScoreTracker.score);
-        DatabaseManager.instance.currentLanguage.LevelUp();
+        DatabaseManager.instance.currentLanguage.currentTime = LevelTimer.GetTimeInSeconds();
+        DatabaseManager.instance.currentLanguage.currentScore = ScoreTracker.score;
+        instance.LevelComplete();
     }
 
     private void LevelComplete()
     {
-        levelCompleteModalControl.Open();
+        if (DatabaseManager.instance.currentLanguage.isPlayingTheLastLevel)
+        {
+            int time = DatabaseManager.instance.currentLanguage.currentTime;
+            int score = DatabaseManager.instance.currentLanguage.currentScore;
+
+            statisticsModalControl.Open(time, score);
+        }
+        else
+        {
+            levelCompleteModalControl.Open();
+        }
+
+        DatabaseManager.instance.currentLanguage.LevelUp();
     }
 }

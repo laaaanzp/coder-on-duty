@@ -16,7 +16,10 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         titleCanvasGroup = title.GetComponent<CanvasGroup>();
+    }
 
+    void Start()
+    {
         AnimateTitle();
     }
 
@@ -29,7 +32,7 @@ public class MainMenu : MonoBehaviour
 
     private void MoveAndResizeTitle()
     {
-        LeanTween.color(backgroundImage.rectTransform, new Color(0f, 0f, 0f, 0f), duration)
+        LeanTween.color(backgroundImage.rectTransform, new Color(0f, 0f, 0f, 0.3f), duration)
             .setDelay(1f)
             .setEase(leanType);
 

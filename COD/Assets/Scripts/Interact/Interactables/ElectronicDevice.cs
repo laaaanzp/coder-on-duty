@@ -19,10 +19,11 @@ public class ElectronicDevice : MonoBehaviour
         {
             deviceScreen.ChangeScreen(fixedScreenMaterial);
             Destroy(outline);
+            Destroy(interactable);
             return;
         }
 
-        ticket = TicketManager.RegisterTask(gameObject, $"Fix Device ({name})");
+        ticket = TicketManager.RegisterTask(gameObject, $"Fix Device ({name})", 1000);
         problemModal.onFix += OnFix;
 
         interactable.interactionEvent.AddListener(Interact);

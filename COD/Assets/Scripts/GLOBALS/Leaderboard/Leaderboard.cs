@@ -30,6 +30,7 @@ public class Leaderboard : MonoBehaviour
 
     public void Reload()
     {
+        SetLoading();
         string languageName = languageDropdown.options[languageDropdown.value].text;
         string filterBy = filterByDropdown.options[filterByDropdown.value].text;
 
@@ -50,9 +51,18 @@ public class Leaderboard : MonoBehaviour
         }
     }
 
+    private void SetLoading()
+    {
+        foreach (LeaderboardEntry entry in leaderboardEntries)
+        {
+            entry.SetValues("Loading...", "Loading...");
+        }
+    }
+
     private void LoadData(Dictionary<string, int> datas)
     {
         int iterationCount = 0;
+        string filterBy = filterByDropdown.options[filterByDropdown.value].text;
 
         foreach (KeyValuePair<string, int> data in datas)
         {
@@ -64,9 +74,30 @@ public class Leaderboard : MonoBehaviour
             string name = data.Key;
             int value = data.Value;
 
-            leaderboardEntries[iterationCount].SetValues(name, value);
+            string valueAsString;
+
+            if (filterBy == "Time")
+            {
+                valueAsString = SecondsToTimeString(value);
+            }
+            else
+            {
+                valueAsString = value.ToString();
+            }
+
+            leaderboardEntries[iterationCount].SetValues(name, valueAsString);
 
             iterationCount++;
         }
+    }
+
+    private string SecondsToTimeString(int time)
+    {
+        int minutes = time / 60;
+        int seconds = time % 60;
+
+        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        return timeString;
     }
 }

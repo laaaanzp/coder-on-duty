@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ProblemSolvingDistributor : MonoBehaviour
 {
+    GameObject[] computerObjects;
+    private int index = 0;
+
     void Start()
     {
-        GameObject[] computerObjects = GameObject.FindGameObjectsWithTag("Computer");
+        computerObjects = GameObject.FindGameObjectsWithTag("Computer");
         GameObject[] shuffledComputerObjects = Shuffle(computerObjects);
 
         ProblemSolving[] problemSolvings = GetComponentsInChildren<ProblemSolving>(includeInactive: true);
@@ -37,5 +40,15 @@ public class ProblemSolvingDistributor : MonoBehaviour
         }
 
         return array;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            GameObject computer = computerObjects[index];
+            ObjectNavigation.Navigate(computer);
+            index++;
+        }
     }
 }

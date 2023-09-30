@@ -8,20 +8,11 @@ public class LevelCompleteModal : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    [SerializeField] private GameObject nextLevelButton;
-    [SerializeField] private GameObject viewStatisticsButton;
-
 
     public void Open()
     {
         timeText.text = $"<b>Time:</b> {LevelTimer.GetTimeAsString()}";
         scoreText.text = $"<b>Score:</b> {ScoreTracker.score}";
-
-        if (DatabaseManager.instance.currentLanguage.isPlayingTheLastLevel)
-        {
-            nextLevelButton.SetActive(false);
-            viewStatisticsButton.SetActive(true);
-        }
 
         levelCompleteModal.Open();
     }
@@ -32,8 +23,8 @@ public class LevelCompleteModal : MonoBehaviour
         LanguageDatabase.Play(languageName);
     }
 
-    public void ShowStatistics()
+    public void MainMenu()
     {
-        DatabaseManager.instance.currentLanguage.LoadUserData();
+        SceneSwitcher.LoadMenu();
     }
 }

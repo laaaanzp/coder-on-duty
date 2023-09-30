@@ -10,7 +10,7 @@ public class UserManual : MonoBehaviour
 
     void Start()
     {
-        ticket = TicketManager.RegisterTask(gameObject, "Read User Manual");
+        ticket = TicketManager.RegisterTask(gameObject, "Read User Manual", 500);
 
         computerManualModal.onClose += delegate
         {

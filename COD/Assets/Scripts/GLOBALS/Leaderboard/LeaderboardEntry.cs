@@ -7,9 +7,9 @@ public class LeaderboardEntry : MonoBehaviour
     [SerializeField] private TextMeshProUGUI valueText;
     
     
-    public void SetValues(string name, int value)
+    public void SetValues(string name, string value)
     {
         nameText.text = name;
-        valueText.text = value.ToString();
+        valueText.text = value;
     }
 }
