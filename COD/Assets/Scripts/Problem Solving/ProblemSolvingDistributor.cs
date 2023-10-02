@@ -1,20 +1,41 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProblemSolvingDistributor : MonoBehaviour
 {
-    GameObject[] computerObjects;
-    private int index = 0;
+    [SerializeField] private GameObject problemSolvingModalPrefab;
+
+    private TextAsset[] problemTextAssets;
+
 
     void Start()
     {
-        computerObjects = GameObject.FindGameObjectsWithTag("Computer");
-        GameObject[] shuffledComputerObjects = Shuffle(computerObjects);
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string sceneName = SceneManager.GetActiveScene().name;
+        problemTextAssets = Resources.LoadAll<TextAsset>($"Problems/{languageName}/{sceneName}");
 
-        ProblemSolving[] problemSolvings = GetComponentsInChildren<ProblemSolving>(includeInactive: true);
+        GameObject[] computerObjects = GameObject.FindGameObjectsWithTag("Computer");
+        GameObject[] shuffledComputerObjects = Tools.ShuffleArray(computerObjects);
 
-        for (int i = 0; i < problemSolvings.Length; i++)
+        List<ProblemSolving> problemSolvings = new List<ProblemSolving>();
+
+        foreach (TextAsset problemTextAsset in problemTextAssets)
+        {
+            GameObject problemSolvingModal = Instantiate(problemSolvingModalPrefab, transform);
+            ProblemSolving problemSolving = problemSolvingModal.GetComponent<ProblemSolving>();
+
+            string[] problemSplitted = problemTextAsset.text.Split("##############################");
+            string[] answers = Tools.ShuffleArray(problemSplitted[0].Split('\n'));
+            string problem = problemSplitted[1].Trim();
+
+            problemSolving.Initialize(problem, answers);
+
+            problemSolvings.Add(problemSolving);
+        }
+
+        for (int i = 0; i < problemSolvings.Count; i++)
         {
             ElectronicDevice electronicDevice = shuffledComputerObjects[i].GetComponent<ElectronicDevice>();
             electronicDevice.problemModal = problemSolvings[i];
@@ -24,31 +45,6 @@ public class ProblemSolvingDistributor : MonoBehaviour
         {
             ElectronicDevice electronicDevice = computerObject.GetComponent<ElectronicDevice>();
             electronicDevice.Initialize();
-        }
-    }
-
-    private static T[] Shuffle<T>(T[] array)
-    {
-        int n = array.Length;
-
-        for (int i = 0; i < n; i++)
-        {
-            int r = i + Random.Range(0, n - i); // Random index from i to n-1
-            T temp = array[i];
-            array[i] = array[r];
-            array[r] = temp;
-        }
-
-        return array;
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            GameObject computer = computerObjects[index];
-            ObjectNavigation.Navigate(computer);
-            index++;
         }
     }
 }

@@ -50,10 +50,9 @@ public class AnswerNode : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         current = null;
     }
 
-    void OnValidate()
+    public void SetAnswer(string answer)
     {
-        if (answer == "")
-            answer = "UNASSIGNED VALUE";
+        this.answer = answer;
 
         name = $"AnsNode: {answer}";
         GetComponentInChildren<TextMeshProUGUI>().text = answer;

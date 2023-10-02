@@ -1,0 +1,18 @@
+Hello, World
+"Hello, World"
+'Hello, World'
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string myString = (NODE_SLOT:"Hello, World");
+
+        Console.WriteLine(myString);
+
+        Console.Write("Press enter to continue...");
+        Console.ReadKey();
+    }
+}

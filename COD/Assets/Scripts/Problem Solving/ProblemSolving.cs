@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
@@ -6,18 +7,21 @@ public class ProblemSolving : MonoBehaviour
 {
     [SerializeField] private ModalControl modalControl;
 
+    [Header("Problem")]
+    [SerializeField] private GameObject problemSolvingRowPrefab;
+    [SerializeField] private Transform problemSolvingRowContainer;
+
+    [Header("Answer")]
+    [SerializeField] private GameObject answerNodePrefab;
+    [SerializeField] private Transform answersContainer;
+
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI timeRemainingText;
     [SerializeField] private TextMeshProUGUI bonusOnTimeScoreText;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI scoreDeductionPerMistakeText;
-
-    [SerializeField] private float targetTime = 60.0f;
 
     [Header("Score")]
-    [SerializeField] private int baseScore = 500;               // Score when the device is fixed
-    [SerializeField] private int scoreDeductedPerMistake = 50;  // Score when the user submitted with wrong answer
-    [SerializeField] private int bonusOnTimeScore = 1000;       // Bonus score they get when they fixed the problem on time (targetTime).
+    [SerializeField] private float targetTime = 60.0f;
+    [SerializeField] private int bonusOnTimeScore = 2000;
 
     public Action onFix;
 
@@ -25,11 +29,43 @@ public class ProblemSolving : MonoBehaviour
     void Awake()
     {
         UpdateTimeDisplay();
-        UpdateScoreDisplay();
         bonusOnTimeScoreText.text = $"<b>Bonus On-Time Score:</b> {bonusOnTimeScore}";
-        scoreDeductionPerMistakeText.text = $"<b>Additional Score Deduction Per Mistake:</b> {scoreDeductedPerMistake}";
 
         InvokeRepeating("DeductTime", 1f, 1f);
+
+    }
+
+    public void Initialize(string problem, string[] answers)
+    {
+        string[] lines = problem.Split('\n');
+
+        foreach (string line in lines)
+        {
+            GameObject problemSolvingRowObject = Instantiate(problemSolvingRowPrefab, problemSolvingRowContainer);
+            ProblemSolvingRowControl problemSolvingRowControl = problemSolvingRowObject.GetComponent<ProblemSolvingRowControl>(); ;
+
+            string pattern = @"\((NODE_SLOT:[^)]+)\)";
+
+            string[] tokens = Regex.Split(line, pattern);
+
+            foreach (string token in tokens)
+            {
+                problemSolvingRowControl.AddToken(token);
+            }
+        }
+
+        foreach (string answer in answers)
+        {
+            if (answer == "")
+            {
+                continue;
+            }
+
+            GameObject answerObject = Instantiate(answerNodePrefab, answersContainer);
+            AnswerNode answerNode = answerObject.GetComponent<AnswerNode>();
+
+            answerNode.SetAnswer(answer.Trim());
+        }
     }
 
     private void DeductTime()
@@ -49,17 +85,6 @@ public class ProblemSolving : MonoBehaviour
         timeRemainingText.text = $"<b>Time Remaining:<b> {timeRemainingInSeconds}s";
     }
 
-    private void UpdateScoreDisplay()
-    {
-        scoreText.text = $"<b>Additional Score:</b> {baseScore}";
-    }
-
-    private void DeductScore()
-    {
-        baseScore -= scoreDeductedPerMistake;
-        baseScore = baseScore > 0 ? baseScore : 0;
-        UpdateScoreDisplay();
-    }
 
     public void Open()
     {
@@ -85,20 +110,19 @@ public class ProblemSolving : MonoBehaviour
                 $"{slotNodes.Length - totalCorrect} out of {slotNodes.Length} slots are answered incorrectly or left unanswered."
                 );
 
-            DeductScore();
             return;
         }
 
         modalControl.Close();
 
-        int additionalScore = baseScore;
+        int score = 0;
 
         if (targetTime > 0)
         {
-            additionalScore += bonusOnTimeScore;
+            score += bonusOnTimeScore;
         }
 
-        ScoreTracker.AddScore(additionalScore);
+        ScoreTracker.AddScore(score);
 
         onFix?.Invoke();
     }

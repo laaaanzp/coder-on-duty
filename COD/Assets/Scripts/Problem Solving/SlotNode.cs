@@ -5,21 +5,20 @@ using UnityEngine.UI;
 public class SlotNode : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public string correctAnswer;
-    public Color highlightEffectColor;
-    public Vector2 highlightEffectDistance;
+    private Color highlightEffectColor = Color.yellow;
+    private Vector2 highlightEffectDistance = new Vector2(3, 3);
 
     private float minWidth, minHeight;
     private LayoutElement layoutElement;
 
     // Default outline value
-    private UnityEngine.UI.Outline outline;
+    [SerializeField] private UnityEngine.UI.Outline outline;
     private Color effectColor;
     private Vector2 effectDistance;
 
     
     void Awake()
     {
-        outline = GetComponent<UnityEngine.UI.Outline>();
         effectColor = outline.effectColor;
         effectDistance = outline.effectDistance;
 

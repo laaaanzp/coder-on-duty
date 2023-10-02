@@ -170,6 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctAnswer: answerf
+  highlightEffectColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightEffectDistance: {x: 0, y: 0}
+  outline: {fileID: 8507999231133259966}
 --- !u!61 &1714487013
 BoxCollider2D:
   m_ObjectHideFlags: 0

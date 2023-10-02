@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6962377680216830828}
   - component: {fileID: 6962377680216830829}
   - component: {fileID: 6962377680216830826}
+  - component: {fileID: 8724211048003627922}
   m_Layer: 5
   m_Name: ProblemSolvingRow
   m_TagString: Untagged
@@ -118,3 +119,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8724211048003627922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6962377680216830825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e025a62cff1d7d4e8b74088cb60c932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodePrefab: {fileID: 4592322727144532479, guid: 188d18660e945484ca972281c84403f9,
+    type: 3}
+  spaceNodePrefab: {fileID: 4592322727144532479, guid: 5a70f0ed46efdf34e8bce03f788bab23,
+    type: 3}
+  slotNodePrefab: {fileID: 8213853234683122856, guid: 3ece8c7e5965bb744a712b4532ff7a7c,
+    type: 3}
+  rectTransform: {fileID: 6962377680216830824}

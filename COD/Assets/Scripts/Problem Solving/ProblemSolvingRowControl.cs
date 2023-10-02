@@ -4,64 +4,35 @@ using UnityEngine.UI;
 
 public class ProblemSolvingRowControl : MonoBehaviour
 {
-    public GameObject keywordNode;
-    public GameObject identifierNode;
-    public GameObject stringNode;
-    public GameObject numericNode;
-    public GameObject spaceNode;
-    public GameObject tabNode;
-    public GameObject blankNode;
-
-    private RectTransform rectTransform;
+    [SerializeField] private GameObject nodePrefab;
+    [SerializeField] private GameObject spaceNodePrefab;
+    [SerializeField] private GameObject slotNodePrefab;
+    [SerializeField] private RectTransform rectTransform;
 
 
-    void Awake()
+    public void AddToken(string token)
     {
-        rectTransform = GetComponent<RectTransform>();
-    }
+        if (token.StartsWith("NODE_SLOT:"))
+        {
+            GameObject slotNodeObj = Instantiate(slotNodePrefab, transform);
+            SlotNode slotNode = slotNodeObj.GetComponent<SlotNode>();
 
-    public void AddKeyword(string text)
-    {
-        GameObject node = Instantiate(keywordNode, transform);
-        node.GetComponent<TextMeshProUGUI>().text = text;
+            string answer = token.Replace("NODE_SLOT:", "");
+  
+            slotNode.correctAnswer = answer;
+        }
+        else
+        {
+            token = CodeHighlighter.CSSyntaxHighlight(token);
+            GameObject nodeObj = Instantiate(nodePrefab, transform);
+            TextMeshProUGUI nodeText = nodeObj.GetComponent<TextMeshProUGUI>();
+            nodeText.text = token;
 
-        RebuildLayout();
-    }
-
-    public void AddIdentifier(string text)
-    {
-        GameObject node = Instantiate(identifierNode, transform);
-        node.GetComponent<TextMeshProUGUI>().text = text;
-
-        RebuildLayout();
-    }
-
-    public void AddString(string text)
-    {
-        GameObject node = Instantiate(stringNode, transform);
-        node.GetComponent<TextMeshProUGUI>().text = text;
-
-        RebuildLayout();
-    }
-
-    public void AddNumeric(string text)
-    {
-        GameObject node = Instantiate(numericNode, transform);
-        node.GetComponent<TextMeshProUGUI>().text = text;
-
-        RebuildLayout();
-    }
-
-    public void AddSpace()
-    {
-        Instantiate(spaceNode, transform);
-
-        RebuildLayout();
-    }
-
-    public void AddTab()
-    {
-        Instantiate(tabNode, transform);
+            if (token.EndsWith(' '))
+            {
+                Instantiate(spaceNodePrefab, transform);
+            }
+        }
 
         RebuildLayout();
     }
