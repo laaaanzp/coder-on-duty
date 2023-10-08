@@ -7,6 +7,7 @@ public class LevelTimer : MonoBehaviour
     public static int totalMinutes;
     public static int totalSeconds;
     public static bool isStarted;
+    public static bool onTime;
 
     [SerializeField] private TextMeshProUGUI timeText;
 
@@ -15,10 +16,12 @@ public class LevelTimer : MonoBehaviour
 
     void Awake()
     {
-        totalTime = DatabaseManager.instance.currentLanguage.currentTime;
+        totalTime = 0;
         totalMinutes = totalSeconds = 0;
-        InvokeRepeating("UpdateTimeDisplay", 1f, 1f);
         isStarted = false;
+        onTime = true;
+
+        InvokeRepeating("UpdateTimeDisplay", 1f, 1f);
     }
 
     public void StartTimer()

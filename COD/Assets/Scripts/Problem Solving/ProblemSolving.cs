@@ -16,6 +16,7 @@ public class ProblemSolving : MonoBehaviour
     [SerializeField] private Transform answersContainer;
 
     [Header("Texts")]
+    [SerializeField] private TextMeshProUGUI outputText;
     [SerializeField] private TextMeshProUGUI timeRemainingText;
     [SerializeField] private TextMeshProUGUI bonusOnTimeScoreText;
 
@@ -35,7 +36,7 @@ public class ProblemSolving : MonoBehaviour
 
     }
 
-    public void Initialize(string problem, string[] answers)
+    public void Initialize(string problem, string[] answers, string output)
     {
         string[] lines = problem.Split('\n');
 
@@ -66,6 +67,8 @@ public class ProblemSolving : MonoBehaviour
 
             answerNode.SetAnswer(answer.Trim());
         }
+
+        outputText.text = output;
     }
 
     private void DeductTime()
@@ -76,6 +79,7 @@ public class ProblemSolving : MonoBehaviour
         if (targetTime == 0)
         {
             CancelInvoke("DeductTime");
+            LevelTimer.onTime = false;
         }
     }
 
@@ -103,6 +107,9 @@ public class ProblemSolving : MonoBehaviour
                 totalCorrect++;
         }
 
+        ScoreManager.totalCorrect += totalCorrect;
+        ScoreManager.totalSlots += slotNodes.Length;
+
         if (totalCorrect != slotNodes.Length)
         {
             MessageBoxControl.ShowOk(
@@ -122,7 +129,7 @@ public class ProblemSolving : MonoBehaviour
             score += bonusOnTimeScore;
         }
 
-        ScoreTracker.AddScore(score);
+        ScoreManager.AddScore(score);
 
         onFix?.Invoke();
     }

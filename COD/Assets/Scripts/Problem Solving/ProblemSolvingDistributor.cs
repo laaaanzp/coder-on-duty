@@ -29,8 +29,9 @@ public class ProblemSolvingDistributor : MonoBehaviour
             string[] problemSplitted = problemTextAsset.text.Split("##############################");
             string[] answers = Tools.ShuffleArray(problemSplitted[0].Split('\n'));
             string problem = problemSplitted[1].Trim();
+            string output = problemSplitted[2].Trim();
 
-            problemSolving.Initialize(problem, answers);
+            problemSolving.Initialize(problem, answers, output);
 
             problemSolvings.Add(problemSolving);
         }

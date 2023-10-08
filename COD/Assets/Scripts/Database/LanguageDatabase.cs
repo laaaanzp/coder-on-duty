@@ -1,10 +1,8 @@
 using Firebase.Database;
 using Firebase.Extensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Tymski;
 using UnityEngine;
 
@@ -42,7 +40,7 @@ public class LanguageDatabase : MonoBehaviour
     [SerializeField] public string languageName;
     [SerializeField] public SceneReference[] scenes;
 
-    [HideInInspector] public int currentLevel
+    public int currentLevel
     {
         get
         {
@@ -54,7 +52,7 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.Save();
         }
     }
-    [HideInInspector] public int currentTime
+    public int currentTime
     {
         get
         {
@@ -66,7 +64,7 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.Save();
         }
     }
-    [HideInInspector] public int currentScore
+    public int currentScore
     {
         get
         {
@@ -77,6 +75,22 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.SetInt($"{languageName}-score", value);
             SecurePlayerPrefs.Save();
         }
+    }
+    public float currentTotalAccuracy
+    {
+        get
+        {
+            return SecurePlayerPrefs.GetFloat($"{languageName}-accuracy", 100);
+        }
+        set
+        {
+            SecurePlayerPrefs.SetFloat($"{languageName}-accuracy", value);
+            SecurePlayerPrefs.Save();
+        }
+    }
+    public float overAllAccuracy
+    {
+        get => currentTotalAccuracy / scenes.Length;
     }
 
     // Instances
@@ -125,18 +139,9 @@ public class LanguageDatabase : MonoBehaviour
         }
     }
 
-    public void LoadUserData()
-    {
-        FetchUserData(userData =>
-        {
-            currentLevel = userData.level;
-            currentTime = userData.time;
-            currentScore = userData.score;
-        });
-    }
-
     public void OnLogin()
     {
+        Debug.Log("H");
         ResetProgress();
     }
 
@@ -205,6 +210,7 @@ public class LanguageDatabase : MonoBehaviour
         currentLevel = 1;
         currentTime = 0;
         currentScore = 0;
+        currentTotalAccuracy = 0f;
     }
 
     public void AddAttempt()

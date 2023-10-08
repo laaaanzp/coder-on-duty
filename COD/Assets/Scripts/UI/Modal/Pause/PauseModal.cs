@@ -11,7 +11,7 @@ public class PauseModal : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex == 0) // if the current scene is main menu
         {
-            return;
+            // return;
         }
 
         if (gameObject.activeInHierarchy)

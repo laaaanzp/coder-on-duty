@@ -47,7 +47,7 @@ public class TicketManager : MonoBehaviour
             ObjectNavigation.StopNavigate();
         }
 
-        ScoreTracker.AddScore(ticket.score);
+        ScoreManager.AddScore(ticket.score);
         CheckTasks();
     }
 
@@ -66,8 +66,10 @@ public class TicketManager : MonoBehaviour
 
         isLevelCompleted = true;
 
-        DatabaseManager.instance.currentLanguage.currentTime = LevelTimer.GetTimeInSeconds();
-        DatabaseManager.instance.currentLanguage.currentScore = ScoreTracker.score;
+        DatabaseManager.instance.currentLanguage.currentTime += LevelTimer.GetTimeInSeconds();
+        DatabaseManager.instance.currentLanguage.currentScore += ScoreManager.score;
+        DatabaseManager.instance.currentLanguage.currentTotalAccuracy += ScoreManager.accuracy;
+
         instance.LevelComplete();
     }
 
