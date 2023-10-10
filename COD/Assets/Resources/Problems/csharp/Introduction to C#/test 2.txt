@@ -1,0 +1,26 @@
+LogLine
+Log
+Print
+Console
+Console
+Console
+Debug
+Write
+WriteLine
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string url = "https://www.google.com/";
+
+        (NODE_SLOT:Console).(NODE_SLOT:WriteLine)("The url is " + url);
+
+        (NODE_SLOT:Console).(NODE_SLOT:Write)("Press enter to continue...");
+        (NODE_SLOT:Console).ReadKey();
+    }
+}
+##############################
+The url is https://www.google.com/

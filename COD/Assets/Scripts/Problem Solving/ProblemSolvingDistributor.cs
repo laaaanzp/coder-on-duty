@@ -15,28 +15,40 @@ public class ProblemSolvingDistributor : MonoBehaviour
         string languageName = DatabaseManager.instance.currentLanguage.languageName;
         string sceneName = SceneManager.GetActiveScene().name;
         problemTextAssets = Resources.LoadAll<TextAsset>($"Problems/{languageName}/{sceneName}");
+        problemTextAssets = Tools.ShuffleArray(problemTextAssets);
 
         GameObject[] computerObjects = GameObject.FindGameObjectsWithTag("Computer");
         GameObject[] shuffledComputerObjects = Tools.ShuffleArray(computerObjects);
 
         List<ProblemSolving> problemSolvings = new List<ProblemSolving>();
 
+
+        int i = 0;
         foreach (TextAsset problemTextAsset in problemTextAssets)
         {
+            if (i == 5)
+                break;
+
             GameObject problemSolvingModal = Instantiate(problemSolvingModalPrefab, transform);
             ProblemSolving problemSolving = problemSolvingModal.GetComponent<ProblemSolving>();
 
             string[] problemSplitted = problemTextAsset.text.Split("##############################");
             string[] answers = Tools.ShuffleArray(problemSplitted[0].Split('\n'));
             string problem = problemSplitted[1].Trim();
-            string output = problemSplitted[2].Trim();
+            string output = "";
+            try
+            {
+                output = problemSplitted[2].Trim();
+            }
+            catch { }
 
             problemSolving.Initialize(problem, answers, output);
 
             problemSolvings.Add(problemSolving);
+            i++;
         }
 
-        for (int i = 0; i < problemSolvings.Count; i++)
+        for (i = 0; i < problemSolvings.Count; i++)
         {
             ElectronicDevice electronicDevice = shuffledComputerObjects[i].GetComponent<ElectronicDevice>();
             electronicDevice.problemModal = problemSolvings[i];

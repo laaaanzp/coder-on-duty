@@ -10,6 +10,7 @@ public class CodeCompiler : MonoBehaviour
 {
     public TMP_InputField codeInputField;
     public ModalControl consoleModalControl;
+    public TypeChooser typeChooser;
 
     public TextMeshProUGUI outputTMPText;
     public int outputMaxDisplayLine = 1000;
@@ -123,5 +124,15 @@ public class CodeCompiler : MonoBehaviour
             outputTMPText.text += newOutput + "\n";
             currentLineCount++;
         });
+    }
+
+    public void Templates()
+    {
+        typeChooser.Open("C#", SetCode);
+    }
+
+    public void SetCode(string code)
+    {
+        codeInputField.text = code;
     }
 }

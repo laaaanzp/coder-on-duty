@@ -30,7 +30,12 @@ public class ProblemSolvingRowControl : MonoBehaviour
 
             if (token.EndsWith(' '))
             {
-                Instantiate(spaceNodePrefab, transform);
+                int trailingSpacesCount = token.Length - token.TrimEnd().Length;
+
+                for (int i = 0; i < trailingSpacesCount; i++)
+                {
+                    Instantiate(spaceNodePrefab, transform);
+                }
             }
         }
 

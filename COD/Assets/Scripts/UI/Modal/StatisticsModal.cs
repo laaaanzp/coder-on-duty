@@ -103,7 +103,6 @@ public class StatisticsModal : MonoBehaviour
 
     private void AnimateStars()
     {
-        Debug.Log(overallStars);
         for (int i = 0; i < overallStars; i++)
         {
             stars[i].color = Color.white;

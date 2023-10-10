@@ -15,7 +15,10 @@ public class ScoreManager : MonoBehaviour
 
     public static float accuracy
     {
-        get => (totalCorrect / totalSlots) * 100;
+        get
+        {
+            return ((float)totalCorrect / totalSlots) * 100;
+        }
     }
 
     void Awake()

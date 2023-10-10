@@ -1,6 +1,8 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+Println
+Print
+Write
+Writeln
+WriteLine
 ##############################
 using System;
 
@@ -8,13 +10,13 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        string name = "Lanz";
 
-        Console.WriteLine(myString);
+        Console.(NODE_SLOT:WriteLine)("My name is " + name);
 
-        Console.Write("Press enter to continue...");
+        Console.(NODE_SLOT:Write)("Press enter to continue...");
         Console.ReadKey();
     }
 }
 ##############################
-Hello, World
+My name is Lanz

@@ -119,7 +119,7 @@ public class ProblemSolving : MonoBehaviour
 
             return;
         }
-
+        CancelInvoke("DeductTime");
         modalControl.Close();
 
         int score = 0;
