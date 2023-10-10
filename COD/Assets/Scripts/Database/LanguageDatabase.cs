@@ -22,13 +22,13 @@ public class AttemptData
 
 public class UserData
 {
-    public int level;
+    public string name;
     public int time;
     public int score;
 
-    public UserData(int level, int time, int score)
+    public UserData(string name, int time, int score)
     {
-        this.level = level;
+        this.name = name;
         this.time = time;
         this.score = score;
     }
@@ -40,10 +40,24 @@ public class LanguageDatabase : MonoBehaviour
     [SerializeField] public string languageName;
     [SerializeField] public SceneReference[] scenes;
 
+    public string currentName
+    {
+        get
+        {
+            return SecurePlayerPrefs.GetString($"{languageName}-name", "");
+        }
+        set
+        {
+            SecurePlayerPrefs.SetString($"{languageName}-name", value);
+            SecurePlayerPrefs.Save();
+        }
+    }
+
     public int currentLevel
     {
         get
         {
+            currentLevel = 1;
             return SecurePlayerPrefs.GetInt($"{languageName}-level", 1);
         }
         set
@@ -88,9 +102,28 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.Save();
         }
     }
-    public float overAllAccuracy
+
+    public int currentTotalStars
+    {
+        get
+        {
+            return SecurePlayerPrefs.GetInt($"{languageName}-stars", 0);
+        }
+        set
+        {
+            SecurePlayerPrefs.SetInt($"{languageName}-stars", value);
+            SecurePlayerPrefs.Save();
+        }
+    }
+
+    public float overallAccuracy
     {
         get => currentTotalAccuracy / scenes.Length;
+    }
+
+    public float overallStars
+    {
+        get => currentTotalStars / scenes.Length;
     }
 
     // Instances
@@ -138,53 +171,26 @@ public class LanguageDatabase : MonoBehaviour
             { return 0f; }
         }
     }
-
-    public void OnLogin()
-    {
-        Debug.Log("H");
-        ResetProgress();
-    }
-
-    public void OnSignout()
-    {
-    }
-
-    public void FetchUserData(Action<UserData> onCallback)
-    {
-        DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .GetValueAsync()
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot userDataSnapshot = task.Result;
-
-                    if (userDataSnapshot.Exists)
-                    {
-                        int currentLevel = Convert.ToInt32(userDataSnapshot.Child("current-level").Value);
-                        int currentScore = Convert.ToInt32(userDataSnapshot.Child("current-score").Value);
-                        int currentTime = Convert.ToInt32(userDataSnapshot.Child("current-time").Value);
-
-                        UserData userData = new UserData(currentLevel, currentTime, currentScore);
-                        onCallback?.Invoke(userData);
-                    }
-                    else
-                    {
-                        onCallback?.Invoke(new UserData(1, 0, 0));
-                    }
-                }
-                else
-                {
-                    onCallback?.Invoke(new UserData(1, 0, 0));
-                }
-            });
-    }
-
+    
     public static void Play(string languageName)
+    {
+        LanguageDatabase languageDatabase = GetInstance(languageName);
+
+        if (languageDatabase.currentLevel == 1)
+        {
+            ProgrammersNameControl.Show(name =>
+            {
+                languageDatabase.currentName = name;
+                _Play(languageName);
+            });
+        }
+        else
+        {
+            _Play(languageName);
+        }
+    }
+
+    private static void _Play(string languageName)
     {
         LanguageDatabase languageDatabase = GetInstance(languageName);
         DatabaseManager.instance.currentLanguage = languageDatabase;
@@ -211,114 +217,52 @@ public class LanguageDatabase : MonoBehaviour
         currentTime = 0;
         currentScore = 0;
         currentTotalAccuracy = 0f;
+        currentTotalStars = 0;
+        currentName = "";
     }
 
     public void AddAttempt()
     {
-        Dictionary<string, int> attemptInformation = new Dictionary<string, int>
+        Dictionary<string, object> attemptInformation = new Dictionary<string, object>
         {
             { "time", currentTime },
-            { "score", currentScore }
+            { "score", currentScore },
+            { "name", currentName }
         };
 
         DatabaseManager.instance.dbReference
-            .Child("users")
-            .Child(AuthManager.user.UserId)
-            .Child("progression")
-            .Child(languageName)
-            .Child("attempts").Push()
+            .Child("attempts")
+            .Child(languageName).Push()
             .SetValueAsync(attemptInformation);
     }
 
-    public void FetchUserFirstAttempt(Action<AttemptData> onCallback, Action<string> onError)
+    
+    public void FetchTopUsersByScore(Action<List<UserData>> onCallback, Action<string> onError)
     {
-        DatabaseManager.instance.dbReference.Child("users").Child(AuthManager.user.UserId).GetValueAsync()
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot userDataSnapshot = task.Result;
-                    DataSnapshot attemptDataSnapshot = userDataSnapshot.Child("progression").Child(languageName).Child("attempts").Children.First();
-                    DataSnapshot scoreSnapshot = attemptDataSnapshot.Child("score");
-                    DataSnapshot timeSnapshot = attemptDataSnapshot.Child("time");
-
-                    int score = 0, time = 0;
-
-                    if (scoreSnapshot.Exists)
-                        score = Convert.ToInt32(scoreSnapshot.Value);
-
-                    if (timeSnapshot.Exists)
-                        time = Convert.ToInt32(timeSnapshot.Value);
-
-                    onCallback?.Invoke(new AttemptData(time, score));
-                }
-                else if (task.IsFaulted)
-                {
-                    onError("Can't fetch data.");
-                }
-            });
-    }
-
-    public void FetchUserLatestAttempt(Action<AttemptData> onCallback, Action<string> onError)
-    {
-        DatabaseManager.instance.dbReference.Child("users").Child(AuthManager.user.UserId).GetValueAsync()
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot userDataSnapshot = task.Result;
-                    DataSnapshot attemptDataSnapshot = userDataSnapshot.Child("progression").Child(languageName).Child("attempts").Children.Last();
-                    DataSnapshot scoreSnapshot = attemptDataSnapshot.Child("score");
-                    DataSnapshot timeSnapshot = attemptDataSnapshot.Child("time");
-
-                    int score = 0, time = 0;
-
-                    if (scoreSnapshot.Exists)
-                        score = Convert.ToInt32(scoreSnapshot.Value);
-
-                    if (timeSnapshot.Exists)
-                        time = Convert.ToInt32(timeSnapshot.Value);
-
-                    onCallback?.Invoke(new AttemptData(time, score));
-                }
-                else if (task.IsFaulted)
-                {
-                    onError("Can't fetch data.");
-                }
-            });
-    }
-
-    public void FetchTopUsersByScore(Action<Dictionary<string, int>> onCallback, Action<string> onError)
-    {
-        DatabaseManager.instance.dbReference.Child("users").GetValueAsync()
+        DatabaseManager.instance.dbReference.Child("attempts").Child(languageName).GetValueAsync()
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
                 {
                     DataSnapshot usersDataSnapshot = task.Result;
 
-                    Dictionary<string, int> datas = new Dictionary<string, int>();
+                    List<UserData> userDatas = new List<UserData>();
 
                     foreach (DataSnapshot userDataSnapshot in usersDataSnapshot.Children)
                     {
-                        string username = userDataSnapshot.Child("username").Value.ToString();
-                        DataSnapshot attemptDataSnapshot = userDataSnapshot.Child("progression").Child(languageName).Child("attempts").Children.Last();
-                        DataSnapshot scoreSnapshot = attemptDataSnapshot.Child("score");
+                        DataSnapshot timeSnapshot = userDataSnapshot.Child("time");
+                        DataSnapshot scoreSnapshot = userDataSnapshot.Child("score");
 
-                        int score = 0;
+                        string name = userDataSnapshot.Child("name").Value.ToString();
+                        int time = Convert.ToInt32(timeSnapshot.Value);
+                        int score = Convert.ToInt32(scoreSnapshot.Value);
 
-                        if (scoreSnapshot.Exists)
-                            score = Convert.ToInt32(attemptDataSnapshot.Child("score").Value);
-
-                        datas.Add(username, score);
+                        userDatas.Add(new UserData(name, time, score));
                     }
 
-                    // Sort data
-                    List<KeyValuePair<string, int>> sortedList = datas.ToList();
-                    sortedList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
-                    datas = sortedList.ToDictionary(pair => pair.Key, pair => pair.Value);
+                    userDatas.Sort((a, b) => b.score.CompareTo(a.score));
 
-                    onCallback?.Invoke(datas);
+                    onCallback?.Invoke(userDatas);
                 }
                 else if (task.IsFaulted)
                 {
@@ -327,37 +271,32 @@ public class LanguageDatabase : MonoBehaviour
             });
     }
 
-    public void FetchTopUsersByTime(Action<Dictionary<string, int>> onCallback, Action<string> onError)
+    public void FetchTopUsersByTime(Action<List<UserData>> onCallback, Action<string> onError)
     {
-        DatabaseManager.instance.dbReference.Child("users").GetValueAsync()
+        DatabaseManager.instance.dbReference.Child("attempts").Child(languageName).GetValueAsync()
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
                 {
                     DataSnapshot usersDataSnapshot = task.Result;
 
-                    Dictionary<string, int> datas = new Dictionary<string, int>();
+                    List<UserData> userDatas = new List<UserData>();
 
                     foreach (DataSnapshot userDataSnapshot in usersDataSnapshot.Children)
                     {
-                        string username = userDataSnapshot.Child("username").Value.ToString();
-                        DataSnapshot attemptDataSnapshot = userDataSnapshot.Child("progression").Child(languageName).Child("attempts").Children.Last();
-                        DataSnapshot timeSnapshot = attemptDataSnapshot.Child("score");
+                        DataSnapshot timeSnapshot = userDataSnapshot.Child("time");
+                        DataSnapshot scoreSnapshot = userDataSnapshot.Child("score");
 
-                        int time = 0;
+                        string name = userDataSnapshot.Child("name").Value.ToString();
+                        int time = Convert.ToInt32(timeSnapshot.Value);
+                        int score = Convert.ToInt32(scoreSnapshot.Value);
 
-                        if (timeSnapshot.Exists)
-                            time = Convert.ToInt32(attemptDataSnapshot.Child("time").Value);
-
-                        datas.Add(username, time);
+                        userDatas.Add(new UserData(name, time, score));
                     }
 
-                    // Sort data
-                    List<KeyValuePair<string, int>> sortedList = datas.ToList();
-                    sortedList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
-                    datas = sortedList.ToDictionary(pair => pair.Key, pair => pair.Value);
+                    userDatas.Sort((a, b) => a.time.CompareTo(b.time));
 
-                    onCallback?.Invoke(datas);
+                    onCallback?.Invoke(userDatas);
                 }
                 else if (task.IsFaulted)
                 {

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class LevelCompleteModal : MonoBehaviour
 {
     [SerializeField] private ModalControl levelCompleteModal;
+    [SerializeField] private StatisticsModal statisticsModalControl;
 
     [SerializeField] private GameObject titleObject;
 
@@ -19,9 +20,17 @@ public class LevelCompleteModal : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private CanvasGroup[] buttonsCanvasGroup;
 
+    private int totalTime, totalScore;
+    private float totalAccuracy, totalStars;
+    private bool isLastLevel;
 
-    public void Open()
+    public void Open(int time, int score, float accuracy, float stars, bool isLastLevel)
     {
+        this.totalTime = time;
+        this.totalScore = score;
+        this.totalAccuracy = accuracy;
+        this.totalStars = stars;
+        this.isLastLevel = isLastLevel;
         levelCompleteModal.Open();
 
         AnimateTitle();
@@ -116,10 +125,28 @@ public class LevelCompleteModal : MonoBehaviour
         }
     }
 
-    public void NextLevel()
+    public void Proceed()
+    {
+        if (isLastLevel)
+        {
+            ShowFinalData();
+        }
+        else
+        {
+            NextLevel();
+        }
+    }
+
+    private void NextLevel()
     {
         string languageName = DatabaseManager.instance.currentLanguage.languageName;
         LanguageDatabase.Play(languageName);
+    }
+
+    private void ShowFinalData()
+    {
+        levelCompleteModal.Close();
+        statisticsModalControl.Open(totalTime, totalScore, totalAccuracy, totalStars);
     }
 
     public void MainMenu()

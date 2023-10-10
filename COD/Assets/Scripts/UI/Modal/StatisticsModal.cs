@@ -1,77 +1,144 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatisticsModal : MonoBehaviour
 {
-    [SerializeField] private ModalControl statisticsModalControl;
-    [SerializeField] private TextMeshProUGUI userScoreText;
-    [SerializeField] private TextMeshProUGUI userTimeText;
+    [SerializeField] private ModalControl statisticsModal;
 
-    [SerializeField] private TextMeshProUGUI averageScoreText;
-    [SerializeField] private TextMeshProUGUI averageTimeText;
+    [SerializeField] private GameObject titleObject;
 
-    [SerializeField] private GameObject findingsContainer;
-    [SerializeField] private TextMeshProUGUI scoreFindingsText;
-    [SerializeField] private TextMeshProUGUI timeFindingsText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private TextMeshProUGUI accuracyText;
+    [SerializeField] private TextMeshProUGUI ratingsText;
+
+    [Header("Stars")]
+    [SerializeField] private CanvasGroup artCanvasGroup;
+    [SerializeField] private CanvasGroup starsCanvasGroup;
+    [SerializeField] private Image[] stars;
+
+    [Header("Buttons")]
+    [SerializeField] private CanvasGroup[] buttonsCanvasGroup;
+
+    private int totalTime, totalScore;
+    private float overallAccuracy, overallStars;
 
 
-    public void Open(int time, int score)
+    public void Open(int time, int score, float accuracy, float stars)
     {
-        statisticsModalControl.Open();
-        userScoreText.text = $"<b>Score</b>: {score}";
+        totalTime = time;
+        totalScore = score;
+        overallAccuracy = accuracy;
+        overallStars = stars;
 
-        int minutes = time / 60;
-        int seconds = time % 60;
+        statisticsModal.Open();
 
-        userTimeText.text = string.Format("<b>Time</b>: {0:00}m {1:00}s", minutes, seconds);
+        AnimateTitle();
+    }
 
-        DatabaseManager.instance.currentLanguage.FetchLatestAverageAttempt(averageData =>
+    private void AnimateTitle()
+    {
+        titleObject.LeanScale(new Vector3(1, 1, 1), 0.3f)
+            .setDelay(0.3f)
+            .setOnComplete(AnimateArt);
+    }
+
+    private void AnimateArt()
+    {
+        artCanvasGroup
+            .LeanAlpha(1f, 0.5f)
+            .setDelay(0.75f)
+            .setOnComplete(AnimateScore);
+    }
+
+    private void AnimateScore()
+    {
+        scoreText.GetComponent<CanvasGroup>()
+            .LeanAlpha(1f, 0.5f)
+            .setDelay(0.3f)
+            .setOnComplete(() =>
+            {
+                LeanTween.value(0, totalScore, 1f).setDelay(0.3f).setOnUpdate(score =>
+                {
+                    scoreText.text = $"<b>Total Score:</b> {(int)score}";
+                }).setOnComplete(AnimateTime);
+            });
+    }
+
+    private void AnimateTime()
+    {
+        timeText.GetComponent<CanvasGroup>()
+            .LeanAlpha(1f, 0.5f)
+            .setDelay(0.3f)
+            .setOnComplete(() =>
+            {
+                LeanTween.value(0, totalTime, 1f).setDelay(0.3f).setOnUpdate(fSeconds =>
+                {
+                    int seconds = (int)fSeconds;
+                    int minutes = seconds / 60;
+                    seconds = seconds % 60;
+
+                    string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+                    timeText.text = $"<b>Total Time:</b> {timeString}";
+                })
+                .setOnComplete(AnimateAccuracy);
+            });
+    }
+
+    private void AnimateAccuracy()
+    {
+        accuracyText.GetComponent<CanvasGroup>()
+            .LeanAlpha(1f, 0.5f)
+            .setDelay(0.3f)
+            .setOnComplete(() =>
+            {
+                LeanTween.value(0, overallAccuracy, 1f).setDelay(0.3f).setOnUpdate((float accuracy) =>
+                {
+                    accuracyText.text = $"<b>Overall Accuracy:</b> {accuracy:F2}%";
+                }).setOnComplete(AnimateStars);
+            });
+    }
+
+    private void AnimateStars()
+    {
+        Debug.Log(overallStars);
+        for (int i = 0; i < overallStars; i++)
         {
-            averageScoreText.text = $"<b>Score</b>: {averageData.score}";
+            stars[i].color = Color.white;
+        }
 
-            int minutes = averageData.time / 60;
-            int seconds = averageData.time % 60;
-
-            averageTimeText.text = string.Format("<b>Time</b>: {0:00}m {1:00}s", minutes, seconds);
-
-            int scoreDifference = score - averageData.score;
-            float scorePercentageDifference = (float)scoreDifference / (float)averageData.score * 100;
-
-            if (scorePercentageDifference > 0)
-            {
-                scoreFindingsText.text = $"Your score is {scorePercentageDifference:F2}% higher than the average player.";
-            }
-            else if (scorePercentageDifference < 0)
-            {
-                scoreFindingsText.text = $"Your score is {Mathf.Abs(scorePercentageDifference):F2}% lower than the average player.";
-            }
-            else
-            {
-                scoreFindingsText.text = "Your score matches the average player.";
-            }
-
-            int timeDifference = time - averageData.time;
-            float timePercentageDifference = ((float)(time - averageData.time) / averageData.time) * 100; ;
-
-            if (timePercentageDifference < 0)
-            {
-                timeFindingsText.text = $"You completed the game {Mathf.Abs(timePercentageDifference):F2}% faster than the average player.";
-            }
-            else if (timePercentageDifference > 0)
-            {
-                timeFindingsText.text = $"You took {timePercentageDifference:F2}% more time than the average player.";
-            }
-            else
-            {
-                timeFindingsText.text = "Your completion time matches the average player.";
-            }
-
-            findingsContainer.SetActive(true);
-        }, (errorMessage) =>
+        switch (overallStars)
         {
-            averageScoreText.text = "<b>Score</b>: No Internet)";
-            averageTimeText.text = "<b>Time</b>: No Internet)";
-        });
+            case 2:
+                ratingsText.text = "<b>Skill Level:</b> Advanced";
+                break;
+            case 3:
+                ratingsText.text = "<b>Skill Level:</b> Expert";
+                break;
+        }
+
+        starsCanvasGroup
+            .LeanAlpha(1f, 0.5f)
+            .setDelay(0.3f)
+            .setOnComplete(AnimateRatings);
+    }
+
+    private void AnimateRatings()
+    {
+        ratingsText.GetComponent<CanvasGroup>()
+            .LeanAlpha(1f, 0.5f)
+            .setDelay(0.3f)
+            .setOnComplete(AnimateButtons);
+    }
+
+    private void AnimateButtons()
+    {
+        foreach (CanvasGroup buttonCanvasGroup in buttonsCanvasGroup)
+        {
+            buttonCanvasGroup.LeanAlpha(1f, 0.5f).setDelay(0.5f);
+        }
     }
 
     public void MainMenu()

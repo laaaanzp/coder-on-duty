@@ -59,29 +59,31 @@ public class Leaderboard : MonoBehaviour
         }
     }
 
-    private void LoadData(Dictionary<string, int> datas)
+    private void LoadData(List<UserData> userDatas)
     {
         int iterationCount = 0;
         string filterBy = filterByDropdown.options[filterByDropdown.value].text;
 
-        foreach (KeyValuePair<string, int> data in datas)
+        foreach (UserData userData in userDatas)
         {
             if (iterationCount >= leaderboardEntries.Count)
             {
                 break;
             }
 
-            string name = data.Key;
-            int value = data.Value;
+            string name = userData.name;
+            int value;
 
             string valueAsString;
 
             if (filterBy == "Time")
             {
+                value = userData.time;
                 valueAsString = SecondsToTimeString(value);
             }
             else
             {
+                value = userData.score;
                 valueAsString = value.ToString();
             }
 

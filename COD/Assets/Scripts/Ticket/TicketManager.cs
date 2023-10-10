@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Threading;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class TicketManager : MonoBehaviour
 {
@@ -10,7 +9,6 @@ public class TicketManager : MonoBehaviour
 
     [SerializeField] private GameObject taskPrefab;
     [SerializeField] private LevelCompleteModal levelCompleteModalControl;
-    [SerializeField] private StatisticsModal statisticsModalControl;
     [SerializeField] private TextMeshProUGUI ticketCounterText;
 
     private static List<Ticket> tickets;
@@ -53,7 +51,7 @@ public class TicketManager : MonoBehaviour
 
     private void UpdateRemainingActiveTicketsDisplay()
     {
-        ticketCounterText.text = $"Remaining Active Tickets: {tickets.Count}";
+        ticketCounterText.text = $"Remaining Tasks: {tickets.Count}";
     }
 
     private static void CheckTasks()
@@ -66,26 +64,35 @@ public class TicketManager : MonoBehaviour
 
         isLevelCompleted = true;
 
+        int stars = 1;
+        if (LevelTimer.onTime)
+        {
+            stars++;
+        }
+
+        if (ScoreManager.accuracy == 100f)
+        {
+            stars++;
+        }
+
         DatabaseManager.instance.currentLanguage.currentTime += LevelTimer.GetTimeInSeconds();
         DatabaseManager.instance.currentLanguage.currentScore += ScoreManager.score;
         DatabaseManager.instance.currentLanguage.currentTotalAccuracy += ScoreManager.accuracy;
+        DatabaseManager.instance.currentLanguage.currentTotalStars += stars;
 
         instance.LevelComplete();
     }
 
     private void LevelComplete()
     {
-        if (DatabaseManager.instance.currentLanguage.isPlayingTheLastLevel)
-        {
-            int time = DatabaseManager.instance.currentLanguage.currentTime;
-            int score = DatabaseManager.instance.currentLanguage.currentScore;
+        LanguageDatabase languageDatabase = DatabaseManager.instance.currentLanguage;
 
-            statisticsModalControl.Open(time, score);
-        }
-        else
-        {
-            levelCompleteModalControl.Open();
-        }
+        int time = languageDatabase.currentTime;
+        int score = languageDatabase.currentScore;
+        float accuracy = languageDatabase.overallAccuracy;
+        float stars = languageDatabase.overallStars;
+
+        levelCompleteModalControl.Open(time, score, accuracy, stars, languageDatabase.isPlayingTheLastLevel);
 
         DatabaseManager.instance.currentLanguage.LevelUp();
     }
