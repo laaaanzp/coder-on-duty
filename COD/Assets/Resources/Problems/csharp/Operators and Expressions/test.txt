@@ -1,8 +1,8 @@
-Write
-WriteLine
-ReadLine
-Log
-ReadString
++
+-
+*
+/
+%
 ##############################
 using System;
 
@@ -10,19 +10,25 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.(NODE_SLOT:Write)("Enter password: ");
-        string password = Console.(NODE_SLOT:ReadLine)();
+        int num1 = 10;
+        int num2 = 5;
 
-        if (password == "admin")
-        {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
-        }
+        int result1 = num1 (NODE_SLOT:+) num2;
+        int result2 = num1 (NODE_SLOT:-) num2;
+        int result3 = num1 (NODE_SLOT:*) num2;
+        int result4 = num1 (NODE_SLOT:/) num2;
+        int result5 = num1 (NODE_SLOT:%) num2;
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        Console.WriteLine("Result 1: " + result1);
+        Console.WriteLine("Result 2: " + result2);
+        Console.WriteLine("Result 3: " + result3);
+        Console.WriteLine("Result 4: " + result4);
+        Console.WriteLine("Result 5: " + result5); 
     }
 }
 ##############################
-Enter password: <i><u>admin</u></i>
-Welcome, Admin!
-Press enter to continue...
+Result 1: 15
+Result 2: 5
+Result 3: 50
+Result 4: 2
+Result 5: 0

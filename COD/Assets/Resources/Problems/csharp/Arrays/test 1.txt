@@ -1,6 +1,11 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+0
+0
+1
+1
+2
+2
+3
+4
 ##############################
 using System;
 
@@ -8,13 +13,30 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        // Declare and initialize a 2D array with 3 rows and 4 columns.
+        int[,] myArray = new int[(NODE_SLOT:3), (NODE_SLOT:4)];
 
-        Console.WriteLine(myString);
+        // Initialize the 2D array with sample values.
+        myArray = new int[,]
+        {
+            { 1, 2, 3, 4 },
+            { 5, 6, 7, 8 },
+            { 9, 10, 11, 12 }
+        };
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        // Access and print the element at row 2 and column 3.
+        Console.WriteLine("Element at row 2, column 3: " + myArray[(NODE_SLOT:1), (NODE_SLOT:2)]);
+
+        // Determine and print the number of rows in the 2D array.
+        int numRows = myArray.GetLength((NODE_SLOT:0));
+        Console.WriteLine("Number of rows: " + numRows);
+
+        // Determine and print the number of columns in the 2D array.
+        int numCols = myArray.GetLength((NODE_SLOT:1));
+        Console.WriteLine("Number of columns: " + numCols);
     }
 }
 ##############################
-Hello, World
+Element at row 2, column 3: 7
+Number of rows: 3
+Number of columns: 4

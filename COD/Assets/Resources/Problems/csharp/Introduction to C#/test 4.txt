@@ -1,0 +1,22 @@
+Println
+Print
+Log
+main
+Main
+string
+text
+Logln
+Writeln
+WriteLine
+##############################
+using System;
+
+public class Program
+{
+    public static void (NODE_SLOT:Main)((NODE_SLOT:string)[] args)
+    {
+        Console.(NODE_SLOT:WriteLine)("Hello, World!");
+    }
+}
+##############################
+Hello, World!

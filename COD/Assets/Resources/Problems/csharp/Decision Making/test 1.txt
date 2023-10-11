@@ -1,6 +1,11 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+18
+19
+20
+21
+if
+else if
+elif
+else
 ##############################
 using System;
 
@@ -8,13 +13,21 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        int number = (NODE_SLOT:20);
 
-        Console.WriteLine(myString);
-
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        (NODE_SLOT:if) (number > 20)
+        {
+            Console.WriteLine("Number is better than 20.");
+        }
+        (NODE_SLOT:else if) (number > 10)
+        {
+            Console.WriteLine("Number is better than 10.");
+        }
+        (NODE_SLOT:else) 
+        {
+            Console.WriteLine("Number is too low");
+        }
     }
 }
 ##############################
-Hello, World
+Number is better than 10.

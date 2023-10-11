@@ -2,7 +2,8 @@ int
 float
 double
 string
-decimal
+number
+text
 ##############################
 using System;
 
@@ -12,6 +13,8 @@ public class Program
     {
         (NODE_SLOT:int) a = 50;
         (NODE_SLOT:float) b = 39.3f;
+        (NODE_SLOT:double) c = 1003.3d;
+        (NODE_SLOT:string) d = "my string";
     }
 }
 ##############################

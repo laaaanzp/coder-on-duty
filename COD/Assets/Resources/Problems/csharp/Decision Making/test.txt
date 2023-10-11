@@ -1,8 +1,18 @@
-Write
-WriteLine
-ReadLine
-Log
-ReadString
+case
+case
+case
+switch
+switch
+switch
+default
+default
+default
+break
+break
+break
+'A'
+'L'
+'C'
 ##############################
 using System;
 
@@ -10,19 +20,23 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.(NODE_SLOT:Write)("Enter password: ");
-        string password = Console.(NODE_SLOT:ReadLine)();
+        char letter = (NODE_SLOT:'A');
 
-        if (password == "admin")
+        (NODE_SLOT:switch) (letter)
         {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
-        }
+            (NODE_SLOT:case) 'L':
+                Console.WriteLine("Lanz");
+                (NODE_SLOT:break);
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+            (NODE_SLOT:case) 'C':
+                Console.WriteLine("Cristine");
+                (NODE_SLOT:break);
+
+            (NODE_SLOT:default):
+                Console.WriteLine("Unknown Name.");
+                (NODE_SLOT:break);
+        }
     }
 }
 ##############################
-Enter password: <i><u>admin</u></i>
-Welcome, Admin!
-Press enter to continue...
+Unknown Name.

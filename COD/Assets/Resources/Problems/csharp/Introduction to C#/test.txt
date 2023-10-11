@@ -17,12 +17,8 @@ public class Program
         {
             Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
         }
-
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
     }
 }
 ##############################
 Enter password: <i><u>admin</u></i>
 Welcome, Admin!
-Press enter to continue...

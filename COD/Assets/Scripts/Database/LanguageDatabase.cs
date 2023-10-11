@@ -1,6 +1,3 @@
-using Firebase.Database;
-using Firebase.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using Tymski;
@@ -422,6 +419,7 @@ public class LanguageDatabase : MonoBehaviour
                     }
                     else
                     {
+                        AddLevel(levelName);
                         userData.name = "";
                         userData.score = 0;
                         userData.time = 0;
@@ -438,6 +436,29 @@ public class LanguageDatabase : MonoBehaviour
         }
 
         return userData;
+    }
+
+    public void AddLevel(string levelName)
+    {
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = $"INSERT INTO Levels VALUES (@name, @score, @time, @accuracy, @stars);";
+
+                command.Parameters.AddWithValue("@name", levelName);
+                command.Parameters.AddWithValue("@score", 0);
+                command.Parameters.AddWithValue("@time", 0);
+                command.Parameters.AddWithValue("@accuracy", 0);
+                command.Parameters.AddWithValue("@stars", 0);
+
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
     }
 
     public void SetLevelDataByName(string levelName, int score, int time, float accuracy, float stars)

@@ -26,7 +26,7 @@ public class ProblemSolvingDistributor : MonoBehaviour
         int i = 0;
         foreach (TextAsset problemTextAsset in problemTextAssets)
         {
-            if (i == 5)
+            if (i == 3)
                 break;
 
             GameObject problemSolvingModal = Instantiate(problemSolvingModalPrefab, transform);

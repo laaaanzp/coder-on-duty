@@ -1,6 +1,9 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+'c'
+"c"
+c
+21
+31.2
+"21"
 ##############################
 using System;
 
@@ -8,13 +11,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
-
-        Console.WriteLine(myString);
-
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        char a = (NODE_SLOT:'c');
+        int b = (NODE_SLOT:21);
+        float c = (NODE_SLOT:31.2);
     }
 }
 ##############################
-Hello, World

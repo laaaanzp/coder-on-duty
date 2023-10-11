@@ -12,6 +12,7 @@ public class InputFieldSyntaxHighlighter : MonoBehaviour
     private static string keywordHexColor = "#4C9CD6";
     private static string stringHexColor = "#BA9D85";
     private static string numericHexColor = "#B5CE7B";
+    private static string commentHexColor = "#57a648";
 
     private static string[] keywords = {
         "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const",
@@ -33,6 +34,7 @@ public class InputFieldSyntaxHighlighter : MonoBehaviour
     {
         text = HighlightKeywords(text);
         text = HighlightNumerics(text);
+        text = HighlightComments(text);
         text = HighlightStrings(text);
 
         displayText.text = text;
@@ -50,6 +52,19 @@ public class InputFieldSyntaxHighlighter : MonoBehaviour
         string pattern = @"[+-]?\b\d+(\.\d+)?[dDfFbBlL]?\b";
 
         return Regex.Replace(text, pattern, $"<color={numericHexColor}>$&</color>");
+    }
+
+    private string HighlightComments(string text)
+    {
+        string pattern = "//(.*?)(\n|$)";
+
+        text = Regex.Replace(text, pattern, match =>
+        {
+            string capturedText = match.Groups[1].Value;
+            return $"<color={commentHexColor}>//{capturedText}\n</color>";
+        });
+
+        return text;
     }
 
     private string HighlightStrings(string text)

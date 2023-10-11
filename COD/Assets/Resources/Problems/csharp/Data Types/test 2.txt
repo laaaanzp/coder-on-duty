@@ -1,0 +1,25 @@
+const
+Const
+CONST
+52.5f
+93
+'Hello'
+"Hello"
+!myVar
+1myVar
+myVar
+-myVar
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        ((NODE_SLOT:const)) int MY_CONST = (NODE_SLOT:93);
+        string myText = (NODE_SLOT:"Hello");
+        string (NODE_SLOT:myVar) = "World"
+    }
+}
+##############################
+ 

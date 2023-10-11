@@ -1,6 +1,9 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+==
+!=
+>
+<
+>=
+<=
 ##############################
 using System;
 
@@ -8,13 +11,28 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        int num1 = 10;
+        int num2 = 5;
 
-        Console.WriteLine(myString);
+        bool isEqual = (num1 (NODE_SLOT:==) num2);
+        bool isNotEqual = (num1 (NODE_SLOT:!=) num2);
+        bool isGreater = (num1 (NODE_SLOT:>) num2);
+        bool isLess = (num1 (NODE_SLOT:<) num2);
+        bool isGreaterOrEqual = (num1 (NODE_SLOT:>=) num2);
+        bool isLessOrEqual = (num1 (NODE_SLOT:<=) num2);
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        Console.WriteLine("Is num1 equal to num2? " + isEqual);
+        Console.WriteLine("Is num1 not equal to num2? " + isNotEqual);
+        Console.WriteLine("Is num1 greater than num2? " + isGreater);
+        Console.WriteLine("Is num1 less than num2? " + isLess);
+        Console.WriteLine("Is num1 greater than or equal to num2? " + isGreaterOrEqual);
+        Console.WriteLine("Is num1 less than or equal to num2? " + isLessOrEqual);
     }
 }
 ##############################
-Hello, World
+Is num1 equal to num2? False
+Is num1 not equal to num2? True
+Is num1 greater than num2? True
+Is num1 less than num2? False
+Is num1 greater than or equal to num2? True
+Is num1 less than or equal to num2? False

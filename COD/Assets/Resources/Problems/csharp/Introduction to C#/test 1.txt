@@ -1,6 +1,7 @@
 Println
 Print
-Write
+Log
+Writeline
 Writeln
 WriteLine
 ##############################
@@ -13,9 +14,6 @@ public class Program
         string name = "Lanz";
 
         Console.(NODE_SLOT:WriteLine)("My name is " + name);
-
-        Console.(NODE_SLOT:Write)("Press enter to continue...");
-        Console.ReadKey();
     }
 }
 ##############################

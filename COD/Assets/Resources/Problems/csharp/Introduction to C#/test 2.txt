@@ -17,9 +17,6 @@ public class Program
         string url = "https://www.google.com/";
 
         (NODE_SLOT:Console).(NODE_SLOT:WriteLine)("The url is " + url);
-
-        (NODE_SLOT:Console).(NODE_SLOT:Write)("Press enter to continue...");
-        (NODE_SLOT:Console).ReadKey();
     }
 }
 ##############################

@@ -1,8 +1,13 @@
-Write
-WriteLine
-ReadLine
-Log
-ReadString
+10
+20
+30
+40
+50
+5
+index
+0
+1
+2
 ##############################
 using System;
 
@@ -10,19 +15,33 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.(NODE_SLOT:Write)("Enter password: ");
-        string password = Console.(NODE_SLOT:ReadLine)();
+        // Create a single-dimensional integer array with 5 elements.
+        int[] myArray = new int[(NODE_SLOT:5)];
 
-        if (password == "admin")
+        // Initialize the array with values: 10, 20, 30, 40, 50.
+        myArray = new int[] { (NODE_SLOT:10), (NODE_SLOT:20), (NODE_SLOT:30), (NODE_SLOT:40), (NODE_SLOT:50) };
+
+        // Access and print the third element of the 'myArray' array.
+        Console.WriteLine("The third element is: " + myArray[(NODE_SLOT:2)]);
+
+        // Iterate through the 'myArray' array and print each element.
+        for (int index = 0; i < myArray.Length; i++)
         {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
+            Console.WriteLine("Element " + i + ": " + myArray[(NODE_SLOT:index)]);
         }
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        // Change the value of the first element to 99.
+        myArray[(NODE_SLOT:0)] = 99;
+
+        // Print the updated first element.
+        Console.WriteLine("The first element is now: " + myArray[0]);
     }
 }
 ##############################
-Enter password: <i><u>admin</u></i>
-Welcome, Admin!
-Press enter to continue...
+The third element is: 30
+Element 0: 10
+Element 1: 20
+Element 2: 30
+Element 3: 40
+Element 4: 50
+The first element is now: 99

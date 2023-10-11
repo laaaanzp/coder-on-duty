@@ -1,6 +1,9 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+break
+continue
+do
+during
+while
+switch
 ##############################
 using System;
 
@@ -8,13 +11,24 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        int count = 1;
 
-        Console.WriteLine(myString);
+        (NODE_SLOT:do)
+        {
+            if (count % 2 == 0)
+            {
+                Console.Write(count + " ");
+                count++;
+            }
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+            if (count == 6)
+            {
+                (NODE_SLOT:break);
+            }
+
+            count++;
+        } while (count <= 10);
     }
 }
 ##############################
-Hello, World
+2 4 6

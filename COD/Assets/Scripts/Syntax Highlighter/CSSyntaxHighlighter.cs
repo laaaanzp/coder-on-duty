@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -10,6 +11,7 @@ public class CSSyntaxHighlighter : MonoBehaviour
     private static string keywordHexColor = "#4C9CD6";
     private static string stringHexColor = "#BA9D85";
     private static string numericHexColor = "#B5CE7B";
+    private static string commentHexColor = "#57a648";
 
     private static string[] keywords = {
         "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const",
@@ -18,7 +20,7 @@ public class CSSyntaxHighlighter : MonoBehaviour
         "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params",
         "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc",
         "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked",
-        "unsafe", "ushort", "using", "virtual", "void", "volatile", "while"
+        "unsafe", "ushort", "using", "virtual", "void", "volatile", "while", "get", "set"
     };
 
     void Awake()
@@ -35,6 +37,7 @@ public class CSSyntaxHighlighter : MonoBehaviour
     {
         HighlightKeywords();
         HighlightNumerics();
+        HighlightComments();
         HighlightStrings();
     }
 
@@ -52,6 +55,17 @@ public class CSSyntaxHighlighter : MonoBehaviour
         codeText.text = Regex.Replace(codeText.text, pattern, $"<color={numericHexColor}>$&</color>");
     }
 
+    private void HighlightComments()
+    {
+        string pattern = "//(.*?)(\n|$)";
+
+        codeText.text = Regex.Replace(codeText.text, pattern, match =>
+        {
+            string capturedText = match.Groups[1].Value;
+            return $"<color={commentHexColor}>//{capturedText}\n</color>";
+        });
+    }
+
     private void HighlightStrings()
     {
         string pattern = "\"([^\"]*)\""; // Match content inside double quotes
@@ -65,6 +79,7 @@ public class CSSyntaxHighlighter : MonoBehaviour
             {
                 word = word.Replace($"<color={keywordHexColor}>", "");
                 word = word.Replace($"<color={numericHexColor}>", "");
+                word = word.Replace($"<color={commentHexColor}>", "");
                 word = word.Replace($"</color>", "");
 
                 return word;

@@ -1,8 +1,11 @@
-Write
-WriteLine
-ReadLine
-Log
-ReadString
+for
+while
+when
+during
+break
+count+
+count++
+continue
 ##############################
 using System;
 
@@ -10,19 +13,24 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.(NODE_SLOT:Write)("Enter password: ");
-        string password = Console.(NODE_SLOT:ReadLine)();
+        int count = 1;
 
-        if (password == "admin")
+        (NODE_SLOT:while) (count <= 10)
         {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
-        }
+            if (count % 2 == 0)
+            {
+                Console.Write(count + " ");
+                count++;
+            }
+            
+            if (count == 6)
+            {
+                (NODE_SLOT:break);
+            }
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+            (NODE_SLOT:count++);
+        }
     }
 }
 ##############################
-Enter password: <i><u>admin</u></i>
-Welcome, Admin!
-Press enter to continue...
+2 4 6
