@@ -41,21 +41,25 @@ public class Leaderboard : MonoBehaviour
 
         LanguageDatabase languageDatabase = LanguageDatabase.GetInstance(languageName.ToLower());
 
+        List<UserData> userDatas;
+
         if (filterBy == "Time")
         {
-            languageDatabase.FetchTopUsersByTime(LoadData, null);
+            userDatas = languageDatabase.GetTopUserDataByTime();
         }
         else
         {
-            languageDatabase.FetchTopUsersByScore(LoadData, null);
+            userDatas = languageDatabase.GetTopUserDataByScore();
         }
+
+        LoadData(userDatas);
     }
 
     private void SetLoading()
     {
         foreach (LeaderboardEntry entry in leaderboardEntries)
         {
-            entry.SetValues("Loading...", "Loading...");
+            entry.SetValues("-", "-");
         }
     }
 
@@ -63,12 +67,21 @@ public class Leaderboard : MonoBehaviour
     {
         int iterationCount = 0;
         string filterBy = filterByDropdown.options[filterByDropdown.value].text;
+        List<string> names = new List<string>();
 
         foreach (UserData userData in userDatas)
         {
             if (iterationCount >= leaderboardEntries.Count)
             {
                 break;
+            }
+            if (names.Contains(userData.name))
+            {
+                continue;
+            }
+            else
+            {
+                names.Add(userData.name);
             }
 
             string name = userData.name;

@@ -1,0 +1,58 @@
+using System;
+
+abstract class Device
+{
+    public abstract string Model
+    {
+        get;
+    }
+
+    public void TurnOn()
+    {
+        Console.WriteLine($"{Model} is now turned on.");
+    }
+
+    public void TurnOff()
+    {
+        Console.WriteLine($"{Model} is now turned off.");
+    }
+}
+
+class Smartphone : Device 
+{
+    public override string Model
+    {
+        get
+        {
+            return "Smartphone";
+        }
+    }
+}
+
+class Computer : Device 
+{
+    public override string Model
+    {
+        get
+        {
+            return "Computer";
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Device smartphone = new Smartphone();
+        Device computer = new Computer();
+
+        Console.WriteLine("Turning on devices...");
+        smartphone.TurnOn();
+        computer.TurnOn();
+
+        Console.WriteLine("Turning off devices...");
+        smartphone.TurnOff();
+        computer.TurnOff();
+    }
+}

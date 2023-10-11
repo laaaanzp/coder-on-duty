@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -72,6 +73,11 @@ namespace Tymski
                 sceneAsset = GetSceneAssetFromPath();
 #endif
             }
+        }
+
+        public string SceneName
+        {
+            get => Path.GetFileName(ScenePath).Replace(".unity", "");
         }
 
         public static implicit operator string(SceneReference sceneReference)

@@ -2,36 +2,20 @@ using Firebase.Database;
 using Firebase.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data;
 using Tymski;
+using Mono.Data.Sqlite;
 using UnityEngine;
 
-
-[System.Serializable]
-public class AttemptData
-{
-    public int time;
-    public int score;
-
-    public AttemptData(int time, int score)
-    {
-        this.time = time;
-        this.score = score;
-    }
-}
 
 public class UserData
 {
     public string name;
-    public int time;
     public int score;
-
-    public UserData(string name, int time, int score)
-    {
-        this.name = name;
-        this.time = time;
-        this.score = score;
-    }
+    public int time;
+    public float accuracy;
+    public float stars;
+    public string rating;
 }
 
 
@@ -39,6 +23,8 @@ public class LanguageDatabase : MonoBehaviour
 {
     [SerializeField] public string languageName;
     [SerializeField] public SceneReference[] scenes;
+
+    private string connectionString;
 
     public string currentName
     {
@@ -52,12 +38,10 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.Save();
         }
     }
-
     public int currentLevel
     {
         get
         {
-            currentLevel = 1;
             return SecurePlayerPrefs.GetInt($"{languageName}-level", 1);
         }
         set
@@ -102,7 +86,6 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.Save();
         }
     }
-
     public int currentTotalStars
     {
         get
@@ -115,17 +98,32 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.Save();
         }
     }
-
     public float overallAccuracy
     {
         get => currentTotalAccuracy / scenes.Length;
     }
-
     public float overallStars
     {
         get => currentTotalStars / scenes.Length;
     }
-
+    public string overallRating
+    {
+        get
+        {
+            if (overallStars >= 3)
+            {
+                return "Expert";
+            }
+            else if (overallStars >= 2)
+            {
+                return "Advanced";
+            }
+            else
+            {
+                return "Beginner";
+            }
+        }
+    }
     // Instances
     public static Dictionary<string, LanguageDatabase> instances = new Dictionary<string, LanguageDatabase>();
 
@@ -133,6 +131,39 @@ public class LanguageDatabase : MonoBehaviour
     void Awake()
     {
         instances.TryAdd(languageName, this);
+        connectionString = $"URI=file:{Application.dataPath}/{languageName}.db";
+    }
+
+    void Start()
+    {
+        CreateDB();
+    }
+
+    private void CreateDB()
+    {
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "CREATE TABLE IF NOT EXISTS Attempts (name VARCHAR(16), score INT, time INT, accuracy FLOAT, stars FLOAT, rating VARCHAR(20));";
+                command.ExecuteNonQuery();
+
+                command.CommandText = "CREATE TABLE IF NOT EXISTS Levels (name VARCHAR(50), score INT, time INT, accuracy FLOAT, stars FLOAT);";
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+    }
+
+    private void ResetLevels()
+    {
+        foreach (SceneReference scene in scenes)
+        {
+            SetLevelDataByName(scene.SceneName, 0, 0, 0, 0);
+        }
     }
 
     public static LanguageDatabase GetInstance(string languageName)
@@ -219,179 +250,216 @@ public class LanguageDatabase : MonoBehaviour
         currentTotalAccuracy = 0f;
         currentTotalStars = 0;
         currentName = "";
+
+        ResetLevels();
     }
 
     public void AddAttempt()
     {
-        Dictionary<string, object> attemptInformation = new Dictionary<string, object>
+        using (var connection = new SqliteConnection(connectionString))
         {
-            { "time", currentTime },
-            { "score", currentScore },
-            { "name", currentName }
-        };
+            connection.Open();
 
-        DatabaseManager.instance.dbReference
-            .Child("attempts")
-            .Child(languageName).Push()
-            .SetValueAsync(attemptInformation);
+            using (var command = connection.CreateCommand())
+            {
+                Debug.Log("Adding attempt...");
+                command.CommandText = $"INSERT INTO Attempts VALUES (@name, @score, @time, @accuracy, @stars, @rating);";
+
+                command.Parameters.AddWithValue("@name", currentName);
+                command.Parameters.AddWithValue("@score", currentScore);
+                command.Parameters.AddWithValue("@time", currentTime);
+                command.Parameters.AddWithValue("@accuracy", overallAccuracy);
+                command.Parameters.AddWithValue("@stars", overallStars);
+                command.Parameters.AddWithValue("@rating", overallRating);
+
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
     }
 
-    
-    public void FetchTopUsersByScore(Action<List<UserData>> onCallback, Action<string> onError)
+    public List<UserData> GetTopUserDataByScore()
     {
-        DatabaseManager.instance.dbReference.Child("attempts").Child(languageName).GetValueAsync()
-            .ContinueWithOnMainThread(task =>
+        List<UserData> userDatas = new List<UserData>();
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
             {
-                if (task.IsCompleted)
+                command.CommandText = $"SELECT * FROM Attempts";
+
+                using (var reader = command.ExecuteReader())
                 {
-                    DataSnapshot usersDataSnapshot = task.Result;
-
-                    List<UserData> userDatas = new List<UserData>();
-
-                    foreach (DataSnapshot userDataSnapshot in usersDataSnapshot.Children)
+                    while (reader.Read())
                     {
-                        DataSnapshot timeSnapshot = userDataSnapshot.Child("time");
-                        DataSnapshot scoreSnapshot = userDataSnapshot.Child("score");
+                        UserData userData = new UserData();
 
-                        string name = userDataSnapshot.Child("name").Value.ToString();
-                        int time = Convert.ToInt32(timeSnapshot.Value);
-                        int score = Convert.ToInt32(scoreSnapshot.Value);
+                        userData.name = reader.GetString("name");
+                        userData.score = reader.GetInt32("score");
+                        userData.time = reader.GetInt32("time");
+                        userData.accuracy = reader.GetFloat("accuracy");
+                        userData.stars = reader.GetFloat("stars");
+                        userData.rating = reader.GetString("rating");
 
-                        userDatas.Add(new UserData(name, time, score));
+                        userDatas.Add(userData);
                     }
 
                     userDatas.Sort((a, b) => b.score.CompareTo(a.score));
+                }
 
-                    onCallback?.Invoke(userDatas);
-                }
-                else if (task.IsFaulted)
-                {
-                    onError("Can't fetch data.");
-                }
-            });
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+
+        return userDatas;
     }
 
-    public void FetchTopUsersByTime(Action<List<UserData>> onCallback, Action<string> onError)
+    public List<UserData> GetTopUserDataByTime()
     {
-        DatabaseManager.instance.dbReference.Child("attempts").Child(languageName).GetValueAsync()
-            .ContinueWithOnMainThread(task =>
+        List<UserData> userDatas = new List<UserData>();
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
             {
-                if (task.IsCompleted)
+                command.CommandText = $"SELECT * FROM Attempts";
+
+                using (var reader = command.ExecuteReader())
                 {
-                    DataSnapshot usersDataSnapshot = task.Result;
-
-                    List<UserData> userDatas = new List<UserData>();
-
-                    foreach (DataSnapshot userDataSnapshot in usersDataSnapshot.Children)
+                    while (reader.Read())
                     {
-                        DataSnapshot timeSnapshot = userDataSnapshot.Child("time");
-                        DataSnapshot scoreSnapshot = userDataSnapshot.Child("score");
+                        UserData userData = new UserData();
 
-                        string name = userDataSnapshot.Child("name").Value.ToString();
-                        int time = Convert.ToInt32(timeSnapshot.Value);
-                        int score = Convert.ToInt32(scoreSnapshot.Value);
+                        userData.name = reader.GetString("name");
+                        userData.score = reader.GetInt32("score");
+                        userData.time = reader.GetInt32("time");
+                        userData.accuracy = reader.GetFloat("accuracy");
+                        userData.stars = reader.GetFloat("stars");
+                        userData.rating = reader.GetString("rating");
 
-                        userDatas.Add(new UserData(name, time, score));
+                        userDatas.Add(userData);
                     }
 
                     userDatas.Sort((a, b) => a.time.CompareTo(b.time));
+                }
 
-                    onCallback?.Invoke(userDatas);
-                }
-                else if (task.IsFaulted)
-                {
-                    onError("Can't fetch data.");
-                }
-            });
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+
+        return userDatas;
     }
 
-    public void FetchFirstAverageAttempt(Action<AttemptData> onCallback, Action<string> onError)
+    public List<UserData> GetAttemptsHistory()
     {
-        DatabaseManager.instance.dbReference.Child("users").GetValueAsync()
-            .ContinueWithOnMainThread(task =>
+        List<UserData> userDatas = new List<UserData>();
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
             {
-                if (task.IsCompleted)
+                command.CommandText = $"SELECT * FROM Attempts";
+
+                using (var reader = command.ExecuteReader())
                 {
-                    DataSnapshot usersDataSnapshot = task.Result;
-
-                    int totalTime = 0, totalScore = 0, totalData = 0;
-
-                    foreach (DataSnapshot userDataSnapshot in usersDataSnapshot.Children)
+                    while (reader.Read())
                     {
-                        string username = userDataSnapshot.Child("username").Value.ToString();
-                        DataSnapshot attemptsDataSnapshot = userDataSnapshot.Child("progression").Child(languageName).Child("attempts");
+                        UserData userData = new UserData();
 
-                        if (!attemptsDataSnapshot.Exists)
-                            continue;
+                        userData.name = reader.GetString("name");
+                        userData.score = reader.GetInt32("score");
+                        userData.time = reader.GetInt32("time");
+                        userData.accuracy = reader.GetFloat("accuracy");
+                        userData.stars = reader.GetFloat("stars");
+                        userData.rating = reader.GetString("rating");
 
-                        DataSnapshot attemptDataSnapshot = attemptsDataSnapshot.Children.First();
-
-                        totalTime += Convert.ToInt32(attemptDataSnapshot.Child("time").Value);
-                        totalScore += Convert.ToInt32(attemptDataSnapshot.Child("score").Value);
-                        totalData++;
+                        userDatas.Add(userData);
                     }
+                }
 
-                    if (totalData == 0)
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+
+        return userDatas;
+    }
+
+    public UserData GetLevelDataByName(string levelName)
+    {
+        UserData userData = new UserData();
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT * FROM Levels WHERE name = \"{levelName}\";";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
                     {
-                        onCallback?.Invoke(new AttemptData(0, 0));
+                        reader.Read();
+                        userData.name = reader.GetString("name");
+                        userData.score = reader.GetInt32("score");
+                        userData.time = reader.GetInt32("time");
+                        userData.accuracy = reader.GetFloat("accuracy");
+                        userData.stars = reader.GetFloat("stars");
                     }
                     else
                     {
-                        int averageTime = totalTime / totalData;
-                        int averageScore = totalScore / totalData;
-
-                        onCallback?.Invoke(new AttemptData(averageTime, averageScore));
+                        userData.name = "";
+                        userData.score = 0;
+                        userData.time = 0;
+                        userData.accuracy = 0;
+                        userData.stars = 0;
                     }
+
                 }
-                else if (task.IsFaulted)
-                {
-                    onError("Can't fetch data.");
-                }
-            });
+
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+
+        return userData;
     }
 
-    public void FetchLatestAverageAttempt(Action<AttemptData> onCallback, Action<string> onError)
+    public void SetLevelDataByName(string levelName, int score, int time, float accuracy, float stars)
     {
-        DatabaseManager.instance.dbReference.Child("users").GetValueAsync()
-            .ContinueWithOnMainThread(task =>
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
             {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot usersDataSnapshot = task.Result;
+                command.CommandText = $"UPDATE Levels SET score = @score, time = @time, accuracy = @accuracy, stars = @stars WHERE name = @levelName;";
 
-                    int totalTime = 0, totalScore = 0, totalData = 0;
+                command.Parameters.AddWithValue("@levelName", levelName);
+                command.Parameters.AddWithValue("@score", score);
+                command.Parameters.AddWithValue("@time", time);
+                command.Parameters.AddWithValue("@accuracy", accuracy);
+                command.Parameters.AddWithValue("@stars", stars);
 
-                    foreach (DataSnapshot userDataSnapshot in usersDataSnapshot.Children)
-                    {
-                        string username = userDataSnapshot.Child("username").Value.ToString();
-                        DataSnapshot attemptsDataSnapshot = userDataSnapshot.Child("progression").Child(languageName).Child("attempts");
+                command.ExecuteNonQuery();
+            }
 
-                        if (!attemptsDataSnapshot.Exists)
-                            continue;
-
-                        DataSnapshot attemptDataSnapshot = attemptsDataSnapshot.Children.Last();
-
-                        totalTime += Convert.ToInt32(attemptDataSnapshot.Child("time").Value);
-                        totalScore += Convert.ToInt32(attemptDataSnapshot.Child("score").Value);
-                        totalData++;
-                    }
-
-                    if (totalData == 0)
-                    {
-                        onCallback?.Invoke(new AttemptData(0, 0));
-                    }
-                    else
-                    {
-                        int averageTime = totalTime / totalData;
-                        int averageScore = totalScore / totalData;
-
-                        onCallback?.Invoke(new AttemptData(averageTime, averageScore));
-                    }
-                }
-                else if (task.IsFaulted)
-                {
-                    onError("Can't fetch data.");
-                }
-            });
+            connection.Close();
+        }
     }
 }

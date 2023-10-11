@@ -1,0 +1,34 @@
+using System;
+
+interface IAnimal
+{
+    public void MakeNoise();
+}
+
+class Dog : IAnimal
+{
+    public void MakeNoise()
+    {
+        Console.WriteLine("Bark...");
+    }
+}
+
+class Cat : IAnimal
+{
+    public void MakeNoise()
+    {
+        Console.WriteLine("Meow...");
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        IAnimal dog = new Dog();
+        IAnimal cat = new Cat();
+
+        dog.MakeNoise();
+        cat.MakeNoise();
+    }
+}

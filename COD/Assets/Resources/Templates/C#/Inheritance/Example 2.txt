@@ -1,0 +1,35 @@
+using System;
+
+interface IDatabase
+{
+    public int GetValue();
+    public void SetValue(int value);
+}
+
+class LocalDatabase : IDatabase
+{
+    private int value = 10;
+
+    public int GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(int value)
+    {
+        this.value = value;
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        IDatabase database = new LocalDatabase();
+
+        database.SetValue(20);
+
+        int value = database.GetValue();
+        Console.WriteLine($"Database returned a value of {value}.");
+    }
+}

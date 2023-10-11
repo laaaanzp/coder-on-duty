@@ -24,6 +24,7 @@ public class SceneSwitcher : MonoBehaviour
             GameObject.FindGameObjectWithTag("SceneSwitcherOverlay")
                       .GetComponent<CanvasGroup>();
 
+        imageOverlay.blocksRaycasts = true;
         imageOverlay.LeanAlpha(1f, 1f)
             .setIgnoreTimeScale(true)
             .setOnComplete(() =>
@@ -32,7 +33,11 @@ public class SceneSwitcher : MonoBehaviour
                 onSceneLoad?.Invoke();
 
                 imageOverlay.LeanAlpha(0f, 1f)
-                    .setIgnoreTimeScale(true);
+                    .setIgnoreTimeScale(true)
+                    .setOnComplete(() =>
+                    {
+                        imageOverlay.blocksRaycasts = false;
+                    });
             });
     }
 

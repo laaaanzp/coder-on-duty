@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class TicketManager : MonoBehaviour
@@ -20,6 +21,14 @@ public class TicketManager : MonoBehaviour
         isLevelCompleted = false;
         tickets = new List<Ticket>();
         instance = this;
+    }
+
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name.StartsWith("Introduction"))
+        {
+            TutorialModalControl.Open();
+        }
     }
 
     public static Ticket RegisterTask(GameObject owner, string ticketTitle, int score)
@@ -46,7 +55,7 @@ public class TicketManager : MonoBehaviour
         }
 
         ScoreManager.AddScore(ticket.score);
-        CheckTasks();
+        instance.CheckTasks();
     }
 
     private void UpdateRemainingActiveTicketsDisplay()
@@ -54,7 +63,7 @@ public class TicketManager : MonoBehaviour
         ticketCounterText.text = $"Remaining Tasks: {tickets.Count}";
     }
 
-    private static void CheckTasks()
+    private void CheckTasks()
     {
         foreach (Ticket task in tickets)
         {
@@ -79,8 +88,9 @@ public class TicketManager : MonoBehaviour
         DatabaseManager.instance.currentLanguage.currentScore += ScoreManager.score;
         DatabaseManager.instance.currentLanguage.currentTotalAccuracy += ScoreManager.accuracy;
         DatabaseManager.instance.currentLanguage.currentTotalStars += stars;
+        DatabaseManager.instance.currentLanguage.SetLevelDataByName(SceneManager.GetActiveScene().name, ScoreManager.score, LevelTimer.GetTimeInSeconds(), ScoreManager.accuracy, stars);
 
-        instance.LevelComplete();
+        LevelComplete();
     }
 
     private void LevelComplete()

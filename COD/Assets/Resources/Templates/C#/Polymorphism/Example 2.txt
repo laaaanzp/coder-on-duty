@@ -1,0 +1,57 @@
+using System;
+
+class Vehicle
+{
+    public virtual void SpeedUp()
+    {
+        Console.WriteLine("The vehicle speeds up.");
+    }
+
+    public virtual void SlowDown()
+    {
+        Console.WriteLine("The vehicle slows up.");
+    }
+}
+
+class Bike : Vehicle 
+{
+    public override void SpeedUp()
+    {
+        Console.WriteLine("The bike speeds up.");
+    }
+
+    public override void SlowDown()
+    {
+        Console.WriteLine("The bike slows up.");
+    }
+}
+
+class Car : Vehicle
+{
+    public override void SpeedUp()
+    {
+        Console.WriteLine("The car speeds up.");
+    }
+
+    public override void SlowDown()
+    {
+        Console.WriteLine("The car slows up.");
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Vehicle bike = new Bike();
+        Vehicle car = new Car();
+
+        Console.WriteLine("Speeding up vehicles.");
+        bike.SpeedUp();
+        car.SpeedUp();
+
+        Console.WriteLine("Slowing down vehicles.");
+        bike.SlowDown();
+        car.SlowDown(); 
+    }
+}

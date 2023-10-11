@@ -27,7 +27,7 @@ public class CodeCompiler : MonoBehaviour
 
     #region fileName fix for editor and actual build
 #if UNITY_EDITOR
-    private string fileName = "C:\\Users\\Kurumi\\Desktop\\Test\\Compilers\\C#\\CSCompiler.exe";
+    private string fileName = "C:\\Users\\peloe\\OneDrive\\Desktop\\Capstone\\build\\Compilers\\C#\\CSCompiler.exe";
 #else
     private string fileName = $"{Path.GetDirectoryName(Application.dataPath)}/Compilers/C#/CSCompiler.exe";
 #endif
@@ -72,7 +72,6 @@ public class CodeCompiler : MonoBehaviour
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
-            UnityEngine.Debug.Log(code);
 
             process.Start();
 
@@ -87,7 +86,6 @@ public class CodeCompiler : MonoBehaviour
                 isProcessing = !process.HasExited;
                 while ((outputLine = reader.ReadLine()) != null)
                 {
-                    UnityEngine.Debug.Log(outputLine);
                     AppendConsoleOutput(outputLine);
                 }
 

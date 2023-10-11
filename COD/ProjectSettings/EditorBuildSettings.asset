@@ -13,29 +13,5 @@ EditorBuildSettings:
     guid: 32b7f0ca7a465b848ba6c3abb142e3c6
   - enabled: 1
     path: Assets/Scenes/CSharp Levels/Data Types.unity
-    guid: 931bc4a26ee969f439fc0c9971e22839
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Operators and Expressions.unity
-    guid: 101286282cde8f94d8670261cee5a084
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Decision Making.unity
-    guid: 68f782d4b37071b408f45f8369576633
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Looping.unity
-    guid: 8a7fd8a1f460efe43b4fb649930f6978
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Arrays.unity
-    guid: ecb97b9a0201fb144a48f5b125c4f8c3
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Strings.unity
-    guid: 4b1426acdd33299478d63d791959c81b
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Methods and Structures.unity
-    guid: 7505af9707642b34c99fedee12f12eb2
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Classes and Objects.unity
-    guid: e46e8e38755afcd48a7bdfde1c19de1f
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Inheritance and Polymorphism.unity
-    guid: 3ecabcf7066903d40afd6aedd790eddf
+    guid: 23261b34048dea24ba41ab9509dd1818
   m_configObjects: {}

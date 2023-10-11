@@ -1,0 +1,37 @@
+using System;
+
+class Animal
+{
+    public virtual void MakeNoise()
+    {
+        Console.WriteLine($"The animal makes a noise.");
+    }
+}
+
+class Dog : Animal
+{
+    public override void MakeNoise()
+    {
+        Console.WriteLine($"The dog barked.");
+    }
+}
+
+class Cat : Animal
+{
+    public override void MakeNoise()
+    {
+        Console.WriteLine($"The cat meowed.");
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Animal dog = new Dog();
+        Animal cat = new Cat();
+
+        dog.MakeNoise();
+        cat.MakeNoise();
+    }
+}

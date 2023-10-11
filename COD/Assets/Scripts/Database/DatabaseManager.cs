@@ -26,6 +26,7 @@ public class DatabaseManager : MonoBehaviour
             instance = this;
         }
 
+        /*
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Result == DependencyStatus.Available)
@@ -39,5 +40,6 @@ public class DatabaseManager : MonoBehaviour
                 Debug.LogError($"Could not resolve all Firebase dependencies: {task.Result}");
             }
         });
+        */
     }
 }
