@@ -1,9 +1,11 @@
 'c'
 "c"
 c
-21
+212
 31.2
-"21"
+"212"
+True
+decimal
 ##############################
 using System;
 
@@ -12,8 +14,10 @@ public class Program
     public static void Main(string[] args)
     {
         char a = (NODE_SLOT:'c');
-        int b = (NODE_SLOT:21);
+        int b = (NODE_SLOT:212);
         float c = (NODE_SLOT:31.2);
+        bool d = (NODE_SLOT:true);
+        (NODE_SLOT:double) e = 400d;
     }
 }
 ##############################

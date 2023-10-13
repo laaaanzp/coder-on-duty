@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class ProblemSolvingDistributor : MonoBehaviour
 {
     [SerializeField] private GameObject problemSolvingModalPrefab;
-
+    private List<ProblemSolving> problemSolvings;
     private TextAsset[] problemTextAssets;
 
 
@@ -20,8 +20,7 @@ public class ProblemSolvingDistributor : MonoBehaviour
         GameObject[] computerObjects = GameObject.FindGameObjectsWithTag("Computer");
         GameObject[] shuffledComputerObjects = Tools.ShuffleArray(computerObjects);
 
-        List<ProblemSolving> problemSolvings = new List<ProblemSolving>();
-
+        problemSolvings = new List<ProblemSolving>();
 
         int i = 0;
         foreach (TextAsset problemTextAsset in problemTextAssets)
@@ -31,6 +30,7 @@ public class ProblemSolvingDistributor : MonoBehaviour
 
             GameObject problemSolvingModal = Instantiate(problemSolvingModalPrefab, transform);
             ProblemSolving problemSolving = problemSolvingModal.GetComponent<ProblemSolving>();
+
 
             string[] problemSplitted = problemTextAsset.text.Split("##############################");
             string[] answers = Tools.ShuffleArray(problemSplitted[0].Split('\n'));

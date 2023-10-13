@@ -1,6 +1,10 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+Object
+return
+create
+Lanz
+Entity
+age
+name
 ##############################
 using System;
 
@@ -8,13 +12,19 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        (NODE_SLOT:Person) person = (NODE_SLOT:new) Person();
+        person.(NODE_SLOT:Name) = (NODE_SLOT"Lanz");
+        person.Age = 21;
 
-        Console.WriteLine(myString);
-
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        Console.WriteLine("Age is " + person.(NODE_SLOT:Age));
     }
 }
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
 ##############################
-Hello, World
+Age is 21

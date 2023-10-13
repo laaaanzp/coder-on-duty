@@ -1,6 +1,13 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+Hello, World!
+"Hello, World!"
+'Hello, World!'
+", World!"
+Append
+Add
+Concat
+ToString
+Result
+Value
 ##############################
 using System;
 
@@ -8,13 +15,12 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        StringBuilder sb = new StringBuilder("Hello");
 
-        Console.WriteLine(myString);
+        sb.(NODE_SLOT:Append)((NODE_SLOT:", World!"));
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        Console.WriteLine(sb.(NODE_SLOT:ToString)());
     }
 }
 ##############################
-Hello, World
+Hello, World!

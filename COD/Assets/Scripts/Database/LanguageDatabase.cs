@@ -39,6 +39,7 @@ public class LanguageDatabase : MonoBehaviour
     {
         get
         {
+            return 3;
             return SecurePlayerPrefs.GetInt($"{languageName}-level", 1);
         }
         set
@@ -259,7 +260,6 @@ public class LanguageDatabase : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                Debug.Log("Adding attempt...");
                 command.CommandText = $"INSERT INTO Attempts VALUES (@name, @score, @time, @accuracy, @stars, @rating);";
 
                 command.Parameters.AddWithValue("@name", currentName);

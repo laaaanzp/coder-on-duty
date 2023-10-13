@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class TicketManager : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class TicketManager : MonoBehaviour
 
     [SerializeField] private GameObject taskPrefab;
     [SerializeField] private LevelCompleteModal levelCompleteModalControl;
+    [SerializeField] private GameOverModal gameOverModalControl;
     [SerializeField] private TextMeshProUGUI ticketCounterText;
 
     private static List<Ticket> tickets;
@@ -31,21 +31,22 @@ public class TicketManager : MonoBehaviour
         }
     }
 
-    public static Ticket RegisterTask(GameObject owner, string ticketTitle, int score)
+    public static Ticket RegisterTask(GameObject owner, string ticketTitle)
     {
         GameObject taskInstance = Instantiate(instance.taskPrefab, instance.transform);
 
         Ticket task = taskInstance.GetComponent<Ticket>();
         tickets.Add(task);
 
-        task.Initialize(owner, ticketTitle, score, OnFix);
+        task.Initialize(owner, ticketTitle, OnFinish);
         instance.UpdateRemainingActiveTicketsDisplay();
 
         return task;
     }
 
-    private static void OnFix(Ticket ticket)
+    public static void OnFinish(Ticket ticket)
     {
+        instance.CheckTasks();
         tickets.Remove(ticket);
         instance.UpdateRemainingActiveTicketsDisplay();
 
@@ -53,9 +54,6 @@ public class TicketManager : MonoBehaviour
         {
             ObjectNavigation.StopNavigate();
         }
-
-        ScoreManager.AddScore(ticket.score);
-        instance.CheckTasks();
     }
 
     private void UpdateRemainingActiveTicketsDisplay()
@@ -67,28 +65,25 @@ public class TicketManager : MonoBehaviour
     {
         foreach (Ticket task in tickets)
         {
-            if (!task.isFixed)
+            if (!task.isFinished)
+            {
                 return;
+            }
+        }
+
+        if (ScoreManager.fixedDevices == 0)
+        {
+            gameOverModalControl.Open();
+            return;
         }
 
         isLevelCompleted = true;
 
-        int stars = 1;
-        if (LevelTimer.onTime)
-        {
-            stars++;
-        }
-
-        if (ScoreManager.accuracy == 100f)
-        {
-            stars++;
-        }
-
         DatabaseManager.instance.currentLanguage.currentTime += LevelTimer.GetTimeInSeconds();
         DatabaseManager.instance.currentLanguage.currentScore += ScoreManager.score;
         DatabaseManager.instance.currentLanguage.currentTotalAccuracy += ScoreManager.accuracy;
-        DatabaseManager.instance.currentLanguage.currentTotalStars += stars;
-        DatabaseManager.instance.currentLanguage.SetLevelDataByName(SceneManager.GetActiveScene().name, ScoreManager.score, LevelTimer.GetTimeInSeconds(), ScoreManager.accuracy, stars);
+        DatabaseManager.instance.currentLanguage.currentTotalStars += ScoreManager.fixedDevices;
+        DatabaseManager.instance.currentLanguage.SetLevelDataByName(SceneManager.GetActiveScene().name, ScoreManager.score, LevelTimer.GetTimeInSeconds(), ScoreManager.accuracy, ScoreManager.fixedDevices);
 
         LevelComplete();
     }

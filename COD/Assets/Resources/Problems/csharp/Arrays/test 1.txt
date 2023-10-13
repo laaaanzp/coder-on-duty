@@ -1,11 +1,14 @@
-0
-0
-1
-1
-2
-2
-3
-4
+2, 3
+3, 4
+1, 1
+2, 1
+1, 0
+float
+double
+array
+MyArray
+return
+new
 ##############################
 using System;
 
@@ -13,30 +16,17 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        // Declare and initialize a 2D array with 3 rows and 4 columns.
-        int[,] myArray = new int[(NODE_SLOT:3), (NODE_SLOT:4)];
-
-        // Initialize the 2D array with sample values.
-        myArray = new int[,]
+        int (NODE_SLOT:myArray) = (NODE_SLOT:new) (NODE_SLOT:int)[,]
         {
             { 1, 2, 3, 4 },
             { 5, 6, 7, 8 },
             { 9, 10, 11, 12 }
         };
 
-        // Access and print the element at row 2 and column 3.
-        Console.WriteLine("Element at row 2, column 3: " + myArray[(NODE_SLOT:1), (NODE_SLOT:2)]);
-
-        // Determine and print the number of rows in the 2D array.
-        int numRows = myArray.GetLength((NODE_SLOT:0));
-        Console.WriteLine("Number of rows: " + numRows);
-
-        // Determine and print the number of columns in the 2D array.
-        int numCols = myArray.GetLength((NODE_SLOT:1));
-        Console.WriteLine("Number of columns: " + numCols);
+        Console.WriteLine("Element at row 1, column 2: " + myArray[(NODE_SLOT:0, 1)]);
+        Console.WriteLine("Element at row 2, column 3: " + myArray[(NODE_SLOT:1, 2]);
     }
 }
 ##############################
+Element at row 1, column 2: 2
 Element at row 2, column 3: 7
-Number of rows: 3
-Number of columns: 4

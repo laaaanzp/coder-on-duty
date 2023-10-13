@@ -1,8 +1,9 @@
-Write
-WriteLine
-ReadLine
-Log
-ReadString
+bool
+char
+string
+int
+byte
+sbyte
 ##############################
 using System;
 
@@ -10,19 +11,30 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.(NODE_SLOT:Write)("Enter password: ");
-        string password = Console.(NODE_SLOT:ReadLine)();
+        (NODE_SLOT:bool) a = MyFunction(true);
+        (NODE_SLOT:char) b = MyFunction('c');
+        (NODE_SLOT:string) c = MyFunction("str");
+        (NODE_SLOT:int) d = MyFunction(25);
+    }
 
-        if (password == "admin")
-        {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
-        }
+    public static string MyFunction(string value)
+    {
+        return value;
+    }
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+    public static char MyFunction(char value)
+    {
+        return value;
+    }
+
+    public static bool MyFunction(bool value)
+    {
+        return value; 
+    }
+
+    public static int MyFunction(int value)
+    {
+        return value;
     }
 }
 ##############################
-Enter password: <i><u>admin</u></i>
-Welcome, Admin!
-Press enter to continue...

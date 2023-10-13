@@ -19,7 +19,6 @@ public static class ScrollRectExt
 
         LeanTween.value(normalizedPosition.y, 1, duration).setOnUpdate((float v) =>
         {
-            Debug.Log(v);
             scrollRect.normalizedPosition = new Vector2(0, v);
         });
     }

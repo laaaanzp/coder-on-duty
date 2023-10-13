@@ -1,8 +1,9 @@
-Write
-WriteLine
-ReadLine
-Log
-ReadString
+varA
+varB
+, World!
+", World!"
+World
+"Hello, World!"
 ##############################
 using System;
 
@@ -10,19 +11,18 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.(NODE_SLOT:Write)("Enter password: ");
-        string password = Console.(NODE_SLOT:ReadLine)();
+        string varA = "Hello";
+        string varB = (NODE_SLOT:", World!");
 
-        if (password == "admin")
+        string varC = (NODE_SLOT:varA) + (NODE_SLOT:varB) 
+        Console.WriteLine(C);
+
+        if (varC == (NODE_SLOT:"Hello, World!"))
         {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
+            Console.WriteLine("The strings are equal.");
         }
-
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
     }
 }
 ##############################
-Enter password: <i><u>admin</u></i>
-Welcome, Admin!
-Press enter to continue...
+Hello, World!
+"The strings are equal."

@@ -1,13 +1,5 @@
-10
-20
-30
-40
-50
-5
-index
-0
-1
-2
+[3]
+Index
 ##############################
 using System;
 
@@ -15,33 +7,23 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        // Create a single-dimensional integer array with 5 elements.
         int[] myArray = new int[(NODE_SLOT:5)];
 
-        // Initialize the array with values: 10, 20, 30, 40, 50.
-        myArray = new int[] { (NODE_SLOT:10), (NODE_SLOT:20), (NODE_SLOT:30), (NODE_SLOT:40), (NODE_SLOT:50) };
+        myArray = new int[] { (NODE_SLOT:200), 500, (NODE_SLOT:300), 400, 100 };
 
-        // Access and print the third element of the 'myArray' array.
-        Console.WriteLine("The third element is: " + myArray[(NODE_SLOT:2)]);
-
-        // Iterate through the 'myArray' array and print each element.
         for (int index = 0; i < myArray.Length; i++)
         {
-            Console.WriteLine("Element " + i + ": " + myArray[(NODE_SLOT:index)]);
+            Console.WriteLine("Element " + index + ": " + myArray[(NODE_SLOT:index)]);
         }
 
-        // Change the value of the first element to 99.
-        myArray[(NODE_SLOT:0)] = 99;
-
-        // Print the updated first element.
-        Console.WriteLine("The first element is now: " + myArray[0]);
+        Console.WriteLine("The third element is: " + myArray(NODE_SLOT:[2]));
     }
 }
 ##############################
-The third element is: 30
-Element 0: 10
-Element 1: 20
-Element 2: 30
-Element 3: 40
-Element 4: 50
+The third element is: 300
+Element 0: 200
+Element 1: 500
+Element 2: 300
+Element 3: 400
+Element 4: 100
 The first element is now: 99

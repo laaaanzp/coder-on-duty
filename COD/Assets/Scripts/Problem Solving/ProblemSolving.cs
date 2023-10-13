@@ -1,4 +1,5 @@
 using System;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -18,22 +19,24 @@ public class ProblemSolving : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI outputText;
     [SerializeField] private TextMeshProUGUI timeRemainingText;
-    [SerializeField] private TextMeshProUGUI bonusOnTimeScoreText;
 
     [Header("Score")]
-    [SerializeField] private float targetTime = 60.0f;
-    [SerializeField] private int bonusOnTimeScore = 2000;
+    [SerializeField] private float targetTime = 120.0f;
 
-    public Action onFix;
-
+    public Action onSubmitOrFinish;
+    private Ticket ticket;
+    public int totalCorrect = 0;
+    public int timeRemaining = 0;
+    private bool isOnFinishCalled;
+    
+    public void SetTicket(Ticket ticket)
+    {
+        this.ticket = ticket;
+    }
 
     void Awake()
     {
         UpdateTimeDisplay();
-        bonusOnTimeScoreText.text = $"<b>Bonus On-Time Score:</b> {bonusOnTimeScore}";
-
-        InvokeRepeating("DeductTime", 1f, 1f);
-
     }
 
     public void Initialize(string problem, string[] answers, string output)
@@ -52,6 +55,12 @@ public class ProblemSolving : MonoBehaviour
             foreach (string token in tokens)
             {
                 problemSolvingRowControl.AddToken(token);
+
+                if (token.StartsWith("NODE_SLOT:"))
+                {
+                    string answer = token.Replace("NODE_SLOT:", "");
+                    AddAnswer(answer);
+                }
             }
         }
 
@@ -62,25 +71,18 @@ public class ProblemSolving : MonoBehaviour
                 continue;
             }
 
-            GameObject answerObject = Instantiate(answerNodePrefab, answersContainer);
-            AnswerNode answerNode = answerObject.GetComponent<AnswerNode>();
-
-            answerNode.SetAnswer(answer.Trim());
+            AddAnswer(answer);
         }
 
         outputText.text = output;
     }
 
-    private void DeductTime()
+    private void AddAnswer(string answer)
     {
-        targetTime -= 1f;
-        UpdateTimeDisplay();
+        GameObject answerObject = Instantiate(answerNodePrefab, answersContainer);
+        AnswerNode answerNode = answerObject.GetComponent<AnswerNode>();
 
-        if (targetTime == 0)
-        {
-            CancelInvoke("DeductTime");
-            LevelTimer.onTime = false;
-        }
+        answerNode.SetAnswer(answer.Trim());
     }
 
     private void UpdateTimeDisplay()
@@ -88,7 +90,6 @@ public class ProblemSolving : MonoBehaviour
         int timeRemainingInSeconds = (int)Mathf.Round(targetTime);
         timeRemainingText.text = $"<b>Time Remaining:<b> {timeRemainingInSeconds}s";
     }
-
 
     public void Open()
     {
@@ -99,7 +100,10 @@ public class ProblemSolving : MonoBehaviour
     {
         SlotNode[] slotNodes = GetComponentsInChildren<SlotNode>();
 
-        int totalCorrect = 0;
+        totalCorrect = 0;
+        timeRemaining = Mathf.FloorToInt(targetTime);
+
+        ticket.isFinished = true;
 
         foreach (SlotNode slotNode in slotNodes)
         {
@@ -110,28 +114,20 @@ public class ProblemSolving : MonoBehaviour
         ScoreManager.totalCorrect += totalCorrect;
         ScoreManager.totalSlots += slotNodes.Length;
 
-        if (totalCorrect != slotNodes.Length)
+        if (totalCorrect < 3)
         {
-            MessageBoxControl.ShowOk(
-                "ERROR", 
-                $"{slotNodes.Length - totalCorrect} out of {slotNodes.Length} slots are answered incorrectly or left unanswered."
-                );
-
-            return;
+            ticket.isFixed = false;
         }
-        CancelInvoke("DeductTime");
+        else
+        {
+            int score = Mathf.FloorToInt(targetTime) * 10;
+            ScoreManager.AddScore(score);
+            ScoreManager.fixedDevices++;
+            ticket.isFixed = true;
+        }
+        ScoreManager.finishedDevices++;
+        onSubmitOrFinish?.Invoke();
         modalControl.Close();
-
-        int score = 0;
-
-        if (targetTime > 0)
-        {
-            score += bonusOnTimeScore;
-        }
-
-        ScoreManager.AddScore(score);
-
-        onFix?.Invoke();
     }
 
     public void ClearAnswers()
@@ -141,6 +137,24 @@ public class ProblemSolving : MonoBehaviour
         foreach (SlotNode slotNode in slotNodes)
         {
             slotNode.ResetNodeParent();
+        }
+    }
+
+    private void Update()
+    {
+        targetTime -= Time.deltaTime;
+
+        targetTime = MathF.Max(targetTime, 0);
+        UpdateTimeDisplay();
+
+        if (targetTime == 0)
+        {
+            if (!isOnFinishCalled)
+            {
+                onSubmitOrFinish?.Invoke();
+                modalControl.Close();
+            }
+            isOnFinishCalled = true;
         }
     }
 }

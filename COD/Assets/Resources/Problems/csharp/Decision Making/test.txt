@@ -1,18 +1,6 @@
-case
-case
-case
-switch
-switch
-switch
-default
-default
-default
-break
-break
-break
-'A'
-'L'
-'C'
+if
+else
+else if
 ##############################
 using System;
 
@@ -25,16 +13,16 @@ public class Program
         (NODE_SLOT:switch) (letter)
         {
             (NODE_SLOT:case) 'L':
-                Console.WriteLine("Lanz");
-                (NODE_SLOT:break);
+                Console.WriteLine("L");
+                break;
 
             (NODE_SLOT:case) 'C':
-                Console.WriteLine("Cristine");
-                (NODE_SLOT:break);
+                Console.WriteLine("C");
+                break;
 
             (NODE_SLOT:default):
                 Console.WriteLine("Unknown Name.");
-                (NODE_SLOT:break);
+                break;
         }
     }
 }

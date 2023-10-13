@@ -10,7 +10,6 @@ public class LevelCompleteModal : MonoBehaviour
     [SerializeField] private GameObject titleObject;
 
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI accuracyText;
 
     [Header("Stars")]
@@ -53,28 +52,7 @@ public class LevelCompleteModal : MonoBehaviour
                 LeanTween.value(0, ScoreManager.score, 1f).setDelay(0.3f).setOnUpdate(score =>
                 {
                     scoreText.text = $"<b>Score:</b> {(int)score}";
-                }).setOnComplete(AnimateTime);
-            });
-    }
-
-    private void AnimateTime()
-    {
-        timeText.GetComponent<CanvasGroup>()
-            .LeanAlpha(1f, 0.5f)
-            .setDelay(0.3f)
-            .setOnComplete(() =>
-            {
-                LeanTween.value(0, LevelTimer.GetTimeInSeconds(), 1f).setDelay(0.3f).setOnUpdate(fSeconds =>
-                {
-                    int seconds = (int)fSeconds;
-                    int minutes = seconds / 60;
-                    seconds = seconds % 60;
-
-                    string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
-
-                    timeText.text = $"<b>Time:</b> {timeString}";
-                })
-                .setOnComplete(AnimateAccuracy);
+                }).setOnComplete(AnimateAccuracy);
             });
     }
 
@@ -94,19 +72,7 @@ public class LevelCompleteModal : MonoBehaviour
 
     private void AnimateStars()
     {
-        int totalStars = 1;
-
-        if (ScoreManager.accuracy == 100f)
-        {
-            totalStars++;
-        }
-
-        if (LevelTimer.onTime)
-        {
-            totalStars++;
-        }
-
-        for (int i = 0; i < totalStars; i++)
+        for (int i = 0; i < ScoreManager.fixedDevices; i++)
         {
             stars[i].color = Color.white;
         }

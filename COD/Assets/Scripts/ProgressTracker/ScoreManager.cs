@@ -10,6 +10,8 @@ public class ScoreManager : MonoBehaviour
 
     public static int totalCorrect;
     public static int totalSlots;
+    public static int fixedDevices;
+    public static int finishedDevices;
 
     private static LTDescr currentDescr;
 
@@ -27,6 +29,8 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         totalCorrect = 0;
         totalSlots = 0;
+        fixedDevices = 0;
+        finishedDevices = 0;
     }
 
     public static void AddScore(int additionalScore)

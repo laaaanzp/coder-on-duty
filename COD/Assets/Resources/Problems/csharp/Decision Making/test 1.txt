@@ -1,11 +1,9 @@
-18
-19
-20
-21
-if
-else if
+100
+50
+case
 elif
-else
+elseif
+default
 ##############################
 using System;
 
@@ -13,15 +11,15 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        int number = (NODE_SLOT:20);
+        int (NODE_SLOT:number) = (NODE_SLOT:200);
 
-        (NODE_SLOT:if) (number > 20)
+        (NODE_SLOT:if) (number > 200)
         {
-            Console.WriteLine("Number is better than 20.");
+            Console.WriteLine("Number is too high.");
         }
-        (NODE_SLOT:else if) (number > 10)
+        (NODE_SLOT:else if) (number > 100)
         {
-            Console.WriteLine("Number is better than 10.");
+            Console.WriteLine("Number is average.");
         }
         (NODE_SLOT:else) 
         {
@@ -30,4 +28,4 @@ public class Program
     }
 }
 ##############################
-Number is better than 10.
+Number is average.

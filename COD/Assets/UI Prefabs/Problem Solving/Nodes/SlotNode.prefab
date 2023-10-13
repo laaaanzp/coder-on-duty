@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
@@ -170,8 +170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctAnswer: answerf
-  highlightEffectColor: {r: 0, g: 0, b: 0, a: 0}
-  highlightEffectDistance: {x: 0, y: 0}
   outline: {fileID: 8507999231133259966}
 --- !u!61 &1714487013
 BoxCollider2D:

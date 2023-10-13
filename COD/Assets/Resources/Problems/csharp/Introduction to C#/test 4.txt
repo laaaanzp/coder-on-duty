@@ -1,21 +1,18 @@
-Println
+PrintLine
 Print
 Log
 main
-Main
-string
 text
 Logln
 Writeln
-WriteLine
 ##############################
 using System;
 
 public class Program
 {
-    public static void (NODE_SLOT:Main)((NODE_SLOT:string)[] args)
+    public (NODE_SLOT:static) void (NODE_SLOT:Main)((NODE_SLOT:string)[] args)
     {
-        Console.(NODE_SLOT:WriteLine)("Hello, World!");
+        Console.(NODE_SLOT:WriteLine)((NODE_SLOT:"Hello, World!"));
     }
 }
 ##############################

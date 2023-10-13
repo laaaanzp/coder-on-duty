@@ -1,6 +1,3 @@
-Write
-WriteLine
-ReadLine
 Log
 ReadString
 ##############################
@@ -13,9 +10,9 @@ public class Program
         Console.(NODE_SLOT:Write)("Enter password: ");
         string password = Console.(NODE_SLOT:ReadLine)();
 
-        if (password == "admin")
+        if (password == (NODE_SLOT:"admin"))
         {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
+            Console.(NODE_SLOT:WriteLine)((NODE_SLOT:"Welcome, Admin!"));
         }
     }
 }

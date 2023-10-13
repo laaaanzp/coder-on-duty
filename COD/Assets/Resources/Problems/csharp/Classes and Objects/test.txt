@@ -1,28 +1,29 @@
-Write
-WriteLine
-ReadLine
-Log
-ReadString
+self
+here
+that
+Point
+Point
+object
+object
+Object
 ##############################
-using System;
-
-public class Program
+class Point
 {
+    public int x, y;
+
+    public Point(int x, int y)
+    {
+        (NODE_SLOT:this).x = x;
+        (NODE_SLOT:this).y = y;
+    }
+
     public static void Main(string[] args)
     {
-        Console.(NODE_SLOT:Write)("Enter password: ");
-        string password = Console.(NODE_SLOT:ReadLine)();
+        Point point = new (NODE_SLOT:Point);
 
-        if (password == "admin")
-        {
-            Console.(NODE_SLOT:WriteLine)("Welcome, Admin!");
-        }
-
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        Console.WriteLine("X: " + (NODE_SLOT:point).x);
+        Console.WriteLine("Y: " + (NODE_SLOT:point).y);
     }
 }
 ##############################
-Enter password: <i><u>admin</u></i>
-Welcome, Admin!
-Press enter to continue...
+

@@ -11,10 +11,7 @@ public class TutorialModalControl : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        instance = this;
     }
 
     public static void Open()

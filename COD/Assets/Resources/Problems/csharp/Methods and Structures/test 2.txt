@@ -1,0 +1,26 @@
+float
+number
+string
+double
+int
+##############################
+using System;
+
+public class Program
+{
+	public static (NODE_SLOT:int) GetValue()
+	{
+		return 1;
+	}
+
+	public static (NODE_SLOT:string) GetValue()
+	{
+		return "Hello";
+	}
+
+	public static (NODE_SLOT:double) GetValue()
+	{
+		return 1.5d;
+	}
+}
+##############################

@@ -1,6 +1,7 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+getName
+printName
+Animal
+Animal
 ##############################
 using System;
 
@@ -8,13 +9,32 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string myString = (NODE_SLOT:"Hello, World");
+        (NODE_SLOT:Dog) dog = new (NODE_SLOT:Dog)();
 
-        Console.WriteLine(myString);
-
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
+        dog.name = "Gorou";
+        dog.(NODE_SLOT:display)();
+        dog.(NODE_SLOT:displayName)();
     }
 }
+
+class Animal 
+{ 
+    public string Name;
+
+    public void display() 
+    {
+        Console.WriteLine("I am an animal");
+    }
+}
+  
+class Dog : Animal 
+{
+    public void displayName() 
+    {
+        Console.WriteLine("My name is " + name);
+    }
+}
+
 ##############################
-Hello, World
+I am an animal
+My name is Gorou

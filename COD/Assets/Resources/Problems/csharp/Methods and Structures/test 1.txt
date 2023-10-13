@@ -1,20 +1,35 @@
-Hello, World
-"Hello, World"
-'Hello, World'
+float
+number
+string
+double
+int
 ##############################
 using System;
 
 public class Program
 {
-    public static void Main(string[] args)
-    {
-        string myString = (NODE_SLOT:"Hello, World");
+	public static (NODE_SLOT:int) Add(int a, int b)
+	{
+		int total = a + b;
+		return total;
+	}
 
-        Console.WriteLine(myString);
+	public static (NODE_SLOT:float) Add(float a, float b)
+	{
+		float total = a + b;
+		return total;
+	}
 
-        Console.Write("Press enter to continue...");
-        Console.ReadKey();
-    }
+	public static (NODE_SLOT:double) Add(double a, double b)
+	{
+		double total = a + b;
+		return total;
+	}
+
+	public static void Main(string[] args)
+	{
+	    int total = Add(3, 5);
+		Console.WriteLine(8);
+	}
 }
 ##############################
-Hello, World

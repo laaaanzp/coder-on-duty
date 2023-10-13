@@ -9,6 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: c3fa9707b378f1f4d9dd573aca7aae4f
   - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Classes and Objects.unity
+    guid: e642664f789ba9f43817291b8f5dd2f1
+  - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Inheritance and Polymorphism.unity
+    guid: 0ad9fce66f5b64744b45dbdb92529960
+  - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Interfaces.unity
+    guid: 9f4621ee72d64f24386bf024530ba843
+  - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Methods and Structures.unity
+    guid: 9b93e58886ce31343b17caf1f0120490
+  - enabled: 1
     path: Assets/Scenes/CSharp Levels/Introduction to C#.unity
     guid: 32b7f0ca7a465b848ba6c3abb142e3c6
   - enabled: 1
@@ -17,4 +29,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CSharp Levels/Operators and Expressions.unity
     guid: cdda5eb4229aed540922ac287c6f32b6
+  - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Arrays.unity
+    guid: 0f80c96d49f2a824d8cfec138f7382df
+  - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Decision Making.unity
+    guid: dbac185e24b7beb459af1e5a9563e4e2
+  - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Looping.unity
+    guid: 93788c41450f9a3488230d03765d47c4
+  - enabled: 1
+    path: Assets/Scenes/CSharp Levels/Strings.unity
+    guid: 160e4311ff3f8764892cb7ccb74f782b
   m_configObjects: {}

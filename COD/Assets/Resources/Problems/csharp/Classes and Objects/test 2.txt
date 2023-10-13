@@ -1,0 +1,23 @@
+product
+Constructor
+create
+create
+##############################
+class Product
+{
+    public string Name { (NODE_SLOT:get); set; }
+    public double Price { (NODE_SLOT:get); set; }
+
+    public (NODE_SLOT:Product)(string (NODE_SLOT:name), double price)
+    {
+        Name = name;
+        Price = price;
+    }
+
+    public (NODE_SLOT:double) DiscountedPrice()
+    {
+        return Price * 0.75;
+    }
+}
+##############################
+

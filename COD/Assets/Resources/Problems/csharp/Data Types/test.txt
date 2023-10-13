@@ -1,9 +1,11 @@
-int
-float
-double
-string
-number
-text
+short
+ushort
+character
+Char
+Hello
+'Hello'
+4
+4.53
 ##############################
 using System;
 
@@ -11,11 +13,13 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        (NODE_SLOT:int) a = 50;
-        (NODE_SLOT:float) b = 39.3f;
-        (NODE_SLOT:double) c = 1003.3d;
-        (NODE_SLOT:string) d = "my string";
+        (NODE_SLOT:int) a = (int)(NODE_SLOT:3.44);
+        (NODE_SLOT:string) b = (NODE_SLOT: "Hello") + a;
+        (NODE_SLOT:char) c = b[2];
+        Console.WriteLine(b);
+        Console.WriteLine(c);
     }
 }
 ##############################
- 
+Hello3 
+l

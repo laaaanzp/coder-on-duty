@@ -3,18 +3,19 @@ Print
 Log
 Writeline
 Writeln
-WriteLine
+struct
+int
 ##############################
 using System;
 
-public class Program
+public (NODE_SLOT:class) Program
 {
-    public static void Main(string[] args)
+    public static (NODE_SLOT:void) Main(string[] args)
     {
         string name = "Lanz";
 
-        Console.(NODE_SLOT:WriteLine)("My name is " + name);
+        Console.(NODE_SLOT:WriteLine)((NODE_SLOT:"Name is ") + (NODE_SLOT:name));
     }
 }
 ##############################
-My name is Lanz
+Name is Lanz

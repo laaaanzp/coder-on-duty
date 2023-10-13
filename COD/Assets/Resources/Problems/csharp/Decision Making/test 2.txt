@@ -1,9 +1,7 @@
-Positive Number
-Negative Number
-?
-:
-!
-~
+"P"
+"N"
+Number
+Result
 ##############################
 using System;
 
@@ -11,12 +9,12 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        int number = 22;
+        int (NODE_SLOT:number) = 22;
 
-        string result = (number > 0) (NODE_SLOT:?) (NODE_SLOT:"Positive Number") (NODE_SLOT::) (NODE_SLOT:"Negative Number");
+        string result = ((NODE_SLOT:number) > 0) ? (NODE_SLOT:"P") : (NODE_SLOT:"N");
 
-        Console.WriteLine(result);
+        Console.WriteLine((NODE_SLOT:result));
     }
 }
 ##############################
-Positive Number
+P
