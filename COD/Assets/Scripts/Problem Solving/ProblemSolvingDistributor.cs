@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 public class ProblemSolvingDistributor : MonoBehaviour
 {
     [SerializeField] private GameObject problemSolvingModalPrefab;
-    private List<ProblemSolving> problemSolvings;
+    public static List<ProblemSolving> problemSolvings;
     private TextAsset[] problemTextAssets;
-
 
     void Start()
     {

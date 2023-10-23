@@ -3,16 +3,43 @@ using System.Data;
 using Tymski;
 using Mono.Data.Sqlite;
 using UnityEngine;
+using System.Data.Common;
 
+public class AttemptData
+{
+    public string programmerName;
+    public int score;
+    public int stars;
+    public int totalCorrectAnswers;
+    public int totalAnswers;
+    public int totalLevels;
 
-public class UserData
+    public float accuracy
+    {
+        get => ((float)totalCorrectAnswers / (float)totalAnswers) * 100;
+    }
+    
+    public float averageStars
+    {
+        get => Mathf.RoundToInt(stars / totalLevels);
+    }
+}
+
+public class LevelData
 {
     public string name;
     public int score;
-    public int time;
-    public float accuracy;
-    public float stars;
-    public string rating;
+    public int stars;
+    public int totalCorrectAnswers;
+    public int totalAnswers;
+
+    public float accuracy
+    {
+        get
+        {
+            return ((float)totalCorrectAnswers / (float)totalAnswers) * 100;
+        }
+    }
 }
 
 
@@ -39,7 +66,6 @@ public class LanguageDatabase : MonoBehaviour
     {
         get
         {
-            return 3;
             return SecurePlayerPrefs.GetInt($"{languageName}-level", 1);
         }
         set
@@ -48,80 +74,11 @@ public class LanguageDatabase : MonoBehaviour
             SecurePlayerPrefs.Save();
         }
     }
-    public int currentTime
+    public string currentLevelName
     {
-        get
-        {
-            return SecurePlayerPrefs.GetInt($"{languageName}-time", 0);
-        }
-        set
-        {
-            SecurePlayerPrefs.SetInt($"{languageName}-time", value);
-            SecurePlayerPrefs.Save();
-        }
+        get => scenes[currentLevel - 1].SceneName;
     }
-    public int currentScore
-    {
-        get
-        {
-            return SecurePlayerPrefs.GetInt($"{languageName}-score", 0);
-        }
-        set
-        {
-            SecurePlayerPrefs.SetInt($"{languageName}-score", value);
-            SecurePlayerPrefs.Save();
-        }
-    }
-    public float currentTotalAccuracy
-    {
-        get
-        {
-            return SecurePlayerPrefs.GetFloat($"{languageName}-accuracy", 100);
-        }
-        set
-        {
-            SecurePlayerPrefs.SetFloat($"{languageName}-accuracy", value);
-            SecurePlayerPrefs.Save();
-        }
-    }
-    public int currentTotalStars
-    {
-        get
-        {
-            return SecurePlayerPrefs.GetInt($"{languageName}-stars", 0);
-        }
-        set
-        {
-            SecurePlayerPrefs.SetInt($"{languageName}-stars", value);
-            SecurePlayerPrefs.Save();
-        }
-    }
-    public float overallAccuracy
-    {
-        get => currentTotalAccuracy / scenes.Length;
-    }
-    public float overallStars
-    {
-        get => currentTotalStars / scenes.Length;
-    }
-    public string overallRating
-    {
-        get
-        {
-            if (overallStars >= 3)
-            {
-                return "Expert";
-            }
-            else if (overallStars >= 2)
-            {
-                return "Advanced";
-            }
-            else
-            {
-                return "Beginner";
-            }
-        }
-    }
+
     // Instances
     public static Dictionary<string, LanguageDatabase> instances = new Dictionary<string, LanguageDatabase>();
 
@@ -145,10 +102,10 @@ public class LanguageDatabase : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "CREATE TABLE IF NOT EXISTS Attempts (name VARCHAR(16), score INT, time INT, accuracy FLOAT, stars FLOAT, rating VARCHAR(20));";
+                command.CommandText = "CREATE TABLE IF NOT EXISTS Attempts (name VARCHAR(16), score INT, stars INT, totalCorrectAnswers INT, totalAnswers INT, totalLevels INT);";
                 command.ExecuteNonQuery();
 
-                command.CommandText = "CREATE TABLE IF NOT EXISTS Levels (name VARCHAR(50), score INT, time INT, accuracy FLOAT, stars FLOAT);";
+                command.CommandText = "CREATE TABLE IF NOT EXISTS Levels (name VARCHAR(50), score INT, stars INT, totalCorrectAnswers INT, totalAnswers INT);";
                 command.ExecuteNonQuery();
             }
 
@@ -158,9 +115,24 @@ public class LanguageDatabase : MonoBehaviour
 
     private void ResetLevels()
     {
-        foreach (SceneReference scene in scenes)
+        using (var connection = new SqliteConnection(connectionString))
         {
-            SetLevelDataByName(scene.SceneName, 0, 0, 0, 0);
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "DELETE FROM Levels";
+                command.ExecuteNonQuery();
+
+                foreach (SceneReference scene in scenes)
+                {
+                    command.CommandText = "INSERT INTO Levels VALUES (@name, 0, 0, 0, 0);";
+                    command.Parameters.AddWithValue("@name", scene.SceneName);
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            connection.Close();
         }
     }
 
@@ -243,31 +215,78 @@ public class LanguageDatabase : MonoBehaviour
     public void ResetProgress()
     {
         currentLevel = 1;
-        currentTime = 0;
-        currentScore = 0;
-        currentTotalAccuracy = 0f;
-        currentTotalStars = 0;
         currentName = "";
 
         ResetLevels();
     }
 
+    public List<LevelData> GetAllLevelData()
+    {
+        List<LevelData> levelDatas = new List<LevelData>();
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "SELECT * FROM Levels";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        LevelData levelData = new LevelData();
+
+                        levelData.name = reader.GetString("name");
+                        levelData.score = reader.GetInt32("score");
+                        levelData.stars = reader.GetInt32("stars");
+                        levelData.totalCorrectAnswers = reader.GetInt32("totalCorrectAnswers");
+                        levelData.totalAnswers = reader.GetInt32("totalAnswers");
+
+                        levelDatas.Add(levelData);
+                    }
+                }
+            }
+
+        }
+
+        return levelDatas;
+    }
+
     public void AddAttempt()
     {
+        List<LevelData> levelDatas = GetAllLevelData();
+
+        int totalLevels = levelDatas.Count;
+
+        int totalScore = 0;
+        int totalStars = 0;
+        int totalCorrectAnswers = 0;
+        int totalAnswers = 0;
+        
+        foreach (LevelData levelData in levelDatas)
+        {
+            totalScore += levelData.score;
+            totalStars += levelData.stars;
+            totalCorrectAnswers += levelData.totalCorrectAnswers;
+            totalAnswers += levelData.totalAnswers;
+        }
+
         using (var connection = new SqliteConnection(connectionString))
         {
             connection.Open();
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = $"INSERT INTO Attempts VALUES (@name, @score, @time, @accuracy, @stars, @rating);";
+                command.CommandText = $"INSERT INTO Attempts VALUES (@name, @score, @stars, @totalCorrectAnswers, @totalAnswers, @totalLevels);";
 
                 command.Parameters.AddWithValue("@name", currentName);
-                command.Parameters.AddWithValue("@score", currentScore);
-                command.Parameters.AddWithValue("@time", currentTime);
-                command.Parameters.AddWithValue("@accuracy", overallAccuracy);
-                command.Parameters.AddWithValue("@stars", overallStars);
-                command.Parameters.AddWithValue("@rating", overallRating);
+                command.Parameters.AddWithValue("@score", totalScore);
+                command.Parameters.AddWithValue("@stars", totalScore);
+                command.Parameters.AddWithValue("@totalCorrectAnswers", totalCorrectAnswers);
+                command.Parameters.AddWithValue("@totalAnswers", totalAnswers);
+                command.Parameters.AddWithValue("@totalLevels", totalLevels);
 
                 command.ExecuteNonQuery();
             }
@@ -276,9 +295,9 @@ public class LanguageDatabase : MonoBehaviour
         }
     }
 
-    public List<UserData> GetTopUserDataByScore()
+    public List<AttemptData> GetAllAttempts()
     {
-        List<UserData> userDatas = new List<UserData>();
+        List<AttemptData> attemptDatas = new List<AttemptData>();
 
         using (var connection = new SqliteConnection(connectionString))
         {
@@ -286,117 +305,41 @@ public class LanguageDatabase : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = $"SELECT * FROM Attempts";
+                command.CommandText = "SELECT * FROM Attempts";
 
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        UserData userData = new UserData();
+                        AttemptData attemptData = new AttemptData();
 
-                        userData.name = reader.GetString("name");
-                        userData.score = reader.GetInt32("score");
-                        userData.time = reader.GetInt32("time");
-                        userData.accuracy = reader.GetFloat("accuracy");
-                        userData.stars = reader.GetFloat("stars");
-                        userData.rating = reader.GetString("rating");
+                        attemptData.programmerName = reader.GetString("name");
+                        attemptData.score = reader.GetInt32("score");
+                        attemptData.stars = reader.GetInt32("stars");
+                        attemptData.totalCorrectAnswers = reader.GetInt32("totalCorrectAnswers");
+                        attemptData.totalAnswers = reader.GetInt32("totalAnswers");
+                        attemptData.totalLevels = reader.GetInt32("totalLevels");
 
-                        userDatas.Add(userData);
-                    }
-
-                    userDatas.Sort((a, b) => b.score.CompareTo(a.score));
-                }
-
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
-
-        return userDatas;
-    }
-
-    public List<UserData> GetTopUserDataByTime()
-    {
-        List<UserData> userDatas = new List<UserData>();
-
-        using (var connection = new SqliteConnection(connectionString))
-        {
-            connection.Open();
-
-            using (var command = connection.CreateCommand())
-            {
-                command.CommandText = $"SELECT * FROM Attempts";
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        UserData userData = new UserData();
-
-                        userData.name = reader.GetString("name");
-                        userData.score = reader.GetInt32("score");
-                        userData.time = reader.GetInt32("time");
-                        userData.accuracy = reader.GetFloat("accuracy");
-                        userData.stars = reader.GetFloat("stars");
-                        userData.rating = reader.GetString("rating");
-
-                        userDatas.Add(userData);
-                    }
-
-                    userDatas.Sort((a, b) => a.time.CompareTo(b.time));
-                }
-
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
-
-        return userDatas;
-    }
-
-    public List<UserData> GetAttemptsHistory()
-    {
-        List<UserData> userDatas = new List<UserData>();
-
-        using (var connection = new SqliteConnection(connectionString))
-        {
-            connection.Open();
-
-            using (var command = connection.CreateCommand())
-            {
-                command.CommandText = $"SELECT * FROM Attempts";
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        UserData userData = new UserData();
-
-                        userData.name = reader.GetString("name");
-                        userData.score = reader.GetInt32("score");
-                        userData.time = reader.GetInt32("time");
-                        userData.accuracy = reader.GetFloat("accuracy");
-                        userData.stars = reader.GetFloat("stars");
-                        userData.rating = reader.GetString("rating");
-
-                        userDatas.Add(userData);
+                        attemptDatas.Add(attemptData);
                     }
                 }
-
-                command.ExecuteNonQuery();
             }
-
-            connection.Close();
         }
 
-        return userDatas;
+        return attemptDatas;
     }
 
-    public UserData GetLevelDataByName(string levelName)
+    public List<AttemptData> GetTopUserDataByScore()
     {
-        UserData userData = new UserData();
+        List<AttemptData> attemptDatas = GetAllAttempts();
+        attemptDatas.Sort((a, b) => b.score.CompareTo(a.score));
+
+        return attemptDatas;
+    }
+
+    public LevelData GetLevelDataByName(string levelName)
+    {
+        LevelData levelData = new LevelData();
 
         using (var connection = new SqliteConnection(connectionString))
         {
@@ -411,20 +354,20 @@ public class LanguageDatabase : MonoBehaviour
                     if (reader.HasRows)
                     {
                         reader.Read();
-                        userData.name = reader.GetString("name");
-                        userData.score = reader.GetInt32("score");
-                        userData.time = reader.GetInt32("time");
-                        userData.accuracy = reader.GetFloat("accuracy");
-                        userData.stars = reader.GetFloat("stars");
+                        levelData.name = reader.GetString("name");
+                        levelData.score = reader.GetInt32("score");
+                        levelData.stars = reader.GetInt32("stars");
+                        levelData.totalCorrectAnswers = reader.GetInt32("totalCorrectAnswers");
+                        levelData.totalAnswers = reader.GetInt32("totalAnswers");
                     }
                     else
                     {
-                        AddLevel(levelName);
-                        userData.name = "";
-                        userData.score = 0;
-                        userData.time = 0;
-                        userData.accuracy = 0;
-                        userData.stars = 0;
+                        SetLevelDataByName(levelName, 0, 0, 0, 0);
+                        levelData.name = "";
+                        levelData.score = 0;
+                        levelData.stars = 0;
+                        levelData.totalCorrectAnswers = 0;
+                        levelData.totalAnswers = 0;
                     }
 
                 }
@@ -435,10 +378,15 @@ public class LanguageDatabase : MonoBehaviour
             connection.Close();
         }
 
-        return userData;
+        return levelData;
     }
 
-    public void AddLevel(string levelName)
+    public void SetCurrentLevelData(int score, int stars, int totalCorrectAnswers, int totalAnswers)
+    {
+        SetLevelDataByName(currentLevelName, score, stars, totalCorrectAnswers, totalAnswers);
+    }
+
+    public void SetLevelDataByName(string levelName, int score, int stars, int totalCorrectAnswers, int totalAnswers)
     {
         using (var connection = new SqliteConnection(connectionString))
         {
@@ -446,38 +394,26 @@ public class LanguageDatabase : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = $"INSERT INTO Levels VALUES (@name, @score, @time, @accuracy, @stars);";
-
-                command.Parameters.AddWithValue("@name", levelName);
-                command.Parameters.AddWithValue("@score", 0);
-                command.Parameters.AddWithValue("@time", 0);
-                command.Parameters.AddWithValue("@accuracy", 0);
-                command.Parameters.AddWithValue("@stars", 0);
-
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
-    }
-
-    public void SetLevelDataByName(string levelName, int score, int time, float accuracy, float stars)
-    {
-        using (var connection = new SqliteConnection(connectionString))
-        {
-            connection.Open();
-
-            using (var command = connection.CreateCommand())
-            {
-                command.CommandText = $"UPDATE Levels SET score = @score, time = @time, accuracy = @accuracy, stars = @stars WHERE name = @levelName;";
+                command.CommandText = $"UPDATE Levels SET score=@score, stars=@stars, totalCorrectAnswers=@totalCorrectAnswers, totalAnswers=@totalAnswers WHERE name = @levelName;";
 
                 command.Parameters.AddWithValue("@levelName", levelName);
                 command.Parameters.AddWithValue("@score", score);
-                command.Parameters.AddWithValue("@time", time);
-                command.Parameters.AddWithValue("@accuracy", accuracy);
                 command.Parameters.AddWithValue("@stars", stars);
+                command.Parameters.AddWithValue("@totalCorrectAnswers", totalCorrectAnswers);
+                command.Parameters.AddWithValue("@totalAnswers", totalAnswers);
 
-                command.ExecuteNonQuery();
+                if (command.ExecuteNonQuery() == 0)
+                {
+                    command.CommandText = $"INSERT INTO Levels VALUES(@levelName, @score, @stars, @totalCorrectAnswers, @totalAnswers)";
+
+                    command.Parameters.AddWithValue("@levelName", levelName);
+                    command.Parameters.AddWithValue("@score", score);
+                    command.Parameters.AddWithValue("@stars", stars);
+                    command.Parameters.AddWithValue("@totalCorrectAnswers", totalCorrectAnswers);
+                    command.Parameters.AddWithValue("@totalAnswers", totalAnswers);
+
+                    command.ExecuteNonQuery();
+                }
             }
 
             connection.Close();

@@ -26,8 +26,10 @@ public class ProblemSolving : MonoBehaviour
     public Action onSubmitOrFinish;
     private Ticket ticket;
     public int totalCorrect = 0;
+    public int totalSlots = 0;
     public int timeRemaining = 0;
     private bool isOnFinishCalled;
+    public TaskScoreModel taskScoreModel;
     
     public void SetTicket(Ticket ticket)
     {
@@ -98,33 +100,43 @@ public class ProblemSolving : MonoBehaviour
 
     public void CheckAnswers()
     {
-        SlotNode[] slotNodes = GetComponentsInChildren<SlotNode>();
+        taskScoreModel = new TaskScoreModel();
+
+        SlotNode[] slotNodes = GetComponentsInChildren<SlotNode>(includeInactive: true);
 
         totalCorrect = 0;
         timeRemaining = Mathf.FloorToInt(targetTime);
 
-        ticket.isFinished = true;
+        // ticket.isFinished = true;
 
         foreach (SlotNode slotNode in slotNodes)
         {
+            totalSlots++;
             if (slotNode.IsAnswerCorrect())
                 totalCorrect++;
         }
 
-        ScoreManager.totalCorrect += totalCorrect;
-        ScoreManager.totalSlots += slotNodes.Length;
+        taskScoreModel.totalCorrectAnswers = totalCorrect;
+        taskScoreModel.totalAnswers = totalSlots;
 
-        if (totalCorrect < 3)
+        // ScoreManager.totalCorrect += totalCorrect;
+        // ScoreManager.totalSlots += slotNodes.Length;
+
+
+        if (totalCorrect < (float)totalSlots / 2)
         {
             ticket.isFixed = false;
+            taskScoreModel.isFixed = false;
         }
         else
         {
             int score = Mathf.FloorToInt(targetTime) * 10;
+            taskScoreModel.score = score;
             ScoreManager.AddScore(score);
-            ScoreManager.fixedDevices++;
             ticket.isFixed = true;
+            taskScoreModel.isFixed = true;
         }
+
         ScoreManager.finishedDevices++;
         onSubmitOrFinish?.Invoke();
         modalControl.Close();

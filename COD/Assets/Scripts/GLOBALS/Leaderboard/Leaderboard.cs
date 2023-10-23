@@ -41,16 +41,7 @@ public class Leaderboard : MonoBehaviour
 
         LanguageDatabase languageDatabase = LanguageDatabase.GetInstance(languageName.ToLower());
 
-        List<UserData> userDatas;
-
-        if (filterBy == "Time")
-        {
-            userDatas = languageDatabase.GetTopUserDataByTime();
-        }
-        else
-        {
-            userDatas = languageDatabase.GetTopUserDataByScore();
-        }
+        List<AttemptData> userDatas = languageDatabase.GetTopUserDataByScore();
 
         LoadData(userDatas);
     }
@@ -63,56 +54,33 @@ public class Leaderboard : MonoBehaviour
         }
     }
 
-    private void LoadData(List<UserData> userDatas)
+    private void LoadData(List<AttemptData> userDatas)
     {
         int iterationCount = 0;
         string filterBy = filterByDropdown.options[filterByDropdown.value].text;
         List<string> names = new List<string>();
 
-        foreach (UserData userData in userDatas)
+        foreach (AttemptData attemptData in userDatas)
         {
             if (iterationCount >= leaderboardEntries.Count)
             {
                 break;
             }
-            if (names.Contains(userData.name))
+            if (names.Contains(attemptData.programmerName))
             {
                 continue;
             }
             else
             {
-                names.Add(userData.name);
+                names.Add(attemptData.programmerName);
             }
 
-            string name = userData.name;
-            int value;
+            string name = attemptData.programmerName;
+            string value = attemptData.score.ToString();
 
-            string valueAsString;
-
-            if (filterBy == "Time")
-            {
-                value = userData.time;
-                valueAsString = SecondsToTimeString(value);
-            }
-            else
-            {
-                value = userData.score;
-                valueAsString = value.ToString();
-            }
-
-            leaderboardEntries[iterationCount].SetValues(name, valueAsString);
+            leaderboardEntries[iterationCount].SetValues(name, value);
 
             iterationCount++;
         }
-    }
-
-    private string SecondsToTimeString(int time)
-    {
-        int minutes = time / 60;
-        int seconds = time % 60;
-
-        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
-
-        return timeString;
     }
 }

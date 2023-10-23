@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Tymski;
 using UnityEngine;
@@ -24,20 +22,21 @@ public class LevelItem : MonoBehaviour
         {
             star.gameObject.SetActive(false);
         }
-        UserData data = LanguageDatabase.GetInstance(languageName).GetLevelDataByName(levelNameText.text);
+
+        LevelData levelData = LanguageDatabase.GetInstance(languageName).GetLevelDataByName(levelNameText.text);
         SceneReference scene = LanguageDatabase.GetInstance(languageName).scenes[LanguageDatabase.GetInstance(languageName).currentLevel - 1];
 
         if (scene.SceneName == levelNameText.text)
         {
             SetAsCurrent();
         }
-        else if (data.time == 0)
+        else if (levelData.stars == 0)
         {
             SetAsLocked();
         }
         else
         {
-            SetDisplay(data);
+            SetDisplay(levelData);
         }
     }
 
@@ -69,39 +68,23 @@ public class LevelItem : MonoBehaviour
         playButton.gameObject.SetActive(true);
     }
 
-    private void SetDisplay(UserData data)
+    private void SetDisplay(LevelData levelData)
     {
-        scoreText.text = $"<b>Score:</b> {data.score}";
-        timeText.text = $"<b>Time:</b> {GetTimeAsString(data.time)}";
-        accuracyText.text = $"<b>Accuracy:</b> {data.accuracy:F2}%";
+        scoreText.text = $"<b>Score:</b> {levelData.score}";
+        timeText.text = $"<b>Answers:</b> {levelData.totalCorrectAnswers}/{levelData.totalAnswers}";
+        accuracyText.text = $"<b>Accuracy:</b> {levelData.accuracy:F0}%";
         backgroundImage.color = new Color(0.72f, 0.72f, 0.3f, 1f);
 
         int totalStars = 1;
 
-        if (data.stars >= 3f)
+        if (levelData.stars > 3)
         {
             totalStars = 3;
-        }
-        else if (data.stars >= 2f)
-        {
-            totalStars = 2;
         }
 
         for (int i = 0; i < totalStars; i++)
         {
             stars[i].gameObject.SetActive(true);
         }
-    }
-
-    private static string GetTimeAsString(int totalTime)
-    {
-        int totalSeconds = totalTime;
-
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
-
-        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
-
-        return timeString;
     }
 }

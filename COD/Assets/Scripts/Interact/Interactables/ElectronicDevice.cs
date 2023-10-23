@@ -64,27 +64,27 @@ public class ElectronicDevice : MonoBehaviour
     {
         int totalCorrect = problemModal.totalCorrect;
         int timeRemaining = problemModal.timeRemaining;
-
-        if (ticket.isFixed)
-        {
-            deviceScreen.ChangeScreen(fixedScreenMaterial);
-            if (ScoreManager.finishedDevices != 3)
-            {
-                MessageBoxControl.ShowOk("RESULT", $"Device has been fixed.\n\nCorrect Answers: {totalCorrect} out of 5\nTime Remaining: {timeRemaining}\nAdditional Score: {timeRemaining*10}");
-            }
-        }
-
-        else
-        {
-            if (ScoreManager.finishedDevices != 3)
-            {
-                MessageBoxControl.ShowOk("RESULT", $"Device is still broken. \n\nYou scored {totalCorrect} out of 5.");
-            }
-        }
+        int totalSlots = problemModal.totalSlots;
 
         TicketManager.OnFinish(ticket);
         interactable.isInteractable = false;
         Destroy(outline);
 
+        if (ticket.isFixed)
+        {
+            deviceScreen.ChangeScreen(fixedScreenMaterial);
+            MessageBoxControl.ShowOk("RESULT", $"Device has been fixed.\n\nCorrect Answers: {totalCorrect} out of {totalSlots}\nTime Remaining: {timeRemaining}\nAdditional Score: {timeRemaining*10}", () =>
+            {
+                TicketManager.instance.CheckTasks();
+            });
+        }
+
+        else
+        {
+            MessageBoxControl.ShowOk("RESULT", $"Device is still broken. \n\nCorrect Answers: {totalCorrect} out of {totalSlots}.", () =>
+            {
+                TicketManager.instance.CheckTasks();
+            });
+        }
     }
 }

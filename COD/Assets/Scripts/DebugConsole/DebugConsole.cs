@@ -89,6 +89,33 @@ public class DebugConsole : MonoBehaviour
         Log(sb.ToString());
     }
 
+    [Command()]
+    public void ClearData(string[] parameters)
+    {
+        SecurePlayerPrefs.Init();
+        SecurePlayerPrefs.SetString("csharp-name", "");
+        SecurePlayerPrefs.SetInt("csharp-level", 1);
+        SecurePlayerPrefs.SetInt("csharp-score", 0);
+        SecurePlayerPrefs.SetInt("csharp-time", 0);
+        SecurePlayerPrefs.SetInt("csharp-accuracy", 0);
+        SecurePlayerPrefs.SetInt("csharp-stars", 0);
+
+
+        SecurePlayerPrefs.SetString("java-name", "");
+        SecurePlayerPrefs.SetInt("java-level", 1);
+        SecurePlayerPrefs.SetInt("java-score", 0);
+        SecurePlayerPrefs.SetInt("java-time", 0);
+        SecurePlayerPrefs.SetInt("java-accuracy", 0);
+        SecurePlayerPrefs.SetInt("java-stars", 0);
+
+        SecurePlayerPrefs.Save();
+
+        LanguageDatabase.GetInstance("java").ResetProgress();
+        LanguageDatabase.GetInstance("csharp").ResetProgress();
+
+        LogSuccess("Success");
+    }
+
     [Command("Sets the speed of time of the game. (Min value: 0, Max value: 100)")]
     public void SetTimeScale(string[] parameters)
     {

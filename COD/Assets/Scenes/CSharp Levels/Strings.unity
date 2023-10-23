@@ -69592,9 +69592,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LevelCompleteModal, Assembly-CSharp
-        m_MethodName: Proceed
+      - m_Target: {fileID: 308955397}
+        m_TargetAssemblyTypeName: GameOverModal, Assembly-CSharp
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

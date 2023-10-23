@@ -1,0 +1,21 @@
+Println
+Print
+Log
+Writeline
+Writeln
+struct
+int
+##############################
+using System;
+
+public (NODE_SLOT:class) Program
+{
+    public static (NODE_SLOT:void) Main(string[] args)
+    {
+        string name = "Lanz";
+
+        Console.(NODE_SLOT:WriteLine)((NODE_SLOT:"Name is ") + (NODE_SLOT:name));
+    }
+}
+##############################
+Name is Lanz

@@ -2,6 +2,8 @@ getName
 printName
 Animal
 Animal
+Name
+create
 ##############################
 using System;
 
@@ -9,9 +11,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        (NODE_SLOT:Dog) dog = new (NODE_SLOT:Dog)();
+        (NODE_SLOT:Dog) dog = (NODE_SLOT:new) (NODE_SLOT:Dog)();
 
-        dog.name = "Gorou";
+        dog.(NODE_SLOT:name) = "Gorou";
         dog.(NODE_SLOT:display)();
         dog.(NODE_SLOT:displayName)();
     }

@@ -8,12 +8,11 @@ public class TicketManager : MonoBehaviour
     public static bool isLevelCompleted;
 
     [SerializeField] private GameObject taskPrefab;
-    [SerializeField] private LevelCompleteModal levelCompleteModalControl;
-    [SerializeField] private GameOverModal gameOverModalControl;
+    [SerializeField] private EndScreen endScreen;
     [SerializeField] private TextMeshProUGUI ticketCounterText;
 
     private static List<Ticket> tickets;
-    private static TicketManager instance;
+    public static TicketManager instance;
 
 
     void Awake()
@@ -25,7 +24,7 @@ public class TicketManager : MonoBehaviour
 
     void Start()
     {
-        if (SceneManager.GetActiveScene().name.StartsWith("Introduction"))
+        if (SceneManager.GetActiveScene().name == "Introduction")
         {
             TutorialModalControl.Open();
         }
@@ -46,8 +45,9 @@ public class TicketManager : MonoBehaviour
 
     public static void OnFinish(Ticket ticket)
     {
-        instance.CheckTasks();
+        // instance.CheckTasks();
         tickets.Remove(ticket);
+        Destroy(ticket.gameObject);
         instance.UpdateRemainingActiveTicketsDisplay();
 
         if (ObjectNavigation.instance.currentInstance == ticket.owner)
@@ -61,7 +61,7 @@ public class TicketManager : MonoBehaviour
         ticketCounterText.text = $"Remaining Tasks: {tickets.Count}";
     }
 
-    private void CheckTasks()
+    public void CheckTasks()
     {
         foreach (Ticket task in tickets)
         {
@@ -71,34 +71,28 @@ public class TicketManager : MonoBehaviour
             }
         }
 
-        if (ScoreManager.fixedDevices == 0)
+        List<TaskScoreModel> taskScoreModels = new List<TaskScoreModel>();
+
+        foreach (ProblemSolving problemSolving in ProblemSolvingDistributor.problemSolvings)
         {
-            gameOverModalControl.Open();
-            return;
+            taskScoreModels.Add(problemSolving.taskScoreModel);
         }
 
         isLevelCompleted = true;
-
-        DatabaseManager.instance.currentLanguage.currentTime += LevelTimer.GetTimeInSeconds();
-        DatabaseManager.instance.currentLanguage.currentScore += ScoreManager.score;
-        DatabaseManager.instance.currentLanguage.currentTotalAccuracy += ScoreManager.accuracy;
-        DatabaseManager.instance.currentLanguage.currentTotalStars += ScoreManager.fixedDevices;
-        DatabaseManager.instance.currentLanguage.SetLevelDataByName(SceneManager.GetActiveScene().name, ScoreManager.score, LevelTimer.GetTimeInSeconds(), ScoreManager.accuracy, ScoreManager.fixedDevices);
-
-        LevelComplete();
+        LevelComplete(taskScoreModels);
     }
 
-    private void LevelComplete()
+    private void LevelComplete(List<TaskScoreModel> taskScoreModels)
     {
-        LanguageDatabase languageDatabase = DatabaseManager.instance.currentLanguage;
+        foreach (TaskScoreModel taskScoreModel in taskScoreModels)
+        {
+            if (taskScoreModel.isFixed)
+            {
+                endScreen.ShowLevelComplete(taskScoreModels.ToArray());
+                return;
+            }
+        }
 
-        int time = languageDatabase.currentTime;
-        int score = languageDatabase.currentScore;
-        float accuracy = languageDatabase.overallAccuracy;
-        float stars = languageDatabase.overallStars;
-
-        levelCompleteModalControl.Open(time, score, accuracy, stars, languageDatabase.isPlayingTheLastLevel);
-
-        DatabaseManager.instance.currentLanguage.LevelUp();
+        endScreen.ShowGameOver(taskScoreModels.ToArray());
     }
 }

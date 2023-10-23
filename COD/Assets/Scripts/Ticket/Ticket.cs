@@ -14,7 +14,6 @@ public class Ticket : MonoBehaviour
 
     private Action<Ticket> onFix;
 
-
     public void Initialize(GameObject owner, string title, Action<Ticket> onFix)
     {
         this.owner = owner;
