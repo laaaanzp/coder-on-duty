@@ -5,13 +5,11 @@ using UnityEngine.UI;
 public class SlotNode : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public string correctAnswer;
-    private Color highlightEffectColor = Color.yellow;
     private Vector2 highlightEffectDistance = new Vector2(3, 3);
 
     private float minWidth, minHeight;
     private LayoutElement layoutElement;
 
-    // Default outline value
     [SerializeField] private UnityEngine.UI.Outline outline;
     private Color effectColor;
     private Vector2 effectDistance;
@@ -36,7 +34,6 @@ public class SlotNode : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         if (transform.childCount != 0)
         {
             transform.GetChild(0).SetParent(draggableItem.parentAfterDrag);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(draggableItem.parentAfterDrag.GetComponent<RectTransform>());
         }
 
         draggableItem.parentAfterDrag = transform;
@@ -59,9 +56,19 @@ public class SlotNode : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        layoutElement.minWidth = minWidth;
-        layoutElement.minHeight = minHeight;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+        if (transform.childCount != 0)
+        {
+            Rect childRect = transform.GetChild(0).GetComponent<RectTransform>().rect;
+
+            layoutElement.minWidth = childRect.width;
+            layoutElement.minHeight = childRect.height;
+        }
+        else
+        {
+            layoutElement.minWidth = minWidth;
+            layoutElement.minHeight = minHeight;
+        }
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 
         Unhighlight();
@@ -69,7 +76,7 @@ public class SlotNode : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     private void Highlight()
     {
-        outline.effectColor = highlightEffectColor;
+        outline.effectColor = Color.yellow;
         outline.effectDistance = highlightEffectDistance;
     }
 
@@ -77,6 +84,18 @@ public class SlotNode : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     {
         outline.effectColor = effectColor;
         outline.effectDistance = effectDistance;
+    }
+
+    public void HighlightCorrect()
+    {
+        outline.effectColor = Color.green;
+        outline.effectDistance = highlightEffectDistance;
+    }
+
+    public void HighlightIncorrect()
+    {
+        outline.effectColor = Color.red;
+        outline.effectDistance = highlightEffectDistance;
     }
 
     public bool IsAnswerCorrect()

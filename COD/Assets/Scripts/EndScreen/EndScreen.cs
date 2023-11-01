@@ -53,9 +53,9 @@ public class EndScreen : MonoBehaviour
     {
         DatabaseManager.instance.currentLanguage.SetCurrentLevelData(totalScore, stars, totalCorrectAnswers, totalAnswers);
         Debug.Log(totalScore);
-        Debug.Log(totalCorrectAnswers);
-        Debug.Log(totalScore);
-        Debug.Log(totalScore);
+        Debug.Log($"{totalCorrectAnswers}/{totalAnswers}");
+        Debug.Log(stars);
+
         if (DatabaseManager.instance.currentLanguage.isPlayingTheLastLevel)
         {
             // TODO: Show overall score

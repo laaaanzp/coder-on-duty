@@ -9,36 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: c3fa9707b378f1f4d9dd573aca7aae4f
   - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Arrays.unity
-    guid: 18bf1f0927490f2469900d09f705edf4
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Classes and Objects.unity
-    guid: 4e67532cf8558c746a8b0e7bfa39b470
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Data Types.unity
-    guid: fc275b2d84b673d45ab6e8e6d5e2488e
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Decision Making.unity
-    guid: 9e3ceb4068a6b324da72c8dab1b2dd20
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Inheritance and Polymorphism.unity
-    guid: 26fc97254156ba24faf71791bda3e9a0
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Interfaces.unity
-    guid: 4b913f5d1aa4c6f44acbbd8d3fd5679e
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Introduction.unity
+    path: Assets/Scenes/Level.unity
     guid: 70d6830c02dfb3e4191a16ff77a19774
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Looping.unity
-    guid: 1443dd13474d441448e8be61400c2b09
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Methods and Structures.unity
-    guid: a30227b39888def49b2522c47534317e
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Operators and Expressions.unity
-    guid: 43f392807877e124d954f7f63a2b6294
-  - enabled: 1
-    path: Assets/Scenes/CSharp Levels/Strings.unity
-    guid: bcdbc6c68cc08984fbc6b39a0e04f463
   m_configObjects: {}

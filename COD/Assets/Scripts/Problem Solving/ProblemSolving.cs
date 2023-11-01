@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -29,6 +30,7 @@ public class ProblemSolving : MonoBehaviour
     public int totalSlots = 0;
     public int timeRemaining = 0;
     private bool isOnFinishCalled;
+    private bool hasSubmitted;
     public TaskScoreModel taskScoreModel;
     
     public void SetTicket(Ticket ticket)
@@ -98,7 +100,18 @@ public class ProblemSolving : MonoBehaviour
         modalControl.Open();
     }
 
+    public void Close()
+    {
+        modalControl.Close();
+    }
+
     public void CheckAnswers()
+    {
+        hasSubmitted = true;
+        StartCoroutine(_CheckAnswers());
+    }
+
+    private IEnumerator _CheckAnswers()
     {
         taskScoreModel = new TaskScoreModel();
 
@@ -109,11 +122,22 @@ public class ProblemSolving : MonoBehaviour
 
         // ticket.isFinished = true;
 
+        totalSlots = slotNodes.Length;
         foreach (SlotNode slotNode in slotNodes)
         {
-            totalSlots++;
             if (slotNode.IsAnswerCorrect())
+            {
+                slotNode.HighlightCorrect();
                 totalCorrect++;
+                AudioController.PlayNodeSlotCorrect();
+            }
+            else
+            {
+                slotNode.HighlightIncorrect();
+                AudioController.PlayNodeSlotIncorrect();
+            }
+
+            yield return new WaitForSeconds(0.5f);
         }
 
         taskScoreModel.totalCorrectAnswers = totalCorrect;
@@ -122,11 +146,13 @@ public class ProblemSolving : MonoBehaviour
         // ScoreManager.totalCorrect += totalCorrect;
         // ScoreManager.totalSlots += slotNodes.Length;
 
+        yield return new WaitForSeconds(2f);
 
         if (totalCorrect < (float)totalSlots / 2)
         {
             ticket.isFixed = false;
             taskScoreModel.isFixed = false;
+            AudioController.PlayUnfixedDevice();
         }
         else
         {
@@ -135,6 +161,7 @@ public class ProblemSolving : MonoBehaviour
             ScoreManager.AddScore(score);
             ticket.isFixed = true;
             taskScoreModel.isFixed = true;
+            AudioController.PlayFixedDevice();
         }
 
         ScoreManager.finishedDevices++;
@@ -154,6 +181,10 @@ public class ProblemSolving : MonoBehaviour
 
     private void Update()
     {
+        if (hasSubmitted)
+        {
+            return;
+        }
         targetTime -= Time.deltaTime;
 
         targetTime = MathF.Max(targetTime, 0);

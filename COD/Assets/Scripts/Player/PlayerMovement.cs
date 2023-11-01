@@ -2,23 +2,25 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController characterController;
+    [SerializeField] private CharacterController characterController;
+
+    [SerializeField] private float footstepDelay = 0.75f;
+    private float currentDelayTime = 0f;
 
     [Header("Normal Speed")]
-    [SerializeField] public float normalSpeed = 4f;
+    [SerializeField] private float normalSpeed = 4f;
     private float normalSpeedFOV;
 
     [Header("Sprint Speed")]
-    [SerializeField] public float sprintSpeed = 6f;
-    [SerializeField] public float sprintSpeedFOV = 75f;
+    [SerializeField] private float sprintSpeed = 6f;
+    [SerializeField] private float sprintSpeedFOV = 75f;
 
     [Header("Gravity")]
-    [SerializeField] public bool applyGravity = true;
-    [SerializeField] public float gravity = -9.81f;
+    [SerializeField] private bool applyGravity = true;
+    [SerializeField] private float gravity = -9.81f;
     private Vector3 velocity;
 
     private float currentSpeed;
-
 
     void Awake()
     {
@@ -44,6 +46,18 @@ public class PlayerMovement : MonoBehaviour
             characterController.Move(velocity * Time.deltaTime);
         }
 
+        if (y > 0 || x > 0)
+        {
+            currentDelayTime += Time.deltaTime;
+        }
+        
+        if (currentDelayTime >= footstepDelay)
+        {
+            AudioController.PlayFootstep();
+            currentDelayTime = 0f;
+        }
+
+        /*
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Sprint();
@@ -52,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Walk();
         }
+        */
     }
 
     void Sprint()

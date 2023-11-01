@@ -24,9 +24,9 @@ public class LevelItem : MonoBehaviour
         }
 
         LevelData levelData = LanguageDatabase.GetInstance(languageName).GetLevelDataByName(levelNameText.text);
-        SceneReference scene = LanguageDatabase.GetInstance(languageName).scenes[LanguageDatabase.GetInstance(languageName).currentLevel - 1];
+        string levelName = LanguageDatabase.GetInstance(languageName).levelNames[LanguageDatabase.GetInstance(languageName).currentLevel - 1];
 
-        if (scene.SceneName == levelNameText.text)
+        if (levelName == levelNameText.text)
         {
             SetAsCurrent();
         }
@@ -75,14 +75,7 @@ public class LevelItem : MonoBehaviour
         accuracyText.text = $"<b>Accuracy:</b> {levelData.accuracy:F0}%";
         backgroundImage.color = new Color(0.72f, 0.72f, 0.3f, 1f);
 
-        int totalStars = 1;
-
-        if (levelData.stars > 3)
-        {
-            totalStars = 3;
-        }
-
-        for (int i = 0; i < totalStars; i++)
+        for (int i = 0; i < levelData.stars; i++)
         {
             stars[i].gameObject.SetActive(true);
         }

@@ -25,7 +25,7 @@ public class ElectronicDevice : MonoBehaviour
         }
         ticket = TicketManager.RegisterTask(gameObject, $"Fix Device ({name})");
         problemModal.onSubmitOrFinish += () => 
-        { 
+        {
             OnFinish();
         };
         problemModal.SetTicket(ticket);
@@ -75,6 +75,7 @@ public class ElectronicDevice : MonoBehaviour
             deviceScreen.ChangeScreen(fixedScreenMaterial);
             MessageBoxControl.ShowOk("RESULT", $"Device has been fixed.\n\nCorrect Answers: {totalCorrect} out of {totalSlots}\nTime Remaining: {timeRemaining}\nAdditional Score: {timeRemaining*10}", () =>
             {
+                problemModal.Close();
                 TicketManager.instance.CheckTasks();
             });
         }
@@ -83,6 +84,7 @@ public class ElectronicDevice : MonoBehaviour
         {
             MessageBoxControl.ShowOk("RESULT", $"Device is still broken. \n\nCorrect Answers: {totalCorrect} out of {totalSlots}.", () =>
             {
+                problemModal.Close();
                 TicketManager.instance.CheckTasks();
             });
         }

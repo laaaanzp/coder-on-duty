@@ -12,8 +12,8 @@ public class ProblemSolvingDistributor : MonoBehaviour
     void Start()
     {
         string languageName = DatabaseManager.instance.currentLanguage.languageName;
-        string sceneName = SceneManager.GetActiveScene().name;
-        problemTextAssets = Resources.LoadAll<TextAsset>($"Problems/{languageName}/{sceneName}");
+        string levelName = DatabaseManager.instance.currentLanguage.currentLevelName;
+        problemTextAssets = Resources.LoadAll<TextAsset>($"Problems/{languageName}/{levelName}/");
         problemTextAssets = Tools.ShuffleArray(problemTextAssets);
 
         GameObject[] computerObjects = GameObject.FindGameObjectsWithTag("Computer");

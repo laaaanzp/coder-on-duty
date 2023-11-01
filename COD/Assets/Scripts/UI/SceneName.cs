@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SceneName : MonoBehaviour
 {
@@ -8,13 +7,9 @@ public class SceneName : MonoBehaviour
 
     void Awake()
     {
-        int levelIndex = 1;
+        LanguageDatabase languageDatabase = DatabaseManager.instance.currentLanguage;
 
-        try
-        {
-            levelIndex = DatabaseManager.instance.currentLanguage.currentLevel;
-        } catch { }
-
-        levelNameText.text = $"{levelIndex} - {SceneManager.GetActiveScene().name}";
+        string languageName = languageDatabase.name;
+        levelNameText.text = $"({languageName}) Level {languageDatabase.currentLevel} - {languageDatabase.currentLevelName}";
     }
 }

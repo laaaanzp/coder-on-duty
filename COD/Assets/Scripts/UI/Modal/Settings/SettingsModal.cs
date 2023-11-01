@@ -8,7 +8,6 @@ public class SettingsModal : MonoBehaviour
 {
     [Header("Volume")]
     [SerializeField] private Slider musicVolumeSlider;
-    [SerializeField] private Slider sfxVolumeSlider;
 
     [Header("Video")]
     [SerializeField] private TMP_Dropdown resolutionDropdown;
@@ -28,7 +27,8 @@ public class SettingsModal : MonoBehaviour
 
     private void SaveVolumeSettings()
     {
-        // TODO: Music
+        PlayerPrefs.SetFloat("music-volume", musicVolumeSlider.value);
+        AudioController.SetVolume(musicVolumeSlider.value);
     }
 
     private void SaveVideoSettings()
@@ -51,9 +51,9 @@ public class SettingsModal : MonoBehaviour
     {
         List<string> resolutions = new List<string>();
 
-        for (int i = UnityEngine.Screen.resolutions.Length; i --> 0;)
+        for (int i = Screen.resolutions.Length; i --> 0;)
         {
-            Resolution resolution = UnityEngine.Screen.resolutions[i];
+            Resolution resolution = Screen.resolutions[i];
             string resolutionString = $"{resolution.width}x{resolution.height}";
 
             if (resolutions.Contains(resolutionString))
@@ -78,8 +78,7 @@ public class SettingsModal : MonoBehaviour
 
     private void SetDefaultVolumeSettings()
     {
-        musicVolumeSlider.value = 100f;
-        sfxVolumeSlider.value = 100f;
+        musicVolumeSlider.value = 1f;
     }
 
     private void SetDefaultVideoSettings()
@@ -98,6 +97,7 @@ public class SettingsModal : MonoBehaviour
     void OnEnable()
     {
         // TODO: Music
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("music-volume", 1f);
 
         // Video
         LoadResolutions();

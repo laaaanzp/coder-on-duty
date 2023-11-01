@@ -3,7 +3,6 @@ using System.Data;
 using Tymski;
 using Mono.Data.Sqlite;
 using UnityEngine;
-using System.Data.Common;
 
 public class AttemptData
 {
@@ -46,7 +45,8 @@ public class LevelData
 public class LanguageDatabase : MonoBehaviour
 {
     [SerializeField] public string languageName;
-    [SerializeField] public SceneReference[] scenes;
+    // [SerializeField] public SceneReference[] scenes;
+    [SerializeField] public string[] levelNames;
 
     private string connectionString;
 
@@ -76,7 +76,7 @@ public class LanguageDatabase : MonoBehaviour
     }
     public string currentLevelName
     {
-        get => scenes[currentLevel - 1].SceneName;
+        get => levelNames[currentLevel - 1];
     }
 
     // Instances
@@ -124,10 +124,10 @@ public class LanguageDatabase : MonoBehaviour
                 command.CommandText = "DELETE FROM Levels";
                 command.ExecuteNonQuery();
 
-                foreach (SceneReference scene in scenes)
+                foreach (string levelName in levelNames)
                 {
                     command.CommandText = "INSERT INTO Levels VALUES (@name, 0, 0, 0, 0);";
-                    command.Parameters.AddWithValue("@name", scene.SceneName);
+                    command.Parameters.AddWithValue("@name", levelName);
                     command.ExecuteNonQuery();
                 }
             }
@@ -150,7 +150,7 @@ public class LanguageDatabase : MonoBehaviour
 
     public bool isPlayingTheLastLevel
     {
-        get => currentLevel == scenes.Length;
+        get => currentLevel == levelNames.Length;
     }
 
     public float progressPercentage
@@ -159,7 +159,7 @@ public class LanguageDatabase : MonoBehaviour
         {
             try
             {
-                float result = ((float)currentLevel - 1) / scenes.Length;
+                float result = ((float)currentLevel - 1) / levelNames.Length;
 
                 if (float.IsNaN(result) || result == float.NegativeInfinity ||  result == float.PositiveInfinity)
                 {
@@ -195,8 +195,7 @@ public class LanguageDatabase : MonoBehaviour
     {
         LanguageDatabase languageDatabase = GetInstance(languageName);
         DatabaseManager.instance.currentLanguage = languageDatabase;
-        SceneReference scene = languageDatabase.scenes[languageDatabase.currentLevel - 1];
-        SceneSwitcher.LoadScene(scene);
+        SceneSwitcher.LoadScene(1);
     }
 
     public void LevelUp()
