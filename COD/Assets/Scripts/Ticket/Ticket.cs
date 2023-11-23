@@ -20,7 +20,11 @@ public class Ticket : MonoBehaviour
         titleText.text = title;
         this.onFix = onFix;
 
-        navigateButton.onClick.AddListener(Navigate);
+        navigateButton.onClick.AddListener(() =>
+        {
+            Navigate();
+            TicketModalControl.Close();
+        });
     }
 
     public void Finish()

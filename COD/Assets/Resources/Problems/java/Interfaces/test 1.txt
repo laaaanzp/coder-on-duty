@@ -1,0 +1,42 @@
+class
+struct
+abstract
+Noise
+MakeEat
+IEntity
+person
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        IEntity entity = new (NODE_SLOT:Person)();
+
+        entity.MakeNoise();
+        entity.Eat();
+    }
+}
+
+(NODE_SLOT:interface) IEntity
+{
+    void MakeNoise();
+    void Eat();
+}
+
+public class Person : (NODE_SLOT:IEntity)
+{
+    public void (NODE_SLOT:MakeNoise)()
+    {
+        Console.WriteLine("Hi there!");
+    }
+
+    public void (NODE_SLOT:Eat)()
+    {
+        Console.WriteLine("Eating...");
+    }
+}
+##############################
+Hi there!
+Eating...

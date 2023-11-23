@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float normalSpeedFOV;
 
     [Header("Sprint Speed")]
-    [SerializeField] private float sprintSpeed = 6f;
+    [SerializeField] private float sprintSpeed = 5f;
     [SerializeField] private float sprintSpeedFOV = 75f;
 
     [Header("Gravity")]
@@ -46,18 +46,11 @@ public class PlayerMovement : MonoBehaviour
             characterController.Move(velocity * Time.deltaTime);
         }
 
-        if (y > 0 || x > 0)
+        if (y != 0 || x != 0)
         {
             currentDelayTime += Time.deltaTime;
         }
-        
-        if (currentDelayTime >= footstepDelay)
-        {
-            AudioController.PlayFootstep();
-            currentDelayTime = 0f;
-        }
 
-        /*
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Sprint();
@@ -66,11 +59,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Walk();
         }
-        */
     }
 
     void Sprint()
     {
+        if (currentDelayTime >= footstepDelay / 2)
+        {
+            AudioController.PlayFootstep();
+            currentDelayTime = 0f;
+        }
+
         currentSpeed = sprintSpeed;
 
         if (Camera.main.fieldOfView < sprintSpeedFOV)
@@ -85,6 +83,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Walk()
     {
+        if (currentDelayTime >= footstepDelay)
+        {
+            AudioController.PlayFootstep();
+            currentDelayTime = 0f;
+        }
+
         currentSpeed = normalSpeed;
 
         if (Camera.main.fieldOfView > normalSpeedFOV)

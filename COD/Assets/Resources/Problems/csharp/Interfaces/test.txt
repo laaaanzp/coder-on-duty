@@ -1,0 +1,35 @@
+int
+int
+float
+float
+IShape
+Calculate
+GetArea
+##############################
+using System;
+
+public interface IShape
+{
+    double (NODE_SLOT:CalculateArea)(double radius);
+}
+
+public class Circle : (NODE_SLOT:IShape)
+{
+    public (NODE_SLOT:double) CalculateArea((NODE_SLOT:double) radius)
+    {
+        return Math.PI * Math.Pow(radius, 2);
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        IShape shape = new (NODE_SLOT:Circle)();
+        double area = shape.CalculateArea(5);
+
+        Console.WriteLine($"The area of the shape is: {area}");
+    }
+}
+##############################
+The area of the circle is: 78.5398163397448

@@ -1,0 +1,43 @@
+IVehicle
+IVehicle
+interface
+abstract
+struct
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        IVehicle vehicle1 = new (NODE_SLOT:Car)();
+        IVehicle vehicle2 = new (NODE_SLOT:Tricycle)();
+
+        vehicle1.Start();
+        vehicle2.Start();
+    }
+}
+
+public interface IVehicle
+{
+    void Start();
+}
+
+public (NODE_SLOT:class) Car : (NODE_SLOT:IVehicle)
+{
+    public void Start()
+    {
+        Console.WriteLine("Starting car...");
+    }
+}
+
+public class (NODE_SLOT:Tricycle) : IVehicle
+{
+    public void Start()
+    {
+        Console.WriteLine("Starting tricycle...");
+    }
+}
+##############################
+Starting car...
+Starting tricycle...

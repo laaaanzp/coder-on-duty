@@ -1,9 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TicketModalControl : MonoBehaviour
 {
     [SerializeField] private ModalControl ticketModalControl;
+    public static TicketModalControl instance;
 
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Update()
     {
@@ -14,5 +20,10 @@ public class TicketModalControl : MonoBehaviour
         {
             ticketModalControl.Open();
         }
+    }
+
+    public static void Close()
+    {
+        instance.ticketModalControl.Close();
     }
 }

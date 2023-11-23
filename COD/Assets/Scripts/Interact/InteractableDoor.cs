@@ -27,7 +27,7 @@ public class InteractableDoor : MonoBehaviour
     {
         interactable.isInteractable = false;
         float rotation = gameObject.transform.eulerAngles.y - rotationY;
-
+        AudioController.PlayDoorInteract();
         gameObject.LeanRotateY(rotation, duration).
             setOnComplete(() =>
             {
@@ -40,7 +40,7 @@ public class InteractableDoor : MonoBehaviour
     {
         interactable.isInteractable = false;
         float rotation = gameObject.transform.eulerAngles.y + rotationY;
-
+        AudioController.PlayDoorInteract();
         gameObject.LeanRotateY(rotation, duration).
             setOnComplete(() =>
             {

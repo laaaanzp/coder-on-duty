@@ -75,6 +75,11 @@ public class SceneSwitcher : MonoBehaviour
         LoadScene(0);
     }
 
+    public static void LoadEndScreen()
+    {
+        LoadScene(3);
+    }
+
     public static void QuitApplication()
     {
         Application.Quit();

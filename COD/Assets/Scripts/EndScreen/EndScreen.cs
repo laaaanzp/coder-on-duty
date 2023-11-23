@@ -26,6 +26,8 @@ public class EndScreen : MonoBehaviour
     private int totalAnswers = 0;
     private int stars = 0;
 
+    private bool isPlayingTheLastLevel;
+
     public void ShowGameOver(TaskScoreModel[] taskScores)
     {
         modalControl.Open();
@@ -49,16 +51,18 @@ public class EndScreen : MonoBehaviour
         SceneSwitcher.Restart();
     }
 
+    public void MainMenu()
+    {
+        SceneSwitcher.LoadMenu();
+    }
+
     public void Proceed()
     {
         DatabaseManager.instance.currentLanguage.SetCurrentLevelData(totalScore, stars, totalCorrectAnswers, totalAnswers);
-        Debug.Log(totalScore);
-        Debug.Log($"{totalCorrectAnswers}/{totalAnswers}");
-        Debug.Log(stars);
 
         if (DatabaseManager.instance.currentLanguage.isPlayingTheLastLevel)
         {
-            // TODO: Show overall score
+            SceneSwitcher.LoadEndScreen();
             DatabaseManager.instance.currentLanguage.LevelUp();
         }
         else

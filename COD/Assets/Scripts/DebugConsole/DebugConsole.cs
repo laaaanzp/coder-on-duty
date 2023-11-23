@@ -11,7 +11,6 @@ public class Command : Attribute
 {
     public string helpMessage;
 
-
     public Command()
     {
         this.helpMessage = "";
@@ -42,6 +41,7 @@ public class DebugConsole : MonoBehaviour
     private static DebugConsole instance;
     private SortedDictionary<string, MethodInfo> commands = new SortedDictionary<string, MethodInfo>();
 
+    private string lastCommand = "";
 
     void Awake()
     {
@@ -66,7 +66,7 @@ public class DebugConsole : MonoBehaviour
         }
     }
 
-    [Command("Lists all the available commands.")]
+    [Command("Lists all the available commands. Syntax: Help (optional<command: string>)")]
     public void Help(string[] parameters)
     {
         StringBuilder sb = new StringBuilder("List of all available commands:");
@@ -116,7 +116,97 @@ public class DebugConsole : MonoBehaviour
         LogSuccess("Success");
     }
 
-    [Command("Sets the speed of time of the game. (Min value: 0, Max value: 100)")]
+    [Command("Sets the value of a key. Syntax: SetPrefs <type: int, float, bool, string> <key: string> <value: type>")]
+    public void SetPrefs(string[] parameters)
+    {
+        if (parameters.Length != 4)
+        {
+            LogError("Error. Missing 3 arguments.");
+            return;
+        }
+
+        switch (parameters[1])
+        {
+            case "float":
+                if (float.TryParse(parameters[3], out float fValue))
+                {
+                    SecurePlayerPrefs.SetFloat(parameters[2], fValue);
+                    LogSuccess("Set value success.");
+                }
+                else
+                {
+                    LogError("Invalid float value.");
+                }
+                break;
+            case "bool":
+                if (bool.TryParse(parameters[3], out bool bValue))
+                {
+                    SecurePlayerPrefs.SetBool(parameters[2], bValue);
+                    LogSuccess("Set value success.");
+                }
+                else
+                {
+                    LogError("Invalid float value.");
+                }
+                break;
+            case "int":
+                if (int.TryParse(parameters[3], out int iValue))
+                {
+                    SecurePlayerPrefs.SetInt(parameters[2], iValue);
+                    LogSuccess("Set value success.");
+                }
+                else
+                {
+                    LogError("Invalid float value.");
+                }
+                break;
+            case "string":
+                SecurePlayerPrefs.SetString(parameters[2], parameters[3]);
+                LogSuccess("Set value success.");
+                break;
+            default:
+                LogError($"Invalid type. \"{parameters[3]}\"");
+                break;
+        }
+
+    }
+
+    [Command("Gets the value of a key. Syntax: GetPrefs <type: int, float, bool, string> <key: type>")]
+    public void GetPrefs(string[] parameters)
+    {
+        if (parameters.Length != 3)
+        {
+            LogError("Error. Missing 2 argument.");
+            return;
+        }
+
+        if (!SecurePlayerPrefs.HasKey(parameters[2]))
+        {
+            LogError("Invalid key.");
+            return;
+        }
+
+        switch (parameters[1])
+        {
+            case "float":
+                Log(SecurePlayerPrefs.GetFloat(parameters[2]));
+                break;
+            case "bool":
+                Log(SecurePlayerPrefs.GetBool(parameters[2]));
+                break;
+            case "int":
+                Log(SecurePlayerPrefs.GetInt(parameters[2]));
+                break;
+            case "string":
+                Log(SecurePlayerPrefs.GetString(parameters[2]));
+                break;
+            default:
+                LogError($"Invalid type. \"{parameters[3]}\"");
+                break;
+        }
+    }
+
+    [Command("Sets the speed of time of the game. Syntax: SetTimeScale <speed: float(0, 100)>")]
     public void SetTimeScale(string[] parameters)
     {
         if (parameters.Length == 1)
@@ -141,10 +231,11 @@ public class DebugConsole : MonoBehaviour
         commandInputField.text = "";
         Focus();
 
-        if (input.Replace(" ", "") == "")
+        if (string.IsNullOrWhiteSpace(input))
             return;
 
         Log($"> {input}");
+        lastCommand = input;
         HandleCommand(input);
     }
 
@@ -252,5 +343,13 @@ public class DebugConsole : MonoBehaviour
     void OnDestroy()
     {
         Application.logMessageReceived -= OnError;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            commandInputField.SetTextWithoutNotify(lastCommand);
+        }
     }
 }

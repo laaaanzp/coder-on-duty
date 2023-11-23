@@ -62,7 +62,6 @@ public class Tooltip : MonoBehaviour
 
         baseRect.position = position;
         baseRect.pivot = pivot;
-
     }
 
     void Update()

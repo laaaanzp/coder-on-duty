@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Data;
-using Tymski;
 using Mono.Data.Sqlite;
 using UnityEngine;
+using System;
 
 public class AttemptData
 {
@@ -12,15 +12,16 @@ public class AttemptData
     public int totalCorrectAnswers;
     public int totalAnswers;
     public int totalLevels;
+    public DateTime dateTime;
 
     public float accuracy
     {
-        get => ((float)totalCorrectAnswers / (float)totalAnswers) * 100;
+        get => Mathf.Max(((float)totalCorrectAnswers / (float)totalAnswers) * 100, 100);
     }
     
     public float averageStars
     {
-        get => Mathf.RoundToInt(stars / totalLevels);
+        get => Mathf.Max(Mathf.RoundToInt(stars / totalLevels), 3);
     }
 }
 
@@ -34,10 +35,7 @@ public class LevelData
 
     public float accuracy
     {
-        get
-        {
-            return ((float)totalCorrectAnswers / (float)totalAnswers) * 100;
-        }
+        get => Mathf.Max(((float)totalCorrectAnswers / (float)totalAnswers) * 100, 100);
     }
 }
 
@@ -45,7 +43,6 @@ public class LevelData
 public class LanguageDatabase : MonoBehaviour
 {
     [SerializeField] public string languageName;
-    // [SerializeField] public SceneReference[] scenes;
     [SerializeField] public string[] levelNames;
 
     private string connectionString;
@@ -102,7 +99,7 @@ public class LanguageDatabase : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "CREATE TABLE IF NOT EXISTS Attempts (name VARCHAR(16), score INT, stars INT, totalCorrectAnswers INT, totalAnswers INT, totalLevels INT);";
+                command.CommandText = "CREATE TABLE IF NOT EXISTS Attempts (name VARCHAR(16), score INT, stars INT, totalCorrectAnswers INT, totalAnswers INT, totalLevels INT, date DATETIME);";
                 command.ExecuteNonQuery();
 
                 command.CommandText = "CREATE TABLE IF NOT EXISTS Levels (name VARCHAR(50), score INT, stars INT, totalCorrectAnswers INT, totalAnswers INT);";
@@ -195,7 +192,20 @@ public class LanguageDatabase : MonoBehaviour
     {
         LanguageDatabase languageDatabase = GetInstance(languageName);
         DatabaseManager.instance.currentLanguage = languageDatabase;
-        SceneSwitcher.LoadScene(1);
+
+        if (languageDatabase.currentLevel == 1)
+        {
+            // Storyboard
+            // SceneSwitcher.LoadScene(2);
+
+            // Temporary
+            SceneSwitcher.LoadScene(1);
+        }
+        else
+        {
+            // Level
+            SceneSwitcher.LoadScene(1);
+        }
     }
 
     public void LevelUp()
@@ -278,20 +288,60 @@ public class LanguageDatabase : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = $"INSERT INTO Attempts VALUES (@name, @score, @stars, @totalCorrectAnswers, @totalAnswers, @totalLevels);";
+                command.CommandText = $"INSERT INTO Attempts VALUES (@name, @score, @stars, @totalCorrectAnswers, @totalAnswers, @totalLevels, @date);";
 
                 command.Parameters.AddWithValue("@name", currentName);
                 command.Parameters.AddWithValue("@score", totalScore);
-                command.Parameters.AddWithValue("@stars", totalScore);
+                command.Parameters.AddWithValue("@stars", totalStars);
                 command.Parameters.AddWithValue("@totalCorrectAnswers", totalCorrectAnswers);
                 command.Parameters.AddWithValue("@totalAnswers", totalAnswers);
                 command.Parameters.AddWithValue("@totalLevels", totalLevels);
+                command.Parameters.AddWithValue("@date", DateTime.Now);
 
                 command.ExecuteNonQuery();
             }
 
             connection.Close();
         }
+    }
+
+    public AttemptData GetLatestData()
+    {
+        AttemptData attemptData = new AttemptData();
+
+        attemptData.programmerName = "Lanz";
+        attemptData.score = 59400;
+        attemptData.stars = 30;
+        attemptData.totalCorrectAnswers = 165;
+        attemptData.totalAnswers = 165;
+        attemptData.totalLevels = 11;
+        attemptData.dateTime = DateTime.Now;
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "SELECT ROWID, * FROM Attempts ORDER BY ROWID DESC LIMIT 1";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        attemptData.programmerName = reader.GetString("name");
+                        attemptData.score = reader.GetInt32("score");
+                        attemptData.stars = reader.GetInt32("stars");
+                        attemptData.totalCorrectAnswers = reader.GetInt32("totalCorrectAnswers");
+                        attemptData.totalAnswers = reader.GetInt32("totalAnswers");
+                        attemptData.totalLevels = reader.GetInt32("totalLevels");
+                        attemptData.dateTime = reader.GetDateTime("date");
+                    }
+                }
+            }
+        }
+
+        return attemptData;
     }
 
     public List<AttemptData> GetAllAttempts()
@@ -304,7 +354,7 @@ public class LanguageDatabase : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT * FROM Attempts";
+                command.CommandText = "SELECT ROWID, * FROM Attempts ORDER BY ROWID";
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -318,6 +368,7 @@ public class LanguageDatabase : MonoBehaviour
                         attemptData.totalCorrectAnswers = reader.GetInt32("totalCorrectAnswers");
                         attemptData.totalAnswers = reader.GetInt32("totalAnswers");
                         attemptData.totalLevels = reader.GetInt32("totalLevels");
+                        attemptData.dateTime = reader.GetDateTime("date");
 
                         attemptDatas.Add(attemptData);
                     }
@@ -331,6 +382,20 @@ public class LanguageDatabase : MonoBehaviour
     public List<AttemptData> GetTopUserDataByScore()
     {
         List<AttemptData> attemptDatas = GetAllAttempts();
+
+        for (int i = 1; i <= 10; i++)
+        {
+            AttemptData attemptData = new AttemptData();
+            attemptData.programmerName = "Bot " + i;
+            attemptData.score = i * 100;
+            attemptData.stars = 10 + 1 * i;
+            attemptData.totalCorrectAnswers = 100 + 2 * i;
+            attemptData.totalAnswers = 165;
+            attemptData.totalLevels = 11;
+            attemptData.dateTime = DateTime.Now;
+
+            attemptDatas.Add(attemptData);
+        }
         attemptDatas.Sort((a, b) => b.score.CompareTo(a.score));
 
         return attemptDatas;

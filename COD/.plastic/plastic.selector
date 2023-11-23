@@ -1,0 +1,4 @@
+repository "COD@LanzP@cloud"
+  path "/"
+    br "/main"
+    co "/main"

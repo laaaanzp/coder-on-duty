@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -22,14 +21,15 @@ public class ProblemSolving : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeRemainingText;
 
     [Header("Score")]
-    [SerializeField] private float targetTime = 120.0f;
+    [SerializeField] private float targetTime = 180.0f;
 
     public Action onSubmitOrFinish;
     private Ticket ticket;
     public int totalCorrect = 0;
     public int totalSlots = 0;
     public int timeRemaining = 0;
-    private bool isOnFinishCalled;
+
+    private int currentTimeInInt = 180;
     private bool hasSubmitted;
     public TaskScoreModel taskScoreModel;
     
@@ -43,8 +43,11 @@ public class ProblemSolving : MonoBehaviour
         UpdateTimeDisplay();
     }
 
-    public void Initialize(string problem, string[] answers, string output)
+    public void Initialize(string taskName, string problem, string[] answers, string output)
     {
+        taskScoreModel = new TaskScoreModel();
+        taskScoreModel.name = taskName;
+
         string[] lines = problem.Split('\n');
 
         foreach (string line in lines)
@@ -113,8 +116,6 @@ public class ProblemSolving : MonoBehaviour
 
     private IEnumerator _CheckAnswers()
     {
-        taskScoreModel = new TaskScoreModel();
-
         SlotNode[] slotNodes = GetComponentsInChildren<SlotNode>(includeInactive: true);
 
         totalCorrect = 0;
@@ -187,17 +188,28 @@ public class ProblemSolving : MonoBehaviour
         }
         targetTime -= Time.deltaTime;
 
+        int newTimeInInt = (int)targetTime;
+
+        if (newTimeInInt != currentTimeInInt)
+        {
+            currentTimeInInt = newTimeInInt;
+            OnTimeSecond();
+        }
+
         targetTime = MathF.Max(targetTime, 0);
         UpdateTimeDisplay();
 
         if (targetTime == 0)
         {
-            if (!isOnFinishCalled)
-            {
-                onSubmitOrFinish?.Invoke();
-                modalControl.Close();
-            }
-            isOnFinishCalled = true;
+            CheckAnswers();
+        }
+    }
+
+    private void OnTimeSecond()
+    {
+        if (currentTimeInInt <= 10)
+        {
+            AudioController.PlayBeep();
         }
     }
 }

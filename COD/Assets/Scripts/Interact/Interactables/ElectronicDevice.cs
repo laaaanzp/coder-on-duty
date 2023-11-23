@@ -39,7 +39,7 @@ public class ElectronicDevice : MonoBehaviour
         {
             if (!currentlyOpen)
             {
-                MessageBoxControl.ShowYesNo("INSTRUCTIONS", "Fill the slots with the correct nodes.\n\nYou have 120 seconds to solve the problem. Do you want to proceed?",
+                MessageBoxControl.ShowYesNo("INSTRUCTIONS", "Fill the slots with the correct nodes.\n\nYou have 180 seconds to solve the problem. Do you want to proceed?",
                     () =>
                     {
                         problemModal.Open();

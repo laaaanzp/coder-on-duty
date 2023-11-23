@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1703146496851626410}
   - component: {fileID: 1703146496851626411}
   - component: {fileID: 1703146496851626408}
-  - component: {fileID: 1703146496851626415}
   m_Layer: 5
   m_Name: Submit
   m_TagString: Untagged
@@ -167,19 +166,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.19607843}
   m_EffectDistance: {x: 5, y: -5}
   m_UseGraphicAlpha: 1
---- !u!114 &1703146496851626415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703146496851626406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fed7a637246c37246b636893671b4568, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 10
 --- !u!1 &1703146496975966941
 GameObject:
   m_ObjectHideFlags: 0

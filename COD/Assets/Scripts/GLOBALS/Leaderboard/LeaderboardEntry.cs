@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LeaderboardEntry : MonoBehaviour
 {
@@ -11,5 +12,6 @@ public class LeaderboardEntry : MonoBehaviour
     {
         nameText.text = name;
         valueText.text = value;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 }

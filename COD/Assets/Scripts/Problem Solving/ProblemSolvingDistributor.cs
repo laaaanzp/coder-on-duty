@@ -29,7 +29,7 @@ public class ProblemSolvingDistributor : MonoBehaviour
 
             GameObject problemSolvingModal = Instantiate(problemSolvingModalPrefab, transform);
             ProblemSolving problemSolving = problemSolvingModal.GetComponent<ProblemSolving>();
-
+            ElectronicDevice electronicDevice = shuffledComputerObjects[i].GetComponent<ElectronicDevice>();
 
             string[] problemSplitted = problemTextAsset.text.Split("##############################");
             string[] answers = Tools.ShuffleArray(problemSplitted[0].Split('\n'));
@@ -41,16 +41,11 @@ public class ProblemSolvingDistributor : MonoBehaviour
             }
             catch { }
 
-            problemSolving.Initialize(problem, answers, output);
-
             problemSolvings.Add(problemSolving);
-            i++;
-        }
 
-        for (i = 0; i < problemSolvings.Count; i++)
-        {
-            ElectronicDevice electronicDevice = shuffledComputerObjects[i].GetComponent<ElectronicDevice>();
+            problemSolving.Initialize(electronicDevice.name, problem, answers, output);
             electronicDevice.problemModal = problemSolvings[i];
+            i++;
         }
 
         foreach (GameObject computerObject in computerObjects)

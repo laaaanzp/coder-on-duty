@@ -20,6 +20,11 @@ public class TicketManager : MonoBehaviour
         isLevelCompleted = false;
         tickets = new List<Ticket>();
         instance = this;
+
+        if (DatabaseManager.instance.currentLanguage.currentLevel == 1)
+        {
+            TutorialModalControl.Open();
+        }
     }
 
     void Start()

@@ -18,6 +18,11 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip footstepRight;
     private bool isLeftFootstep;
 
+    [Header("Door")]
+    [SerializeField] private AudioClip doorInteract;
+
+    [Header("Door")]
+    [SerializeField] private AudioClip beepSound;
 
     void Awake()
     {
@@ -54,5 +59,15 @@ public class AudioController : MonoBehaviour
     {
         instance.audioSource.PlayOneShot(instance.isLeftFootstep ? instance.footstepLeft : instance.footstepRight);
         instance.isLeftFootstep = !instance.isLeftFootstep;
+    }
+
+    public static void PlayDoorInteract()
+    {
+        instance.audioSource.PlayOneShot(instance.doorInteract);
+    }
+
+    public static void PlayBeep()
+    {
+        instance.audioSource.PlayOneShot(instance.beepSound);
     }
 }
