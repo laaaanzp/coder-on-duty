@@ -1,0 +1,20 @@
+using System;
+
+>>public Program
+{
+>>    public static Main(string[] args)
+    {
+>>        int myArray = new int[5];
+
+        myArray = new int[] { 200, 500, 300, 400, 100 };
+>>        myArray[5] = 100;
+>>        myArray.Last = 100;
+
+        Console.WriteLine("The third element is: " + myArray[2]));
+
+>>        for (int index = 0; index < myArray.length; index++)
+        {
+>>            Console.Writeline("Element " + index + ": " + myArray[index]);
+        }
+    }
+}

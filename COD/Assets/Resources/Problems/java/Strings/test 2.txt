@@ -1,21 +1,21 @@
 "Programming is fun."
 "fun"
 strA
+size
+count
 strB
 ##############################
-using System;
-
 public class Program
 {
-    public static void Main(string[] args)
+    public static void main(String[] args)
     {
-        string strA = (NODE_SLOT:"Programming is");
-        string strB = (NODE_SLOT:"fun.");
-        string (NODE_SLOT:strC) = strA + strB;
+        String strA = (NODE_SLOT:"Programming is");
+        String strB = (NODE_SLOT:"fun.");
+        String (NODE_SLOT:strC) = strA + strB;
 
-        if (strC == (NODE_SLOT:"Programming isfun."))
+        if (strC.equals((NODE_SLOT:"Programming isfun.")))
         {
-            Console.WriteLine("The length of the final string is " + strC.(NODE_SLOT:Length));
+            System.out.println("The length of the final string is " + strC.(NODE_SLOT:length)());
         }
     }
 }

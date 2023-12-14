@@ -1,0 +1,25 @@
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+>>        string varB = ", World!";
+>>        string varA = "Hello";
+>>        string varC = varA + varB;
+
+        Console.WriteLine(varC);
+
+>>        if (varC == "Hello, World!")
+        {
+>>            Console.WriteLine("The strings are equal.");
+        }
+>>        else
+        {
+>>            Console.WriteLine("The strings are not equal.");
+        }
+    }
+}
+##############################
+Hello, World!
+The strings are equal.

@@ -1,0 +1,24 @@
+using System;
+
+public class Point {
+    // instance variables
+    public int xPos, yPos;
+
+    // constructor Point
+    public Point(int x, int y) {
+        this.xPos = x;
+        this.yPos = y;
+    }
+
+    public void displayPosition() {
+        Console.WriteLine("xPos = " + this.xPos + " yPos = " + this.yPos);
+    }
+
+    public static void Main(string[] args) {
+        // Creating an instance of Point class
+        Point point = new Point(5, 10);
+
+        // Calling displayPosition method to print the coordinates
+        point.displayPosition();
+    }
+}

@@ -1,0 +1,41 @@
+class
+struct
+abstract
+Noise
+MakeNoise
+Eat
+IEntity
+person
+##############################
+public class Program
+{
+    public static void main(String[] args)
+    {
+        IEntity entity = new (NODE_SLOT:Person)();
+
+        entity.(NODE_SLOT:makeNoise)();
+        entity.(NODE_SLOT:eat)();
+    }
+}
+
+(NODE_SLOT:interface) IEntity
+{
+    void makeNoise();
+    void eat();
+}
+
+class Person implements (NODE_SLOT:IEntity)
+{
+    public void (NODE_SLOT:makeNoise)()
+    {
+        (NODE_SLOT:System).out.println("Hi there!");
+    }
+
+    public void (NODE_SLOT:eat)()
+    {
+        (NODE_SLOT:System).out.println("Eating...");
+    }
+}
+##############################
+Hi there!
+Eating...

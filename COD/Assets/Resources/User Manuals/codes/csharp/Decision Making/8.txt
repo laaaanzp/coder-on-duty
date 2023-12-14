@@ -1,0 +1,27 @@
+using System;
+
+namespace HelloWorld {
+    class Program {
+        public static void Main(string[] args) {
+            int a = 3;
+
+            switch (a) {
+            case 1:
+                Console.WriteLine("The value is 1.");
+                break;
+            case 2:
+                Console.WriteLine("The value is 2.");
+                break;
+            case 3:
+                Console.WriteLine("The value is 3.");
+                break;
+            default:
+                Console.WriteLine("The value is unknown.");
+                break;
+            }
+
+            // Outputs The value is 3.
+
+        }
+    }
+}

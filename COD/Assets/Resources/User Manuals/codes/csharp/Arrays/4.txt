@@ -1,0 +1,14 @@
+using System;
+
+public class Program {
+    public static void Main(string[] args) {
+        double[] grades = { 2.50, 2.75, 1.25, 5.0, 1.50 };
+
+        double studentGrade = grades[1];
+        Console.WriteLine(studentGrade);
+
+        foreach(double grade in grades) {
+            Console.Write(grade + " / ");
+        }
+    }
+}

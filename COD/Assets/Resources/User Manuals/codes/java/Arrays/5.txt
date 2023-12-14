@@ -1,0 +1,16 @@
+public class Main {
+    public static void main(String[] args) {
+        double prices[] = {
+            12.25,
+            32.50,
+            16.90,
+            1.25,
+            43
+        };
+
+        // Iterating over the prices array and printing each element
+        for (int i = 0; i < prices.length; i++) {
+            System.out.println(prices[i]);
+        }
+    }
+}

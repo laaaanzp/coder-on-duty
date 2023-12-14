@@ -1,0 +1,26 @@
+public class DecisionMaking
+{
+    public static void main(String[] args)
+    {
+        boolean hasEngine = true;
+        boolean hasWheels = true;
+        boolean hasHandlebars = false;
+
+>>        if hasEngine && hasWheels && !hasHandlebars
+        {
+>>            System.out.println(It's a car!);
+        }
+>>        elseif (!hasEngine && hasWheels && hasHandlebars)
+        {
+            System.out.println("It's a bicycle!");
+        }
+        else if (hasEngine && hasWheels && hasHandlebars)
+        {
+            System.out.println("It's a motorcycle!");
+        }
+>>        else if
+        {
+>>            System.out.println(Unable to identify type of vehicle.);
+        }
+    }
+}

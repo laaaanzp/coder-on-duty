@@ -1,0 +1,24 @@
+public class Main {
+    public static void main(String[] args) {
+        // Initializing an integer array ageList
+        int[] ageList = new int[5];
+        ageList[0] = 23;
+        ageList[1] = 18;
+        ageList[2] = 22;
+        ageList[3] = 17;
+        ageList[4] = 34;
+
+        // Initializing a double array prices
+        double[] prices = {
+            12.25,
+            32.50,
+            16.90,
+            1.25,
+            43
+        };
+
+        // Accessing and printing an element from the prices array
+        int index = 3;
+        System.out.println(prices[index + 1]); // Returns 43.0
+    }
+}

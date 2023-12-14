@@ -8,7 +8,7 @@ public class Ticket : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Button navigateButton;
 
-    [HideInInspector] public bool isFinished;
+    [HideInInspector] public bool isFinished = false;
     [HideInInspector] public bool isFixed;
     [HideInInspector] public GameObject owner;
 

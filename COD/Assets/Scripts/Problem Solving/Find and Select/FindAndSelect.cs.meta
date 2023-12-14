@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 8b53b68e84e775d45999905c02ed17fe
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - modalControl: {instanceID: 0}
+  - closeButton: {instanceID: 0}
+  - selectableRowPrefab: {instanceID: 0}
+  - problemSolvingRowContainer: {instanceID: 0}
+  - answerNodePrefab: {fileID: 8213853234683122856, guid: b01068aa7bf75d74c8819b6ecaf7911e,
+      type: 3}
+  - answersContainer: {instanceID: 0}
+  - outputText: {instanceID: 0}
+  - timeRemainingText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

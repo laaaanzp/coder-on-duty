@@ -1,0 +1,16 @@
+public class Main {
+    public static void main(String[] args) {
+        int[][] board = {
+            { 2, 3, 1 },
+            { 15, 25, 13 },
+            { 20, 4, 7 },
+            { 11, 18, 14}
+        };
+
+        // Printing the number of rows in the array
+        System.out.println("Number of rows: " + board.length);
+
+        // Printing the number of columns in the first row
+        System.out.println("Number of columns in a row: " + board[0].length);
+    }
+}

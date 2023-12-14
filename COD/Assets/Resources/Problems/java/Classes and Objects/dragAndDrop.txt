@@ -1,0 +1,33 @@
+Object
+return
+create
+Lanz
+Entity
+age
+name
+##############################
+public class Program
+{
+    public static void main(String[] args)
+    {
+        (NODE_SLOT:Person) person = (NODE_SLOT:new) Person();
+        person.(NODE_SLOT:name) = (NODE_SLOT:"Lanz");
+        person.age = 21;
+
+        System.out.println("My age is " + person.(NODE_SLOT:age));
+    }
+}
+
+class Person
+{
+    public String name;
+    public int age;
+}
+
+class Entity
+{
+    public String name;
+    public int age;
+}
+##############################
+My age is 21

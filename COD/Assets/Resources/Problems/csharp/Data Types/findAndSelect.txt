@@ -1,0 +1,17 @@
+>>using System
+
+>>public clss Program
+{
+    public static void Main(string[] args)
+    {
+>>        String a = "Hello, World";
+>>        boolean b = true;
+        int c = (int)3.14;
+        float d = 15;
+
+        Console.WriteLine(a);
+        Console.WriteLine(b);
+>>        Console.WriteLine(C);
+        Console.WriteLine(d);
+    }
+}

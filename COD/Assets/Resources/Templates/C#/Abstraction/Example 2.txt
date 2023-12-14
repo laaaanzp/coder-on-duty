@@ -1,35 +1,5 @@
 using System;
 
-abstract class Vehicle
-{
-    public abstract int Speed
-    {
-        get;
-    }
-}
-
-class Bike : Vehicle 
-{
-    public override int Speed
-    {
-        get
-        {
-            return 20;
-        }
-    }
-}
-
-class Car : Vehicle
-{
-    public override int Speed
-    {
-        get
-        {
-            return 50;
-        }
-    }
-}
-
 public class Program
 {
     public static void Main(string[] args)
@@ -39,5 +9,26 @@ public class Program
 
         Console.WriteLine($"Bike speed is {bike.Speed}");
         Console.WriteLine($"Car speed is {car.Speed}");
+    }
+}
+
+abstract class Vehicle
+{
+    public abstract int Speed { get; }
+}
+
+class Bike : Vehicle 
+{
+    public override int Speed
+    {
+        get { return 20; }
+    }
+}
+
+class Car : Vehicle
+{
+    public override int Speed
+    {
+        get { return 70; }
     }
 }

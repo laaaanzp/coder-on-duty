@@ -1,0 +1,37 @@
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        IVehicle vehicle1 = new Car();
+        IVehicle vehicle2 = new Tricycle();
+
+>>        vehicle1.Start();
+>>        vehicle2.Start();
+    }
+}
+
+>>public interface IVehicle
+{
+>>    void Start();
+}
+
+>>public class Car : IVehicle
+{
+>>    public void Start()
+    {
+>>        Console.WriteLine("Starting car...");
+    }
+}
+
+public class Tricycle : IVehicle
+{
+>>    public void Start()
+    {
+>>        Console.WriteLine("Starting tricycle...");
+    }
+}
+##############################
+Starting car...
+Starting tricycle...

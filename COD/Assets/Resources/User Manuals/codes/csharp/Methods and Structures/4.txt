@@ -1,0 +1,26 @@
+using System;
+
+public class DemoMethod {
+    public static void Main(string[] args) {
+        printRectArea(5, 3); // invoke the void method
+        int result = getRectArea(5, 3); // invoke the value-returning method
+        Console.WriteLine("result = " + result);
+    }
+
+    // This method computes and prints the area of a rectangle of given width and height values
+    public static void printRectArea(int width, int height) {
+        int area = width * height;
+        Console.WriteLine("The area of the rectangle is " + area);
+    }
+
+    // This method computes the area of a rectangle of given width and height values then returns the result
+    public static int getRectArea(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            Console.WriteLine("Invalid input. Width and height must be positive values.");
+            return -1; // Indicate an error value
+        }
+
+        int area = width * height;
+        return area;
+    }
+}

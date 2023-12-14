@@ -1,0 +1,66 @@
+using System;
+
+public class BankAccount
+{
+    private string accountHolder;
+    private double balance;
+
+
+    public static void Main(string[] args)
+    {
+        BankAccount account = new BankAccount("John Doe", 1000.00d);
+
+        Console.WriteLine("Bank Account Information:");
+        Console.WriteLine(account.GetAccountInfo());
+
+        account.Deposit(500.00d);
+        Console.WriteLine("\nAfter Deposit:");
+        Console.WriteLine(account.GetAccountInfo());
+
+        bool successfulWithdrawal = account.Withdraw(200.00d);
+        Console.WriteLine("\nAfter Withdrawal:");
+        if (successfulWithdrawal)
+            Console.WriteLine(account.GetAccountInfo());
+        else
+            Console.WriteLine("Withdrawal failed due to insufficient balance.");
+    }
+
+    public BankAccount(string accountHolder, double initialBalance)
+    {
+        AccountHolder = accountHolder;
+        Balance = initialBalance;
+    }
+
+    public string AccountHolder
+    {
+        get { return accountHolder; }
+        set { accountHolder = value; }
+    }
+
+    public double Balance
+    {
+        get { return balance; }
+        private set { balance = value >= 0 ? value : 0; }
+    }
+
+    public void Deposit(double amount)
+    {
+        if (amount > 0)
+            Balance += amount;
+    }
+
+    public bool Withdraw(double amount)
+    {
+        if (amount > 0 && amount <= Balance)
+        {
+            Balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public string GetAccountInfo()
+    {
+        return $"{AccountHolder}'s Account, Balance: {Balance}";
+    }
+}

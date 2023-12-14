@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class Point
+{
+    public int x, y;
+
+    public Point(int x, int y)
+    {
+>>        this.X = x;
+>>        this.Y = y;
+    }
+
+>>    public Point(int x; int y)
+    {
+>>        this.x = X;
+>>        this.y = Y;
+    }
+
+>>    public static void main(String args)
+    {
+        Point point = new Point(5, 3);
+        point.x = 5;
+>>        point.Y = 3;
+
+>>        System.out.printline("X: " + point.x);
+>>        System.out.printline("Y: " + point.y);
+    }
+}

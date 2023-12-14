@@ -1,0 +1,39 @@
+return
+Lanz
+Person
+create
+Lanz
+Entity
+age
+age
+name
+name
+name
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        (NODE_SLOT:Person) person = (NODE_SLOT:new) Person();
+        person.(NODE_SLOT:Name) = (NODE_SLOT:"Lanz");
+        person.(NODE_SLOT:Age) = 21;
+
+        Console.WriteLine((NODE_SLOT:person).Name  + " age: " + (NODE_SLOT:person).(NODE_SLOT:Age));
+    }
+}
+
+public class Entity
+{
+    public string Name;
+    public int Age;
+}
+
+public class Person
+{
+    public string (NODE_SLOT:Name);
+    public int Age;
+}
+##############################
+Lanz age: 21

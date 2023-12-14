@@ -1,0 +1,75 @@
+import java.util.*;
+
+public class BankAccount 
+{
+    private String accountHolder;
+    private double balance;
+
+    public static void main(String[] args) 
+    {
+        BankAccount account = new BankAccount("John Doe", 1000.0);
+
+        System.out.println("Bank Account Information:");
+        System.out.println(account.getAccountInfo());
+
+        account.deposit(500.0);
+        System.out.println("\nAfter Deposit:");
+        System.out.println(account.getAccountInfo());
+
+        boolean successfulWithdrawal = account.withdraw(200.0);
+        System.out.println("\nAfter Withdrawal:");
+        if (successfulWithdrawal) {
+            System.out.println(account.getAccountInfo());
+        } else {
+            System.out.println("Withdrawal failed due to insufficient balance.");
+        }
+    }
+
+    public BankAccount(String accountHolder, double initialBalance) 
+    {
+        this.accountHolder = accountHolder;
+        this.balance = initialBalance;
+    }
+
+    public String getAccountHolder() 
+    {
+        return accountHolder;
+    }
+
+    public void setAccountHolder(String accountHolder) 
+    {
+        this.accountHolder = accountHolder;
+    }
+
+    public double getBalance() 
+    {
+        return balance;
+    }
+
+    public void setBalance(double balance) 
+    {
+        this.balance = balance >= 0 ? balance : 0;
+    }
+
+    public void deposit(double amount) 
+    {
+        if (amount > 0) 
+        {
+            balance += amount;
+        }
+    }
+
+    public boolean withdraw(double amount) 
+    {
+        if (amount > 0 && amount <= balance) 
+        {
+            balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public String getAccountInfo() {
+        return accountHolder + "'s Account, Balance: " + balance;
+    }
+}

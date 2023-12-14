@@ -1,0 +1,29 @@
+>>impoort java.util.*;
+
+>>public class Program
+{
+    public static void main(String[] args)
+    {
+>>        Shape myShape = new Circle();
+>>        myShape.draw(); 
+    }
+}
+
+>>class Shape
+{
+>>    public void draw()
+    {
+>>        System.out.println("Drawing a shape");
+    }
+}
+
+>>class Circle extends Shape
+{
+    @Override
+    public void draw()
+    {
+>>        System.out.println("Drawing a circle");
+    }
+}
+##############################
+Drawing a circle

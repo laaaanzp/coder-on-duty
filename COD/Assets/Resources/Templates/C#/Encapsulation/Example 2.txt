@@ -1,0 +1,52 @@
+using System;
+
+public class InventoryItem
+{
+    private string itemName;
+    private int quantity;
+    private double price;
+
+
+    public static void Main(string[] args)
+    {
+        InventoryItem item = new InventoryItem("Widget", 100, 2.50d);
+
+        Console.WriteLine("Inventory Item Information:");
+        Console.WriteLine(item.GetItemInfo());
+    }
+
+    public InventoryItem(string itemName, int quantity, double price)
+    {
+        ItemName = itemName;
+        Quantity = quantity;
+        Price = price;
+    }
+
+    public string ItemName
+    {
+        get { return itemName; }
+        set { itemName = value; }
+    }
+
+    public int Quantity
+    {
+        get { return quantity; }
+        set { quantity = value >= 0 ? value : 0; }
+    }
+
+    public double Price
+    {
+        get { return price; }
+        set { price = value >= 0 ? value : 0; }
+    }
+
+    public double CalculateTotalValue()
+    {
+        return Quantity * Price;
+    }
+
+    public string GetItemInfo()
+    {
+        return $"{ItemName}, Quantity: {Quantity}, Price: {Price}, Total Value: {CalculateTotalValue()}";
+    }
+}

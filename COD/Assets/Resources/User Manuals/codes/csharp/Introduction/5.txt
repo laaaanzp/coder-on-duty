@@ -1,0 +1,10 @@
+using System;
+
+namespace HelloWorld {
+    public class Program {
+        public static void Main(string[] args) {
+            Console.WriteLine(4 + 10);
+            Console.WriteLine(15 + 2);
+        }
+    }
+}

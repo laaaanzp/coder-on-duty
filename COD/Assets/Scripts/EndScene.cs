@@ -35,10 +35,11 @@ public class EndScene : MonoBehaviour
         AttemptData attemptData = DatabaseManager.instance.currentLanguage.GetLatestData();
 
         scoreText.text = $"<b>Score:</b> {attemptData.score}";
-        accuracyText.text = $"<b>Accuracy:</b> {(int)attemptData.accuracy}";
+        accuracyText.text = $"<b>Accuracy:</b> {(int)attemptData.accuracy}%";
         answersText.text = $"<b>Answers:</b> {attemptData.totalCorrectAnswers} / {attemptData.totalAnswers}";
 
-        for (int i = 0; i < attemptData.stars; i++)
+
+        for (int i = 0; i < (int)attemptData.averageStars; i++)
         {
             stars[i].color = new Color(1f, 1f, 1f, 1f);
         }

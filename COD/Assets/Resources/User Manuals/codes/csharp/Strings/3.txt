@@ -1,0 +1,15 @@
+using System;
+
+public class Program {
+    public static void Main(string[] args) {
+        // Char Property Example
+        string wordForChar = "Computer";
+        int totalForChar = wordForChar.Length;
+        Console.WriteLine("The value of variable totalForChar is " + totalForChar);
+
+        // Length Property Example
+        string wordForLength = "Computer";
+        char letterForLength = wordForLength[2];
+        Console.WriteLine("The value of variable letterForLength is character '" + letterForLength + "'");
+    }
+}

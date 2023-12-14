@@ -11,6 +11,7 @@ public class Storyboard : MonoBehaviour
     [SerializeField] private Image storyboardImage;
     [SerializeField] private RectTransform rect;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private AudioSource storyboardAudioSource;
 
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI nameText;
@@ -25,6 +26,7 @@ public class Storyboard : MonoBehaviour
     void Awake()
     {
         HandleUserInput();
+        storyboardAudioSource.volume = PlayerPrefs.GetFloat("music-volume", 1f) * 0.65f;
     }
 
     public void HandleUserInput()
@@ -100,11 +102,24 @@ public class Storyboard : MonoBehaviour
 
     private void TransitionImage(Sprite image)
     {
+        /*
         LeanTween.color(storyboardImage.rectTransform, new Color(1f, 1f, 1f, 0f), 0.5f).setOnComplete(() =>
         {
             storyboardImage.sprite = image;
             LeanTween.color(storyboardImage.rectTransform, new Color(1f, 1f, 1f, 1f), 0.5f);
         });
+        */
+
+        LeanTween.value(gameObject, UpdateImageColor, storyboardImage.color, new Color(1f, 1f, 1f, 0f), 0.5f).setOnComplete(() =>
+        {
+            storyboardImage.sprite = image;
+            LeanTween.value(gameObject, UpdateImageColor, storyboardImage.color, new Color(1f, 1f, 1f, 1f), 0.5f);
+        });
+    }
+
+    private void UpdateImageColor(Color color)
+    {
+        storyboardImage.color = color;
     }
 
     void Update()
@@ -120,6 +135,7 @@ public class Storyboard : MonoBehaviour
         {
             if (index == dialouges.Length)
             {
+                TransitionAudio();
                 SceneSwitcher.LoadScene(1);
                 isExiting = true;
                 return;
@@ -127,5 +143,25 @@ public class Storyboard : MonoBehaviour
 
             HandleUserInput();
         }
+    }
+
+    public void Skip()
+    {
+        if (isExiting)
+            return;
+
+        isExiting = true;
+        TransitionAudio();
+        SceneSwitcher.LoadScene(1);
+    }
+
+
+    public void TransitionAudio()
+    {
+        float currentVolume = storyboardAudioSource.volume;
+        LeanTween.value(1f, 0f, 1f).setOnUpdate((float value) =>
+        {
+            storyboardAudioSource.volume = value * currentVolume;
+        });
     }
 }

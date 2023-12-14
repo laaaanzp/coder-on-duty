@@ -1,0 +1,23 @@
+public class Program
+{
+    public static void main(String[] args)
+    {
+        int varA = 42;
+        double varB = 3.14d;
+        boolean varC = true;
+        String varD = "Hello, World!";
+        char varE = 'A';
+
+>>        System.out.println(varC);
+>>        System.out.println(varD);
+>>        System.out.println(varA);
+>>        System.out.println(varE);
+>>        System.out.println(varB);
+    }
+}
+##############################
+True
+Hello, World!
+42
+A
+3.14

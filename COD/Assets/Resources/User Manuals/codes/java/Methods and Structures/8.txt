@@ -1,0 +1,14 @@
+public class Main {
+    // This method adds two integers and returns the result
+    static int addNumbers(int x, int y) {
+        return x + y;
+    }
+
+    public static void main(String[] args) {
+        // Calling the addNumbers method with arguments 5 and 3
+        int result = addNumbers(5, 3);
+
+        // Printing the result
+        System.out.println(result);
+    }
+}

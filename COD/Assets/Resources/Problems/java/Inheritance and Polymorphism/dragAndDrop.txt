@@ -1,0 +1,39 @@
+getName
+printName
+Animal
+Animal
+name
+name
+##############################
+public class Program
+{
+    public static void main(String[] args)
+    {
+        (NODE_SLOT:Dog) dog = new (NODE_SLOT:Dog)();
+
+        dog.(NODE_SLOT:name) = "Gorou";
+        dog.(NODE_SLOT:display)();
+        dog.(NODE_SLOT:displayName)();
+    }
+}
+
+class Animal 
+{ 
+    public String name;
+
+    public void display() 
+    {
+        System.out.println("I am an animal");
+    }
+}
+  
+class Dog extends Animal 
+{
+    public void displayName() 
+    {
+        System.out.println("My name is " + name);
+    }
+}
+##############################
+I am an animal
+My name is Gorou

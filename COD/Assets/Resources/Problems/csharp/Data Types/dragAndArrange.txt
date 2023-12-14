@@ -1,0 +1,25 @@
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        int varA = 42;
+        double varB = 3.14;
+        bool varC = true;
+        string varD = "Hello, World!";
+        char varE = 'A';
+
+>>        Console.WriteLine(varC);
+>>        Console.WriteLine(varD);
+>>        Console.WriteLine(varA);
+>>        Console.WriteLine(varE);
+>>        Console.WriteLine(varB);
+    }
+}
+##############################
+True
+Hello, World!
+42
+A
+3.14

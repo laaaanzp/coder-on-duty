@@ -1,35 +1,38 @@
 using System;
 
-interface IDatabase
+public class Vehicle
 {
-    public int GetValue();
-    public void SetValue(int value);
-}
+    public string Model { get; set; }
+    public string Manufacturer { get; set; }
 
-class LocalDatabase : IDatabase
-{
-    private int value = 10;
-
-    public int GetValue()
+    public virtual void Start()
     {
-        return value;
+        Console.WriteLine($"{Model} by {Manufacturer} started.");
     }
 
-    public void SetValue(int value)
+    public virtual void Stop()
     {
-        this.value = value;
+        Console.WriteLine($"{Model} by {Manufacturer} stopped.");
     }
 }
 
-public class Program
+public class Car : Vehicle
 {
+    public void Accelerate()
+    {
+        Console.WriteLine($"{Model} by {Manufacturer} is accelerating.");
+    }
+
     public static void Main(string[] args)
     {
-        IDatabase database = new LocalDatabase();
+        Car myCar = new Car
+        {
+            Model = "Sedan",
+            Manufacturer = "Toyota"
+        };
 
-        database.SetValue(20);
-
-        int value = database.GetValue();
-        Console.WriteLine($"Database returned a value of {value}.");
+        myCar.Start();
+        myCar.Accelerate();
+        myCar.Stop();
     }
 }

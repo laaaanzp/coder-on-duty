@@ -1,0 +1,9 @@
+public class Main {
+    int x = 5;
+
+    public static void main(String[] args) {
+        // Your main method code goes here
+        Main obj = new Main();
+        System.out.println("Value of x: " + obj.x);
+    }
+}

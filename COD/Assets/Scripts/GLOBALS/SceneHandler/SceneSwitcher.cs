@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour
 {
     public UnityEvent onSceneLoad;
+    public UnityEvent onBeforeSceneLoad;
 
     private static SceneSwitcher instance;
 
@@ -24,6 +25,7 @@ public class SceneSwitcher : MonoBehaviour
             GameObject.FindGameObjectWithTag("SceneSwitcherOverlay")
                       .GetComponent<CanvasGroup>();
 
+        onBeforeSceneLoad?.Invoke();
         imageOverlay.blocksRaycasts = true;
         imageOverlay.LeanAlpha(1f, 1f)
             .setIgnoreTimeScale(true)

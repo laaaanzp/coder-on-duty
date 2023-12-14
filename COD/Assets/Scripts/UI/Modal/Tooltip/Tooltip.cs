@@ -30,8 +30,7 @@ public class Tooltip : MonoBehaviour
 
         UpdateLocation();
 
-        canvasGroup.LeanAlpha(1f, 0.1f)
-            .setIgnoreTimeScale(true);
+        canvasGroup.alpha = 1f;
 
         layoutElement.enabled = 
             LayoutUtility.GetPreferredWidth(titleRect) >= layoutElement.preferredWidth - 10 ||
@@ -40,8 +39,7 @@ public class Tooltip : MonoBehaviour
 
     public void Close()
     {
-        canvasGroup.LeanAlpha(0f, 0.1f)
-            .setIgnoreTimeScale(true);
+        canvasGroup.alpha = 0f;
     }
 
     private void UpdateLocation()

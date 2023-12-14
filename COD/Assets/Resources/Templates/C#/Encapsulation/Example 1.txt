@@ -1,48 +1,57 @@
 using System;
 
-abstract class Animal
+public class Employee
 {
-    public abstract string Name
-    {
-        get;
-    }
+    private string name;
+    private int age;
+    private double salary;
 
-    public void DisplayName()
-    {
-        Console.WriteLine($"Animals name is {Name}.");
-    }
-}
 
-class Dog : Animal
-{
-    public override string Name
-    {
-        get
-        {
-            return "Dog";
-        }
-    }
-}
-
-class Cat : Animal
-{
-    public override string Name
-    {
-        get
-        {
-            return "Cat";
-        }
-    }
-}
-
-public class Program
-{
     public static void Main(string[] args)
     {
-        Animal dog = new Dog();
-        Animal cat = new Cat();
+        Employee employee = new Employee("Lanz", 21, 45000d);
 
-        dog.DisplayName();
-        cat.DisplayName();
+        Console.WriteLine("Employee Information:");
+        Console.WriteLine(employee.GetEmployeeInfo());
+
+        employee.GiveRaise(5000d);
+        Console.WriteLine("\nAfter Giving Raise:");
+        Console.WriteLine(employee.GetEmployeeInfo());
+    }
+
+    public Employee(string name, int age, double salary)
+    {
+        Name = name;
+        Age = age;
+        Salary = salary;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
+    public int Age
+    {
+        get { return age; }
+        set { age = value >= 0 ? value : 0; }
+    }
+
+    public double Salary
+    {
+        get { return salary; }
+        set { salary = value >= 0 ? value : 0; }
+    }
+
+    public void GiveRaise(double amount)
+    {
+        if (amount > 0)
+            Salary += amount;
+    }
+
+    public string GetEmployeeInfo()
+    {
+        return $"{Name}, Age: {Age}, Salary: {Salary}";
     }
 }

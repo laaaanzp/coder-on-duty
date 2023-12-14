@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: d5dc6978cf04ead4f8c91548e31d0738
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - modalControl: {instanceID: 0}
+  - closeButton: {instanceID: 0}
+  - slotRow: {fileID: 2426978941756472252, guid: 0f55c97e5244fa648b83ee17dce63034,
+      type: 3}
+  - normalRow: {fileID: 3008730779165229837, guid: ee5ccfb32c3bb8143815bdfe818e8c40,
+      type: 3}
+  - problemSolvingRowContainer: {instanceID: 0}
+  - answerNodePrefab: {fileID: 8213853234683122856, guid: eb31b4410aef210429b88085eebc6243,
+      type: 3}
+  - outputText: {instanceID: 0}
+  - timeRemainingText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

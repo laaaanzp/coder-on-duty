@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class Program 
+{
+    public static void main(String[] args) 
+    {
+        Device smartphone = new Smartphone();
+        Device computer = new Computer();
+
+        System.out.println("Turning on devices...");
+        smartphone.turnOn();
+        computer.turnOn();
+
+        System.out.println("Turning off devices...");
+        smartphone.turnOff();
+        computer.turnOff();
+    }
+}
+
+abstract class Device 
+{
+    public abstract String getModel();
+    
+    public void turnOn() 
+    {
+        System.out.println(getModel() + " is now turned on.");
+    }
+    
+    public void turnOff() 
+    {
+        System.out.println(getModel() + " is now turned off.");
+    }
+}
+
+class Smartphone extends Device 
+{
+    @Override
+    public String getModel() 
+    {
+        return "Smartphone";
+    }
+}
+
+class Computer extends Device 
+{
+    @Override
+    public String getModel() 
+    {
+        return "Computer";
+    }
+}

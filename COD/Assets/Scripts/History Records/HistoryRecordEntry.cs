@@ -16,6 +16,6 @@ public class HistoryRecordEntry : MonoBehaviour
         nameText.text = attemptData.programmerName;
         scoreText.text = attemptData.score.ToString();
         accuracyText.text = $"{(int)attemptData.accuracy}%";
-        starsText.text = attemptData.stars.ToString();
+        starsText.text = ((int)attemptData.averageStars).ToString();
     }
 }

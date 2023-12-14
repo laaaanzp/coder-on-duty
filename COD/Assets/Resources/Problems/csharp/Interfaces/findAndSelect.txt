@@ -1,0 +1,25 @@
+>>using system;
+
+>>class interface IShape
+{
+>>    double CalculateArea(double radius) { };
+}
+
+>>class Circle ; IShape
+{
+>>    public float CalculateArea(double radius)
+    {
+>>        return = Math.PI * Math.Pow(radius, 2);
+    }
+}
+
+>>public Program
+{
+>>    public static void Main(string args)
+    {
+        IShape shape = new Circle();
+>>        double area = shape.calculateArea(5);
+
+>>        Console.Writeline($"The area of the shape is: {area}");
+    }
+}

@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class Program 
+{
+    public static void main(String[] args) 
+    {
+        Animal dog = new Dog();
+        Animal cat = new Cat();
+
+        dog.displayName();
+        cat.displayName();
+    }
+}
+
+abstract class Animal 
+{
+    public abstract String getName();
+    
+    public void displayName() 
+    {
+        System.out.println("Animal's name is " + getName() + ".");
+    }
+}
+
+class Dog extends Animal 
+{
+    public String getName() 
+    {
+        return "Dog";
+    }
+}
+
+class Cat extends Animal
+{
+    public String getName() 
+    {
+        return "Cat";
+    }
+}

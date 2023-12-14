@@ -4,17 +4,17 @@ during
 break
 count+
 WriteLine
+Write
+println
 continue
 //
 **
 %%
 -
 ##############################
-using System;
-
 public class Program
 {
-    public static void Main(string[] args)
+    public static void main(String[] args)
     {
         int count = 1;
 
@@ -22,7 +22,7 @@ public class Program
         {
             if (count (NODE_SLOT:%) 2 == 0)
             {
-                Console.(NODE_SLOT:Write)(count + " ");
+                System.out.(NODE_SLOT:print)(count + " ");
             }
             
             if (count == 6)

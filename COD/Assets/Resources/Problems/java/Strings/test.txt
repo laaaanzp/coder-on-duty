@@ -1,21 +1,19 @@
 , World!
 Hello
 ##############################
-using System;
-
 public class Program
 {
-    public static void Main(string[] args)
+    public static void main(String[] args)
     {
-        string varA = (NODE_SLOT:", World!");
-        string varB = "Hello";
-        string varC = (NODE_SLOT:varB) + (NODE_SLOT:varA);
+        String varA = (NODE_SLOT:", World!");
+        String varB = "Hello";
+        String varC = (NODE_SLOT:varB) + (NODE_SLOT:varA);
 
-        Console.WriteLine((NODE_SLOT:varC));
+        System.out.println((NODE_SLOT:varC));
 
-        if (varC == (NODE_SLOT:"Hello, World!"))
+        if (varC.equals((NODE_SLOT:"Hello, World!")))
         {
-            Console.WriteLine("The strings are equal.");
+            System.out.println("The strings are equal.");
         }
     }
 }

@@ -1,0 +1,21 @@
+public class Main {
+    // Method to add two integers and return the result
+    static int addIntegers(int x, int y) {
+        return x + y;
+    }
+
+    // Method to add two doubles and return the result
+    static double addDoubles(double x, double y) {
+        return x + y;
+    }
+
+    public static void main(String[] args) {
+        // Call the addIntegers method with values 8 and 5
+        int resultInt = addIntegers(8, 5);
+        System.out.println("Sum of integers: " + resultInt);
+
+        // Call the addDoubles method with values 4.3 and 6.26
+        double resultDouble = addDoubles(4.3, 6.26);
+        System.out.println("Sum of doubles: " + resultDouble);
+    }
+}

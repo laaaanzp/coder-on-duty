@@ -1,0 +1,17 @@
+>>using java.util.*;
+
+>>public clss Program
+{
+    public static void nain(String[] args)
+    {
+>>        string a = "Hello, World";
+>>        bool b = true;
+        int c = (int)3.14;
+        float d = 15;
+
+        System.out.println(a);
+        System.out.println(b);        
+>>        System.out.println(C);
+        System.out.println(d);
+    }
+}

@@ -1,0 +1,66 @@
+using System;
+
+public class LibraryBook
+{
+    private string title;
+    private string author;
+    private bool isAvailable;
+
+
+    public static void Main(string[] args)
+    {
+        LibraryBook book = new LibraryBook("The Great Gatsby", "F. Scott Fitzgerald");
+
+        Console.WriteLine("Library Book Information:");
+        Console.WriteLine(book.GetBookInfo());
+
+        book.CheckOut();
+        Console.WriteLine("\nAfter Checking Out:");
+        Console.WriteLine(book.GetBookInfo());
+
+        book.Return();
+        Console.WriteLine("\nAfter Returning:");
+        Console.WriteLine(book.GetBookInfo());
+    }
+
+    public LibraryBook(string title, string author)
+    {
+        Title = title;
+        Author = author;
+        IsAvailable = true;
+    }
+
+    public string Title
+    {
+        get { return title; }
+        set { title = value; }
+    }
+
+    public string Author
+    {
+        get { return author; }
+        set { author = value; }
+    }
+
+    public bool IsAvailable
+    {
+        get { return isAvailable; }
+        set { isAvailable = value; }
+    }
+
+    public void CheckOut()
+    {
+        if (IsAvailable)
+            IsAvailable = false;
+    }
+
+    public void Return()
+    {
+        IsAvailable = true;
+    }
+
+    public string GetBookInfo()
+    {
+        return $"{Title} by {Author}, Available: {IsAvailable}";
+    }
+}

@@ -1,23 +1,21 @@
 Hello
 , World!
-Add
+add
 Insert
+Append
 ToStr
 Result
 GetValue
 ##############################
-using System;
-using System.Text;
-
 public class Program
 {
-    public static void Main(string[] args)
+    public static void main(String[] args)
     {
         StringBuilder sb = new (NODE_SLOT:StringBuilder)((NODE_SLOT:"Hello"));
 
-        sb.(NODE_SLOT:Append)((NODE_SLOT:", World!"));
+        sb.(NODE_SLOT:append)((NODE_SLOT:", World!"));
 
-        Console.WriteLine(sb.(NODE_SLOT:ToString)());
+        System.out.println(sb.(NODE_SLOT:toString)());
     }
 }
 ##############################

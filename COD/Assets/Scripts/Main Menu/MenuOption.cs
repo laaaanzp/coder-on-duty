@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MenuOption : MonoBehaviour
 {
@@ -20,4 +21,5 @@ public class MenuOption : MonoBehaviour
     {
         Debug.Log($"{name}: OnClick");
     }
+
 }

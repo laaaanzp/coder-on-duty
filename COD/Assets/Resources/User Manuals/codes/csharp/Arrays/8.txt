@@ -1,0 +1,16 @@
+using System;
+using System.Collections;
+
+public class Program {
+    public static void Main(string[] args) {
+        ArrayList nameList = new ArrayList();
+        nameList.Add("Arian Alicay");
+        nameList.Add("Mohammad Naym Gote");
+        nameList.Add("Matthew Philip Magistrado");
+        nameList.Add("Mark Edison Pelo");
+
+        foreach(string name in nameList) {
+            Console.Write(name + ", ");
+        }
+    }
+}

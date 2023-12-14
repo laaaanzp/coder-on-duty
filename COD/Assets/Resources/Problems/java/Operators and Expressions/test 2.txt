@@ -1,29 +1,22 @@
-=
-+=
--=
-*=
-/=
 ##############################
-using System;
-
 public class Program
 {
-    public static void Main(string[] args)
+    public static void main(String[] args)
     {
         int x (NODE_SLOT:=) 5;
-        Console.WriteLine(x);
+        System.out.println(x);
 
         x (NODE_SLOT:/=) 2;
-        Console.WriteLine(x);
+        System.out.println(x);
 
         x (NODE_SLOT:-=) 3;
-        Console.WriteLine(x);
+        System.out.println(x);
 
         x (NODE_SLOT:+=) 2;
-        Console.WriteLine(x);
+        System.out.println(x);
 
         x (NODE_SLOT:*=) 4;
-        Console.WriteLine(x);
+        System.out.println(x);
     }
 }
 ##############################

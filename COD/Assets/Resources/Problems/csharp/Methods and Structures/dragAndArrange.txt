@@ -1,0 +1,31 @@
+using System;
+
+public class Program
+{
+    public static int GetValue(int value)
+    {
+>>        Console.WriteLine("Int Method");
+>>        return value;
+    }
+
+    public static string GetValue(string value)
+    {
+>>        Console.WriteLine("String Method");
+>>        return value;
+    }
+
+    public static double GetValue(double value)
+    {
+>>        Console.WriteLine("Double Method");
+        return value;
+    }
+
+    public static void Main(string[] args)
+    {
+>>        double value1 = GetValue(5d);
+>>        int value2 = GetValue(10);
+    }
+}
+##############################
+Double Method
+Int Method

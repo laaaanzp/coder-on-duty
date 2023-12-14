@@ -1,0 +1,44 @@
+else
+elseif
+elif
+3rd
+first
+>=
+<
+>
+if-else
+##############################
+using System;
+
+public class DecisionMaking
+{
+    public static void Main(String[] args)
+    {
+        int first = 7, second = -23, third = 13;
+        (NODE_SLOT:if) (first > second)
+        {
+            if ((NODE_SLOT:first) > third)
+            {
+                Console.WriteLine("{0} is the largest", first);
+            }
+            else
+            {
+                Console.WriteLine("{0} is the largest", (NODE_SLOT:third));
+            }
+        }
+
+        (NODE_SLOT:else)
+        {
+            if (second (NODE_SLOT:>) third)
+            {
+                Console.WriteLine("{0} is the largest", second);
+            }
+            else
+            {
+                Console.WriteLine("{0} is the largest", third);
+            }
+        }
+    }
+}
+##############################
+13 is the largest

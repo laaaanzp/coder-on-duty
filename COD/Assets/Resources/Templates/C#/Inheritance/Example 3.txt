@@ -1,0 +1,57 @@
+using System;
+
+public class BankAccount
+{
+    public string AccountNumber { get; set; }
+    public decimal Balance { get; set; }
+
+    public virtual void Deposit(decimal amount)
+    {
+        Balance += amount;
+        Console.WriteLine($"Deposited {amount}. New balance: {Balance}");
+    }
+
+    public virtual void Withdraw(decimal amount)
+    {
+        if (Balance >= amount)
+        {
+            Balance -= amount;
+            Console.WriteLine($"Withdrawn {amount}. New balance: {Balance}");
+        }
+        else
+        {
+            Console.WriteLine("Insufficient funds for withdrawal.");
+        }
+    }
+
+    public void GetAccountInfo()
+    {
+        Console.WriteLine($"Account - Account Number: {AccountNumber}, Balance: {Balance}");
+    }
+}
+
+public class SavingsAccount : BankAccount
+{
+    public void EarnInterest(decimal interestRate)
+    {
+        decimal interestAmount = Balance * interestRate / 100;
+        Balance += interestAmount;
+        Console.WriteLine($"Interest earned: {interestAmount}. New balance: {Balance}");
+    }
+
+    public static void Main(string[] args)
+    {
+        SavingsAccount savingsAccount = new SavingsAccount
+        {
+            AccountNumber = "SA12345",
+            Balance = 1000.00m
+        };
+
+        Console.WriteLine("Initial Savings Account Information:");
+        savingsAccount.GetAccountInfo();
+
+        savingsAccount.Deposit(500.00m);
+        savingsAccount.Withdraw(200.00m);
+        savingsAccount.EarnInterest(2.5m);
+    }
+}

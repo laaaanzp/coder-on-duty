@@ -5,6 +5,9 @@ public class InteractableDoor : MonoBehaviour
     public float rotationY = 145;
     public float duration = 1.5f;
 
+    [SerializeField] private int levelRequired = 1;
+    [SerializeField] private string errorMessage;
+
     private Interactable interactable;
 
 
@@ -16,6 +19,12 @@ public class InteractableDoor : MonoBehaviour
 
     public void Interact()
     {
+        if (DatabaseManager.instance.currentLanguage.currentLevel < levelRequired)
+        {
+            NPCBoss.Say(errorMessage);
+            return;
+        }
+
         if (interactable.interactionName == "Open")
             Open();
 

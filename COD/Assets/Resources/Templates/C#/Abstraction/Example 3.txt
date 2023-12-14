@@ -1,11 +1,25 @@
 using System;
 
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Device smartphone = new Smartphone();
+        Device computer = new Computer();
+
+        Console.WriteLine("Turning on devices...");
+        smartphone.TurnOn();
+        computer.TurnOn();
+
+        Console.WriteLine("Turning off devices...");
+        smartphone.TurnOff();
+        computer.TurnOff();
+    }
+}
+
 abstract class Device
 {
-    public abstract string Model
-    {
-        get;
-    }
+    public abstract string Model { get; }
 
     public void TurnOn()
     {
@@ -22,10 +36,7 @@ class Smartphone : Device
 {
     public override string Model
     {
-        get
-        {
-            return "Smartphone";
-        }
+        get { return "Smartphone"; }
     }
 }
 
@@ -33,26 +44,6 @@ class Computer : Device
 {
     public override string Model
     {
-        get
-        {
-            return "Computer";
-        }
-    }
-}
-
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        Device smartphone = new Smartphone();
-        Device computer = new Computer();
-
-        Console.WriteLine("Turning on devices...");
-        smartphone.TurnOn();
-        computer.TurnOn();
-
-        Console.WriteLine("Turning off devices...");
-        smartphone.TurnOff();
-        computer.TurnOff();
+        get { return "Computer"; }
     }
 }

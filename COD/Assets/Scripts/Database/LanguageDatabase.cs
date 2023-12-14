@@ -16,12 +16,12 @@ public class AttemptData
 
     public float accuracy
     {
-        get => Mathf.Max(((float)totalCorrectAnswers / (float)totalAnswers) * 100, 100);
+        get => Mathf.Min(((float)totalCorrectAnswers / (float)totalAnswers) * 100, 100);
     }
     
     public float averageStars
     {
-        get => Mathf.Max(Mathf.RoundToInt(stars / totalLevels), 3);
+        get => Mathf.Min(Mathf.RoundToInt(stars / totalLevels), 3);
     }
 }
 
@@ -35,7 +35,7 @@ public class LevelData
 
     public float accuracy
     {
-        get => Mathf.Max(((float)totalCorrectAnswers / (float)totalAnswers) * 100, 100);
+        get => Mathf.Min(((float)totalCorrectAnswers / (float)totalAnswers) * 100, 100);
     }
 }
 
@@ -76,7 +76,6 @@ public class LanguageDatabase : MonoBehaviour
         get => levelNames[currentLevel - 1];
     }
 
-    // Instances
     public static Dictionary<string, LanguageDatabase> instances = new Dictionary<string, LanguageDatabase>();
 
 
@@ -195,15 +194,10 @@ public class LanguageDatabase : MonoBehaviour
 
         if (languageDatabase.currentLevel == 1)
         {
-            // Storyboard
-            // SceneSwitcher.LoadScene(2);
-
-            // Temporary
-            SceneSwitcher.LoadScene(1);
+            SceneSwitcher.LoadScene(2);
         }
         else
         {
-            // Level
             SceneSwitcher.LoadScene(1);
         }
     }
@@ -227,6 +221,11 @@ public class LanguageDatabase : MonoBehaviour
         currentName = "";
 
         ResetLevels();
+    }
+
+    public static void ResetLanguage(string languageName)
+    {
+        GetInstance(languageName).ResetProgress();
     }
 
     public List<LevelData> GetAllLevelData()

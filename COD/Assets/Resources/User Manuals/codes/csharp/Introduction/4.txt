@@ -1,0 +1,12 @@
+using System;
+
+namespace HelloWorld {
+    public class Program {
+        public static void Main(string[] args) {
+            Console.Write("Hello, ");
+            Console.Write("World!");
+            Console.WriteLine();
+            Console.WriteLine("Hello, World!");
+        }
+    }
+}

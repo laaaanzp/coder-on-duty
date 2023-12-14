@@ -1,0 +1,35 @@
+continue
+during
+while
+switch
+Count++
+count + 1
+WriteLine
+else if
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        int (NODE_SLOT:count) = 1;
+
+        (NODE_SLOT:do)
+        {
+            if (count % 2 == 0)
+            {
+                Console.(NODE_SLOT:Write)(count + " ");
+            }
+
+            (NODE_SLOT:if) (count == 6)
+            {
+                (NODE_SLOT:break);
+            }
+
+            (NODE_SLOT:count++);
+        } (NODE_SLOT:while) (count <= 10);
+    }
+}
+##############################
+2 4 6

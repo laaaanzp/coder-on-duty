@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList < String > cars = new ArrayList < String > (); // Create an ArrayList object
+        ArrayList < String > names = new ArrayList < String > ();
+
+        names.add("Alicay, Kate");
+        names.add("Gote, Naym");
+        names.add("Magistrado, Matt");
+        names.add("Pelo, Lanz");
+
+        System.out.println(names.get(0)); // This will print Alicay, Kate
+    }
+}

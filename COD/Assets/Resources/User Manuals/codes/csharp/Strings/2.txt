@@ -1,0 +1,23 @@
+using System;
+
+public class Program {
+    public static void Main(string[] args) {
+        string greeting = "Hello there!";
+        string path = @ "C:\Documents\MyFolder\";
+        char[] word = {
+            'H',
+            'e',
+            'l',
+            'l',
+            'o',
+            '!'
+        };
+        string strGreet = new string(word);
+
+        // Additional output to display the values
+        Console.WriteLine("Greeting: " + greeting);
+        Console.WriteLine("Path: " + path);
+        Console.WriteLine("Word: " + new string(word));
+        Console.WriteLine("Constructed Greet: " + strGreet);
+    }
+}

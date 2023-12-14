@@ -1,0 +1,81 @@
+import java.util.*;
+
+public class Program 
+{
+    public static void main(String[] args) 
+    {
+        Cat myCat = new Cat("Whiskers", 3, "Siamese");
+        myCat.displayInfo();
+        myCat.meow();
+    }
+}
+
+class Animal 
+{
+    private String name;
+    private int age;
+
+    public String getName() 
+    { 
+        return name; 
+    }
+
+    public void setName(String name) 
+    { 
+        this.name = name; 
+        }
+
+    public int getAge() 
+    { 
+        return age; 
+    }
+
+    public void setAge(int age) 
+    { 
+        this.age = age; 
+    }
+
+    public void displayInfo() 
+    {
+        System.out.println("Animal - Name: " + name + ", Age: " + age);
+    }
+
+    public void setBreed(String breed) 
+    { 
+        this.breed = breed; 
+    }
+
+    public String getBreed() 
+    { 
+        return breed; 
+    }
+
+    private String breed;
+}
+
+class Cat extends Animal 
+{
+    public Cat() 
+    {
+        super();
+    }
+
+    public Cat(String name, int age, String breed) 
+    {
+        super();
+        this.setName(name);
+        this.setAge(age);
+        this.setBreed(breed);
+    }
+
+    public void meow() 
+    {
+        System.out.println(getName() + " says 'Meow!'");
+    }
+
+    @Override
+    public void displayInfo() 
+    {
+        System.out.println("Cat - Name: " + getName() + ", Age: " + getAge() + ", Breed: " + getBreed());
+    }
+}

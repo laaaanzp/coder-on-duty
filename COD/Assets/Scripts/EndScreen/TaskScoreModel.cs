@@ -1,6 +1,5 @@
 public class TaskScoreModel
 {
-    public string name;
     public bool isFixed = false;
     public int score = 0;
     public int totalCorrectAnswers = 0;

@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +8,11 @@ public class UserManualControl : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] Button nextButton;
     [SerializeField] Button previousButton;
+    [SerializeField] GameObject tryCodeButton;
 
     private Sprite[] spriteImages;
     private int currentIndex;
+    private string code;
 
 
     void Awake()
@@ -18,6 +22,7 @@ public class UserManualControl : MonoBehaviour
         string levelName = DatabaseManager.instance.currentLanguage.currentLevelName;
 
         spriteImages = Resources.LoadAll<Sprite>($"User Manuals/{languageName}/{levelName}/");
+
         currentIndex = 0;
         image.sprite = spriteImages[0];
     }
@@ -28,6 +33,8 @@ public class UserManualControl : MonoBehaviour
         image.sprite = spriteImages[currentIndex];
 
         previousButton.interactable = true;
+
+        CheckIfCodeExists();
 
         if (currentIndex + 1 == spriteImages.Length)
         {
@@ -42,10 +49,26 @@ public class UserManualControl : MonoBehaviour
 
         nextButton.interactable = true;
 
+        CheckIfCodeExists();
+
         if (currentIndex == 0)
         {
             previousButton.interactable = false;
         }
+    }
+
+    private void CheckIfCodeExists()
+    {
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string levelName = DatabaseManager.instance.currentLanguage.currentLevelName;
+
+        string codePath = $"User Manuals/codes/{languageName}/{levelName}/{currentIndex + 1}";
+        TextAsset codeTextAsset = Resources.Load<TextAsset>(codePath);
+
+        if (codeTextAsset != null)
+            code = codeTextAsset.text;
+
+        tryCodeButton.SetActive(codeTextAsset != null);
     }
 
     void Update()
@@ -58,6 +81,11 @@ public class UserManualControl : MonoBehaviour
         {
             Next();
         }
+    }
+
+    public void TryCode()
+    {
+        CSCodeCompiler.Open(code);
     }
 }
 

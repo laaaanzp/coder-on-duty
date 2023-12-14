@@ -1,0 +1,41 @@
+public class Program
+{
+    public static void main(String[] args)
+    {
+        Animal cat = new Cat();
+        Animal dog = new Dog();
+
+        System.out.println("Cat Information:");
+        cat.displayInfo();
+
+        System.out.println("\nDog Information:");
+        dog.displayInfo();
+    }
+}
+
+abstract class Animal
+{
+    public abstract void makeSound();
+
+    public void displayInfo()
+    {
+        System.out.print("Animal - ");
+        makeSound();
+    }
+}
+
+class Cat extends Animal
+{
+    public void makeSound()
+    {
+        System.out.println("Meow!");
+    }
+}
+
+class Dog extends Animal
+{
+    public void makeSound()
+    {
+        System.out.println("Woof!");
+    }
+}

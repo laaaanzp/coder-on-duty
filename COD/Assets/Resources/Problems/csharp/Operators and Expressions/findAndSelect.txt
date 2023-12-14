@@ -1,0 +1,22 @@
+using System;
+
+>>Public class Program
+{
+    public static void Main(string[] args)
+    {
+>>        int num1 == 10;
+>>        int num2 == 5;
+
+        int result1 = num1 - num2;
+        int result2 = num1 + num2;
+        int result3 = num1 / num2;
+>>        int result4 = num1 % num2
+        int result5 = num1 * num2;
+
+        Console.WriteLine("Result 1: " + result1);
+>>        Console.WriteLine("Result 2: ",  result2);
+        Console.WriteLine("Result 3: " + result3);
+        Console.WriteLine("Result 4: " + result4);
+        Console.WriteLine("Result 5: " + result5); 
+    }
+}

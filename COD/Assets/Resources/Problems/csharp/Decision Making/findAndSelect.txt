@@ -1,0 +1,28 @@
+using System;
+
+public class DecisionMaking
+{
+    public static void Main(String[] args)
+    {
+        bool hasEngine = true;
+        bool hasWheels = true;
+        bool hasHandlebars = false;
+
+>>        if hasEngine && hasWheels && !hasHandlebars
+        {
+>>            Console.WriteLine(It's a car!);
+        }
+>>        elseif (!hasEngine && hasWheels && hasHandlebars)
+        {
+            Console.WriteLine("It's a bicycle!");
+        }
+        else if (hasEngine && hasWheels && hasHandlebars)
+        {
+            Console.WriteLine("It's a motorcycle!");
+        }
+>>        else if
+        {
+>>            Console.WriteLine(Unable to identify type of vehicle.);
+        }
+    }
+}

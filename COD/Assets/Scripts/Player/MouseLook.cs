@@ -16,6 +16,9 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
+        if (!PlayerMovement.canMove)
+            return;
+
         if (Cursor.lockState != CursorLockMode.Locked) 
             return;
 

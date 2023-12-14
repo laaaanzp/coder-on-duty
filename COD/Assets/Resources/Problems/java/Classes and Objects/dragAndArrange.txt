@@ -1,0 +1,31 @@
+import java.util.*;
+
+public class Product
+{
+    public String name;
+    public double price;
+
+>>    public (NODE_SLOT:Product)(String (NODE_SLOT:name), double price)
+    {
+        this.name = name;
+ >>       this.price = price;
+    }
+
+ >>   public (NODE_SLOT:double) discountedPrice()
+    {
+ >>       return price * 0.75d;
+    }
+
+ >>   public static void main(String[] args)
+    {
+ >>       Product product = new Product("Mobile", 1000.0d);
+
+ >>       System.out.println("Name: " + product.name);
+ >>       System.out.println("Price: " + product.price);
+ >>       System.out.println("Discounted Price: " + product.discountedPrice());
+    }
+}
+##############################
+Name: Mobile
+Price: 1000
+Discounted Price: 750

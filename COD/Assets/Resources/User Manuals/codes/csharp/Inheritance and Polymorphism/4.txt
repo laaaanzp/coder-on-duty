@@ -1,0 +1,31 @@
+using System;
+
+class Animal {
+    public virtual void animalSound() {
+        Console.WriteLine("The animal makes a sound");
+    }
+}
+
+class Pig : Animal {
+    public override void animalSound() {
+        Console.WriteLine("The pig says: wee wee");
+    }
+}
+
+class Dog : Animal {
+    public override void animalSound() {
+        Console.WriteLine("The dog says: bow wow");
+    }
+}
+
+public class Program {
+    public static void Main(string[] args) {
+        Animal myAnimal = new Animal(); // Create an Animal object
+        Animal myPig = new Pig(); // Create a Pig object
+        Animal myDog = new Dog(); // Create a Dog object
+
+        myAnimal.animalSound(); // The animal makes a sound 
+        myPig.animalSound(); // The pig says: wee wee
+        myDog.animalSound(); // The dog says: bow wow
+    }
+}

@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     public GameObject title;
     public Image backgroundImage;
     public LeanTweenType leanType;
+    [SerializeField] private AudioSource menuAudioSource;
 
     public static float duration = 1f;
 
@@ -21,6 +22,15 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         AnimateTitle();
+    }
+
+    public void TransitionAudio()
+    {
+        float currentVolume = menuAudioSource.volume;
+        LeanTween.value(1f, 0f, 1f).setOnUpdate((float value) =>
+        {
+            menuAudioSource.volume = value * currentVolume;
+        });
     }
 
     private void AnimateTitle()

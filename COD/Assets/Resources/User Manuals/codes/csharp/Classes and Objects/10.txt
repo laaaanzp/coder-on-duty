@@ -1,0 +1,50 @@
+using System;
+
+public class Person {
+    private string firstName;
+    private string lastName;
+    private int age;
+
+    public Person() {
+        this.firstName = "no name";
+        this.lastName = "no name";
+        this.age = 0;
+    }
+
+    public Person(string fName, string lName) {
+        this.firstName = fName;
+        this.lastName = lName;
+        this.age = 0; // Not used within this constructor
+    }
+
+    public Person(string newfName, string newLName, int newAge) {
+        this.firstName = newfName;
+        this.lastName = newLName;
+        this.age = newAge;
+    }
+
+    public string GetFirstName() {
+        return this.firstName;
+    }
+
+    public string GetLastName() {
+        return this.lastName;
+    }
+
+    public int GetAge() {
+        return this.age;
+    }
+}
+
+public class Program {
+    public static void Main(string[] args) {
+        Person p1 = new Person();
+        Person p2 = new Person("Jack", "Paul");
+        Person p3 = new Person("Elizabeth", "Cruz", 25);
+
+        // Utilizing all assigned values
+        Console.WriteLine("First name of p1 is " + p1.GetFirstName());
+        Console.WriteLine("Last name of p2 is " + p2.GetLastName());
+        Console.WriteLine("Age of p3 is " + p3.GetAge());
+    }
+}

@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class DecisionMaking
+{
+    public static void main(String[] args)
+    {
+        Scanner scanner = new Scanner(System.in);
+
+        char ch;
+>>        System.out.print("Enter an alphabet: ");
+>>        char ch = scanner.next(".").charAt(0);
+
+>>        switch (Character.toLowerCase(ch))
+        {
+            case) 'a':
+                System.out.println("Vowel");
+                break;
+            case 'e':
+                System.out.println("Vowel");
+                break;
+            case 'i':
+                System.out.println("Vowel");
+                break;
+            case 'o':
+                System.out.println("Vowel");
+                break;
+            case 'u':
+                System.out.println("Vowel");
+                break;
+>>            default:
+>>                System.out.println("Not a vowel");
+                break;
+        }
+    }
+}
+##############################
+Enter an alphabet: <u>z</u>
+Not a vowel

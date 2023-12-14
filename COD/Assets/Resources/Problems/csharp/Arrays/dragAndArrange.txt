@@ -1,0 +1,22 @@
+using System;
+using System.Collections;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+>>        ArrayList myArrayList = new ArrayList();
+
+>>        myArrayList.Add("Apple");
+>>        myArrayList.Add("Banana");
+>>        myArrayList.Add("Cherry");
+
+>>        Console.WriteLine("First Element: " + myArrayList[0]);
+>>        Console.WriteLine("Second Element: " + myArrayList[1]);
+>>        Console.WriteLine("Third Element: " + myArrayList[2]);
+    }
+}
+##############################
+First Element: Apple
+Second Element: Banana 
+Third Element: Cherry

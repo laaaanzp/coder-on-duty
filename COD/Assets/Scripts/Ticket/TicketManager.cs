@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class TicketManager : MonoBehaviour
     [SerializeField] private GameObject taskPrefab;
     [SerializeField] private EndScreen endScreen;
     [SerializeField] private TextMeshProUGUI ticketCounterText;
+    public ModalControl taskModalControl;
 
     private static List<Ticket> tickets;
     public static TicketManager instance;
@@ -20,11 +22,7 @@ public class TicketManager : MonoBehaviour
         isLevelCompleted = false;
         tickets = new List<Ticket>();
         instance = this;
-
-        if (DatabaseManager.instance.currentLanguage.currentLevel == 1)
-        {
-            TutorialModalControl.Open();
-        }
+        taskModalControl.gameObject.SetActive(false);
     }
 
     void Start()
@@ -48,9 +46,19 @@ public class TicketManager : MonoBehaviour
         return task;
     }
 
+    public static Ticket CreateTask(GameObject owner, string ticketTitle)
+    {
+        GameObject taskInstance = Instantiate(instance.taskPrefab, instance.transform);
+
+        Ticket task = taskInstance.GetComponent<Ticket>();
+
+        task.Initialize(owner, ticketTitle, null);
+
+        return task;
+    }
+
     public static void OnFinish(Ticket ticket)
     {
-        // instance.CheckTasks();
         tickets.Remove(ticket);
         Destroy(ticket.gameObject);
         instance.UpdateRemainingActiveTicketsDisplay();
@@ -66,38 +74,55 @@ public class TicketManager : MonoBehaviour
         ticketCounterText.text = $"Remaining Tasks: {tickets.Count}";
     }
 
-    public void CheckTasks()
+    public bool CheckTasks()
     {
         foreach (Ticket task in tickets)
         {
             if (!task.isFinished)
             {
-                return;
+                return false;
             }
         }
 
+        return true;
+    }
+
+    public void LevelComplete()
+    {
         List<TaskScoreModel> taskScoreModels = new List<TaskScoreModel>();
 
-        foreach (ProblemSolving problemSolving in ProblemSolvingDistributor.problemSolvings)
+        foreach (IPuzzle problemSolving in ProblemSolvingDistributor.puzzleSolvings)
         {
             taskScoreModels.Add(problemSolving.taskScoreModel);
         }
 
         isLevelCompleted = true;
-        LevelComplete(taskScoreModels);
-    }
 
-    private void LevelComplete(List<TaskScoreModel> taskScoreModels)
-    {
         foreach (TaskScoreModel taskScoreModel in taskScoreModels)
         {
             if (taskScoreModel.isFixed)
             {
-                endScreen.ShowLevelComplete(taskScoreModels.ToArray());
+                Action levelCompleteAction = () => { endScreen.ShowLevelComplete(taskScoreModels.ToArray()); };
+                switch (DatabaseManager.instance.currentLanguage.currentLevel)
+                {
+                    case 1:
+                        NPCBoss.Say("Well done on your first day of training. Keep on doing your best!", levelCompleteAction);
+                        break;
+                    case 2:
+                        NPCBoss.Say("Well done on your second day of training. Keep up the great work. Tomorrow will decide if you're going to be promoted to regular. Goodluck!", levelCompleteAction);
+                        break;
+                    case 3:
+                        NPCBoss.Say("Congratulations! You have finished all of your training, you are now promoted to regular!", levelCompleteAction);
+                        break;
+                    default:
+                        NPCBoss.Say("Well done. You have finished all of your tasks for today.", levelCompleteAction);
+                        break;
+                }
+
                 return;
             }
         }
 
-        endScreen.ShowGameOver(taskScoreModels.ToArray());
+        NPCBoss.Say("You did your best and that's what matters the most. There is always another chance, better luck next time.", () => { endScreen.ShowGameOver(taskScoreModels.ToArray()); });
     }
 }

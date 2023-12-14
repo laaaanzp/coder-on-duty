@@ -1,0 +1,21 @@
+import java.util.ArrayList;
+
+public class Program
+{
+    public static void main(String[] args)
+    {
+>>        ArrayList<String> myArrayList = new ArrayList<String>();
+
+>>        myArrayList.add("Apple");
+>>        myArrayList.add("Banana");
+>>        myArrayList.add("Cherry");
+
+>>        System.out.println("First Element: " + myArrayList.get(0));
+>>        System.out.println("Second Element: " + myArrayList.get(1));
+>>        System.out.println("Third Element: " + myArrayList.get(2));
+    }
+}
+##############################
+First Element: Apple
+Second Element: Banana 
+Third Element: Cherry

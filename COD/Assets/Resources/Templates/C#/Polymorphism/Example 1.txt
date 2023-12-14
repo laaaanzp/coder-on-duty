@@ -1,37 +1,61 @@
 using System;
 
-class Animal
-{
-    public virtual void MakeNoise()
-    {
-        Console.WriteLine($"The animal makes a noise.");
-    }
-}
-
-class Dog : Animal
-{
-    public override void MakeNoise()
-    {
-        Console.WriteLine($"The dog barked.");
-    }
-}
-
-class Cat : Animal
-{
-    public override void MakeNoise()
-    {
-        Console.WriteLine($"The cat meowed.");
-    }
-}
-
 public class Program
 {
     public static void Main(string[] args)
     {
-        Animal dog = new Dog();
-        Animal cat = new Cat();
+        Shape circle = new Circle(5.0);
+        Shape rectangle = new Rectangle(4.0, 6.0);
 
-        dog.MakeNoise();
-        cat.MakeNoise();
+        Console.WriteLine("Circle Information:");
+        circle.DisplayInfo();
+
+        Console.WriteLine("\nRectangle Information:");
+        rectangle.DisplayInfo();
+    }
+}
+
+public class Shape
+{
+    public virtual double CalculateArea()
+    {
+        return 0;  
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Shape - Area: {CalculateArea()}");
+    }
+}
+
+public class Circle : Shape
+{
+    private double radius;
+
+    public Circle(double radius)
+    {
+        this.radius = radius;
+    }
+
+    public override double CalculateArea()
+    {
+        return Math.PI * radius * radius;
+    }
+}
+
+public class Rectangle : Shape
+{
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width)
+    {
+        this.length = length;
+        this.width = width;
+    }
+
+    public override double CalculateArea()
+    {
+        return length * width;
     }
 }

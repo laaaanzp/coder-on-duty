@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctAnswer: answerf
+  layoutElement: {fileID: 4739456176659904055}
   outline: {fileID: 8507999231133259966}
 --- !u!61 &1714487013
 BoxCollider2D:

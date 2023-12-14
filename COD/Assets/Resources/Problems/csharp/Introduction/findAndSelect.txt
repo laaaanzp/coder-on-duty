@@ -1,0 +1,15 @@
+using System;
+
+public class Program
+{
+>>    public static void Main(string args)
+    {
+        Console.Write("Enter password: ");
+>>        string password = Console.readLine();
+
+        if (password == "admin")
+        {
+>>            Console.Writeline("Welcome, Admin!");
+        }
+    }
+}

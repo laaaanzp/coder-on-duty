@@ -1,0 +1,42 @@
+using System;
+
+public class DemoStruct {
+    public static void Main(string[] args) {
+        // Initializing struct members
+        Book book1 = new Book {
+            Title = "Object-Oriented Programming",
+                Author = "John Doe",
+                BookId = 20190001
+        };
+
+        // Accessing struct members
+        Console.WriteLine("Book title: " + book1.Title);
+        Console.WriteLine("Book author: " + book1.Author);
+        Console.WriteLine("Book ID: " + book1.BookId);
+
+        // Creating a new instance of Book struct object and using its methods
+        Book book2 = new Book();
+        book2.SetValues("C# Programming", "Jane Doe", 20190002);
+        book2.DisplayValues();
+    }
+}
+
+public struct Book {
+    public string Title;
+    public string Author;
+    public int BookId;
+
+    // Mutator method that sets values of the struct fields
+    public void SetValues(string newTitle, string newAuthor, int newBookId) {
+        Title = newTitle;
+        Author = newAuthor;
+        BookId = newBookId;
+    }
+
+    // Method that displays the values of struct fields
+    public void DisplayValues() {
+        Console.WriteLine("Book title: " + Title);
+        Console.WriteLine("Book author: " + Author);
+        Console.WriteLine("Book ID: " + BookId);
+    }
+}

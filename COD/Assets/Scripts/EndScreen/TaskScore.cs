@@ -12,7 +12,6 @@ public class TaskScore : MonoBehaviour
 
     public void Show(TaskScoreModel taskScore)
     {
-        taskNameText.text = taskScore.name;
         taskNameText.color = !taskScore.isFixed ? Color.red : Color.green;
         scoreText.text = $"<b>Score:</b> {taskScore.score}";
         correctAnswersText.text = $"<b>Answers:</b> {taskScore.totalCorrectAnswers}/{taskScore.totalAnswers}";

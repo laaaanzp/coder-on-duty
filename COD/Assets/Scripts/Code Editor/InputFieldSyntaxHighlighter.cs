@@ -65,7 +65,7 @@ public class InputFieldSyntaxHighlighter : MonoBehaviour
 
     private string HighlightNumerics(string text)
     {
-        string pattern = @"[+-]?\b\d+(\.\d+)?[dDfFbBlL]?\b";
+        string pattern = @"[+-]?\b\d+(\.\d+)?[dDfFbBlLmM]?\b";
 
         return Regex.Replace(text, pattern, $"<color={numericHexColor}>$&</color>");
     }

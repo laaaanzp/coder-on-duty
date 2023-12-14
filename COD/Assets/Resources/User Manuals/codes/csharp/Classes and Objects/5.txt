@@ -1,0 +1,41 @@
+using System;
+
+public class Point {
+    private int xPos, yPos;
+
+    public Point() {
+        this.xPos = 0;
+        this.yPos = 0;
+    }
+
+    public int xPoint {
+        get {
+            return this.xPos;
+        }
+        set {
+            this.xPos = value;
+        }
+    }
+
+    public int yPoint {
+        get {
+            return this.yPos;
+        }
+        set {
+            this.yPos = value;
+        }
+    }
+}
+
+public class Program {
+    public static void Main(string[] args) {
+        Point p1 = new Point();
+        // This following initialization automatically calls the set method
+        p1.xPoint = 20;
+        p1.yPoint = 10;
+        // Accessing the property automatically calls the get method and returns its value
+        int x = p1.xPoint;
+        Console.WriteLine("value of p1.xPoint is " + x);
+        Console.WriteLine("value of p1.yPoint is " + p1.yPoint);
+    }
+}

@@ -26,8 +26,6 @@ public class EndScreen : MonoBehaviour
     private int totalAnswers = 0;
     private int stars = 0;
 
-    private bool isPlayingTheLastLevel;
-
     public void ShowGameOver(TaskScoreModel[] taskScores)
     {
         modalControl.Open();
@@ -41,6 +39,17 @@ public class EndScreen : MonoBehaviour
 
     public void ShowLevelComplete(TaskScoreModel[] taskScores)
     {
+        switch (DatabaseManager.instance.currentLanguage.currentLevel)
+        {
+            case 9999:
+                titleText.text = "PROMOTED TO PROBITIONARY!";
+                titleShadowText.text = "PROMOTED TO PROBITIONARY!";
+                break;
+            case 3:
+                titleText.text = "PROMOTED TO REGULAR!";
+                titleShadowText.text = "PROMOTED TO REGULAR!";
+                break;
+        }
         modalControl.Open();
         restartButton.SetActive(false);
         StartCoroutine(_Show(taskScores));

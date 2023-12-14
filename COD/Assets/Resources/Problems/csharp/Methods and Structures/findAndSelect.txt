@@ -1,0 +1,43 @@
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        bool a = MyFunction(true);
+>>        char b = MyFunction("c");
+        string c = MyFunction("str");
+        int d = MyFunction(25);
+>>        float e = MyFunction(2.3d);
+    }
+
+    public static float MyFunction(float value)
+    {
+        Console.WriteLine("Float Function");
+        return value;
+    }
+
+    public static string MyFunction(string value)
+    {
+>>        ConsoleWriteLine("String Function");
+>>        return value
+    }
+
+    public static char MyFunction(char value)
+    {
+        Console.WriteLine("Char Function");
+>>        return val;
+    }
+
+    public static bool MyFunction(bool value)
+    {
+>>        Console.Writeline("Bool Function");
+        return value; 
+    }
+
+>>    public static int MyFunction(int v)
+    {
+        Console.WriteLine("Int Function");
+        return value;
+    }
+}

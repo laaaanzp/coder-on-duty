@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GlobalsSingleton : MonoBehaviour
 {
     private static GlobalsSingleton instance;
+    public UnityEvent init;
 
 
     void Awake()
@@ -20,5 +22,7 @@ public class GlobalsSingleton : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        init?.Invoke();
     }
 }

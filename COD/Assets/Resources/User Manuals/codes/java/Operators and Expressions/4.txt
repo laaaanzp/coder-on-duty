@@ -1,0 +1,8 @@
+public class MyClass {
+    public static void main(String args[]) {
+
+        boolean b = 10 > 2;
+        //the expression 10 > 2 is evaluated and the result is true and assigned to the variable b
+        System.out.println(b); //the output is 3
+    }
+}

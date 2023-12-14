@@ -1,0 +1,48 @@
+import java.util.*;
+
+public class InventoryItem 
+{
+    private String itemName;
+    private int quantity;
+    private double price;
+
+    public static void main(String[] args) 
+    {
+        InventoryItem item = new InventoryItem("Widget", 100, 2.50d);
+
+        System.out.println("Inventory Item Information:");
+        System.out.println(item.getItemInfo());
+    }
+
+    public InventoryItem(String itemName, int quantity, double price) 
+    {
+        this.itemName = itemName;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public String getItemName()
+    {
+        return itemName;
+    }
+
+    public int getQuantity() 
+    {
+        return quantity;
+    }
+
+    public double getPrice() 
+    {
+        return price;
+    }
+
+    public double calculateTotalValue() 
+    {
+        return quantity * price;
+    }
+
+    public String getItemInfo() 
+    {
+        return itemName + ", Quantity: " + quantity + ", Price: " + price + ", Total Value: " + calculateTotalValue();
+    }
+}

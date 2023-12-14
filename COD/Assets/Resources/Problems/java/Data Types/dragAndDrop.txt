@@ -1,0 +1,53 @@
+string
+bool
+number
+##############################
+import java.util.Scanner;
+
+public class StudentInformation
+{
+    public static void main(String[] args)
+    {
+        Scanner scanner = new Scanner(System.in);
+
+        (NODE_SLOT:String) name; 
+        (NODE_SLOT:int) age; 
+        (NODE_SLOT:float) gpa; 
+        (NODE_SLOT:char) sex;
+        (NODE_SLOT:boolean) isScholar; 
+
+        System.out.print("Enter your name: ");
+        name = scanner.nextLine();
+
+        System.out.print("Enter your age: ");
+        age = scanner.nextInt();
+
+        System.out.print("Enter your GPA: ");
+        gpa = scanner.nextFloat();
+
+        System.out.print("Enter your sex (M or F): ");
+        sex = scanner.next(".").charAt(0);
+
+        System.out.print("Are you a scholar? (Y/N): ");
+        isScholar = scanner.next().toUpperCase().equals("Y");
+
+        System.out.println("---------------");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " +  age);
+        System.out.println("GPA: " + gpa);
+        System.out.println("Sex: " + sex);
+        System.out.println("Scholar: " + isScholar);
+    }
+}
+##############################
+Enter your name: <u>James</u>
+Enter your age: <u>20</u>
+Enter your GPA: <u>1.73</u>
+Enter your sex (M or F): <u>M</u>
+Are you a scholar? (Y/N): <u>Y</u>
+---------------
+Name: James
+Age: 20
+GPA: 1.73
+Sex: M
+Scholar: True

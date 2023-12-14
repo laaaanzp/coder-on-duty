@@ -7,11 +7,9 @@ count + 1
 count+
 Count++
 ##############################
-using System;
-
 public class Program
 {
-    public static void Main(string[] args)
+    public static void main(String[] args)
     {
         (NODE_SLOT:for) (int count = 1; (NODE_SLOT:count) <= 10; (NODE_SLOT:count++))
         {
@@ -22,7 +20,7 @@ public class Program
                     (NODE_SLOT:continue);
                 }
 
-                Console.Write(count + " ");
+                System.out.print(count + " ");
             }
 
             if (count == 9)

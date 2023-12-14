@@ -1,0 +1,28 @@
+using System;
+
+public class Point
+{
+    public int x, y;
+
+    public Point()
+    {
+>>        this.X = 0;
+>>        this.Y = 0;
+    }
+
+>>    public Point(int x; int y)
+    {
+>>        this.x = X;
+>>        this.y = Y;
+    }
+
+>>    public static void Main(string args)
+    {
+        Point point = new Point(5, 3);
+        point.x = 5;
+>>        Point.y = 3;
+
+>>        Console.Writeline("X: " + point.x);
+>>        Console.Writeline("Y: " + point.y);
+    }
+}

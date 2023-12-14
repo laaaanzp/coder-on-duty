@@ -1,11 +1,20 @@
 using System;
 
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Animal dog = new Dog();
+        Animal cat = new Cat();
+
+        dog.DisplayName();
+        cat.DisplayName();
+    }
+}
+
 abstract class Animal
 {
-    public abstract string Name
-    {
-        get;
-    }
+    public abstract string Name { get; }
 
     public void DisplayName()
     {
@@ -17,10 +26,7 @@ class Dog : Animal
 {
     public override string Name
     {
-        get
-        {
-            return "Dog";
-        }
+        get { return "Dog"; }
     }
 }
 
@@ -28,21 +34,6 @@ class Cat : Animal
 {
     public override string Name
     {
-        get
-        {
-            return "Cat";
-        }
-    }
-}
-
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        Animal dog = new Dog();
-        Animal cat = new Cat();
-
-        dog.DisplayName();
-        cat.DisplayName();
+        get { return "Cat"; }
     }
 }

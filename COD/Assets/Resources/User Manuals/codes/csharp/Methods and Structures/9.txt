@@ -1,0 +1,23 @@
+using System;
+
+public struct Book {
+    public string title;
+    public string author;
+    public long book_id;
+}
+
+public class Program {
+    public static void Main(string[] args) {
+        Book book1 = new Book();
+
+        // Initializing struct members
+        book1.title = "Object-Oriented Programming";
+        book1.author = "John Doe";
+        book1.book_id = 20190001;
+
+        // Accessing struct members
+        Console.WriteLine("Book title: " + book1.title);
+        Console.WriteLine("Book author: " + book1.author);
+        Console.WriteLine("Book ID: " + book1.book_id);
+    }
+}

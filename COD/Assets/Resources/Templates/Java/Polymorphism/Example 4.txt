@@ -1,0 +1,31 @@
+public class Program
+{
+    public static void main(String[] args)
+    {
+        FullTimeEmployee fullTimeEmployee = new FullTimeEmployee();
+
+        double monthlySalary = fullTimeEmployee.calculateSalary(5000.00d);
+        double hourlySalary = fullTimeEmployee.calculateSalary(20.00d, 40);
+
+        System.out.println("Monthly Salary: " + monthlySalary);
+        System.out.println("Hourly Salary: " + hourlySalary);
+    }
+}
+
+class FullTimeEmployee extends Employee
+{
+
+}
+
+class Employee
+{
+    public double calculateSalary(double monthlySalary)
+    {
+        return monthlySalary;
+    }
+
+    public double calculateSalary(double hourlyRate, int hoursWorked)
+    {
+        return hourlyRate * hoursWorked;
+    }
+}

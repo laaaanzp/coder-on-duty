@@ -1,0 +1,18 @@
+println
+Writeline
+Name =
+"name"
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string name = "Lanz";
+
+        Console.(NODE_SLOT:WriteLine)((NODE_SLOT:"Name = ") + (NODE_SLOT:name));
+    }
+}
+##############################
+Name = Lanz

@@ -1,0 +1,43 @@
+public class Main {
+    public static void main(String[] args) {
+        int[][] table = {
+            {
+                3,
+                4,
+                2,
+                5,
+                12
+            },
+            {
+                8,
+                11,
+                23,
+                2,
+                3
+            },
+            {
+                20,
+                1,
+                19,
+                7,
+                6
+            },
+            {
+                15,
+                10,
+                6,
+                17,
+                3
+            }
+        };
+
+        System.out.println("Elements of array table:");
+
+        for (int row = 0; row < table.length; row++) {
+            for (int col = 0; col < table[row].length; col++) {
+                System.out.print(table[row][col] + "\t");
+            }
+            System.out.println();
+        }
+    }
+}

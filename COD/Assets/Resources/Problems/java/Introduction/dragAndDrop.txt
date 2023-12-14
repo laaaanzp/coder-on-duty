@@ -1,0 +1,16 @@
+writeln
+printline
+Name =
+"name"
+##############################
+public class Program
+{
+    public static void main(String[] args)
+    {
+        String name = "Lanz";
+
+        System.out.(NODE_SLOT:println)((NODE_SLOT:"Name = ") + (NODE_SLOT:name));
+    }
+}
+##############################
+Name = Lanz

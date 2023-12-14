@@ -1,0 +1,31 @@
+[2, 3]
+[3, 4]
+[1, 1]
+[2, 1]
+[1, 0]
+float
+double
+array
+MyArray
+return
+##############################
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        int[,] (NODE_SLOT:myArray) = (NODE_SLOT:new) (NODE_SLOT:int)[,]
+        {
+            (NODE_SLOT:{ 1, 2, 3, 4 }),
+            (NODE_SLOT:{ 5, 6, 7, 8 }),
+            { 9, 10, 11, 12 }
+        };
+
+        Console.WriteLine("Element at row 1, column 2: " + myArray(NODE_SLOT:[0, 1]));
+        Console.WriteLine("Element at row 2, column 3: " + myArray(NODE_SLOT:[1, 2]));
+    }
+}
+##############################
+Element at row 1, column 2: 2
+Element at row 2, column 3: 7

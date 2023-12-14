@@ -1,53 +1,53 @@
 byte
-double
+bool
 decimal
 sbyte
+string
+string
 ##############################
-using System;
-
 public class Program
 {
-    public static void Main(string[] args)
+    public static void main(String[] args)
     {
-        (NODE_SLOT:bool) a = MyFunction(true);
-        (NODE_SLOT:char) b = MyFunction('c');
-        (NODE_SLOT:string) c = MyFunction("str");
-        (NODE_SLOT:int) d = MyFunction(25);
-        (NODE_SLOT:float) e = MyFunction(2.3f);
+        (NODE_SLOT:boolean) a = myFunction(true);
+        (NODE_SLOT:char) b = myFunction('c');
+        (NODE_SLOT:String) c = myFunction("str");
+        (NODE_SLOT:int) d = myFunction(25);
+        (NODE_SLOT:float) e = myFunction(2.3f);
     }
 
-    public static float MyFunction(float value)
+    public static float myFunction(float value)
     {
-        Console.WriteLine("Float Function");
+        System.out.println("Float Function");
         return value;
     }
 
-    public static string MyFunction(string value)
+    public static String myFunction(String value)
     {
-        Console.WriteLine("String Function");
+        System.out.println("String Function");
         return value;
     }
 
-    public static char MyFunction(char value)
+    public static char myFunction(char value)
     {
-        Console.WriteLine("Char Function");
+        System.out.println("Char Function");
         return value;
     }
 
-    public static bool MyFunction(bool value)
+    public static boolean myFunction(boolean value)
     {
-        Console.WriteLine("Bool Function");
+        System.out.println("Boolean Function");
         return value; 
     }
 
-    public static int MyFunction(int value)
+    public static int myFunction(int value)
     {
-        Console.WriteLine("Int Function");
+        System.out.println("Int Function");
         return value;
     }
 }
 ##############################
-Bool Function
+Boolean Function
 Char Function
 String Function
 Int Function

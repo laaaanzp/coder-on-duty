@@ -1,0 +1,27 @@
+>>using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+>>        for (int count = 1; count <= 10; count++)
+        {
+>>            if (count % 3 == 0)
+            {
+                if (count == 6)
+                {
+>>                    continue;
+                }
+
+>>                Console.Write(count + " ");
+            }
+
+>>            if (count == 9)
+            {
+>>                break;
+            }
+        }
+    }
+}
+##############################
+3 9

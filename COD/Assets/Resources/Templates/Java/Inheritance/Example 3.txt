@@ -1,0 +1,78 @@
+import java.util.*;
+
+public class Program {
+    public static void main(String[] args) 
+    {
+        SavingsAccount savingsAccount = new SavingsAccount();
+        savingsAccount.setAccountNumber("SA12345");
+        savingsAccount.setBalance(1000.0);
+
+        System.out.println("Initial Savings Account Information:");
+        savingsAccount.displayAccountInfo();
+
+        savingsAccount.deposit(500.0);
+        savingsAccount.withdraw(200.0);
+        savingsAccount.earnInterest(2.5);
+    }
+}
+
+class BankAccount 
+{
+    private String accountNumber;
+    private double balance;
+
+    public String getAccountNumber() 
+    { 
+        return accountNumber;
+    }
+    
+    public void setAccountNumber(String accountNumber) 
+    {
+        this.accountNumber = accountNumber; 
+    }
+
+    public double getBalance() 
+    { 
+        return balance; 
+    }
+
+    public void setBalance(double balance) 
+    {
+        this.balance = balance; 
+    }
+
+    public void deposit(double amount) 
+    {
+        balance += amount;
+        System.out.println("Deposited " + amount + ". New balance: " + balance);
+    }
+
+    public void withdraw(double amount) 
+    {
+        if (balance >= amount) 
+        {
+            balance -= amount;
+            System.out.println("Withdrawn " + amount + ". New balance: " + balance);
+        }
+        else 
+        {
+            System.out.println("Insufficient funds for withdrawal.");
+        }
+    }
+
+    public void displayAccountInfo() 
+    {
+        System.out.println("Account - Account Number: " + getAccountNumber() + ", Balance: " + getBalance());
+    }
+}
+
+class SavingsAccount extends BankAccount 
+{
+    public void earnInterest(double interestRate) 
+    {
+        double interestAmount = getBalance() * interestRate / 100;
+        double newBalance = getBalance() + interestAmount;
+        setBalance(newBalance);
+        System.out.println("Interest earned: " + interestAmount + ". New balance: " + getBalance());
+    }
+}

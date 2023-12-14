@@ -1,0 +1,55 @@
+import java.util.*;
+
+public class Employee 
+{
+    private String name;
+    private int age;
+    private double salary;
+
+    public static void main(String[] args) 
+    {
+        Employee employee = new Employee("Lanz", 21, 45000d);
+        
+        System.out.println("Employee Information:");
+        System.out.println(employee.getEmployeeInfo());
+
+        employee.giveRaise(5000d);
+        System.out.println("\nAfter Giving Raise:");
+        System.out.println(employee.getEmployeeInfo());
+    }
+
+    public Employee(String name, int age, double salary) 
+    {
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    public String getName() 
+    {
+        return name;
+    }
+
+    public int getAge() 
+    {
+        return age;
+    }
+
+    public double getSalary() 
+    {
+        return salary;
+    }
+
+    public void giveRaise(double amount) 
+    {
+        if (amount > 0) 
+        {
+            salary += amount;
+        }
+    }
+
+    public String getEmployeeInfo() 
+    {
+        return name + ", Age: " + age + ", Salary: " + salary;
+    }
+}

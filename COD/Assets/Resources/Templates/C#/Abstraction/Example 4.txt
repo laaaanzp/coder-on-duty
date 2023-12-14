@@ -1,0 +1,34 @@
+using System;
+
+public abstract class Shape
+{
+    public abstract double CalculateArea();
+    public abstract void DisplayInfo();
+}
+
+public class Circle : Shape
+{
+    private double radius;
+
+
+    public static void Main(string[] args)
+    {
+        Circle circle = new Circle(5.0);
+        circle.DisplayInfo();
+    }
+
+    public Circle(double radius)
+    {
+        this.radius = radius;
+    }
+
+    public override double CalculateArea()
+    {
+        return Math.PI * radius * radius;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"Circle - Radius: {radius}, Area: {CalculateArea()}");
+    }
+}

@@ -1,0 +1,29 @@
+using System;
+
+public class DemoOverload {
+    // This method computes the area of a square
+    public int GetArea(int side) {
+        int area = side * side;
+        return area;
+    }
+
+    // This method computes the area of a rectangle with integer dimensions
+    public int GetArea(int width, int height) {
+        int area = width * height;
+        return area;
+    }
+
+    // This method computes the area of a rectangle with double dimensions
+    public double GetArea(double width, double height) {
+        double area = width * height;
+        return area;
+    }
+
+    public static void Main(string[] args) {
+        DemoOverload obj = new DemoOverload();
+        int square = obj.GetArea(3);
+        int rectInt = obj.GetArea(5, 3);
+        double rectDouble = obj.GetArea(5.25, 3.25);
+        Console.WriteLine(square + " / " + rectInt + " / " + rectDouble);
+    }
+}

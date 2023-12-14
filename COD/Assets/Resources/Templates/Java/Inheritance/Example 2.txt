@@ -1,0 +1,58 @@
+import java.util.*;
+
+public class Program
+{
+    public static void main(String[] args) 
+    {
+        Car car = new Car("Sedan", "Toyota");
+
+        car.start();
+        car.accelerate();
+        car.stop();
+    }
+}
+
+class Vehicle 
+{
+    private String model;
+    private String manufacturer;
+
+    public Vehicle(String model, String manufacturer) 
+    {
+        this.model = model;
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() 
+    {
+        return model;
+    }
+
+    public String getManufacturer() 
+    {
+        return manufacturer;
+    }
+
+    public void start() 
+    {
+        System.out.println(getModel() + " by " + getManufacturer() + " started.");
+    }
+
+    public void stop() 
+    {
+        System.out.println(getModel() + " by " + getManufacturer() + " stopped.");
+    }
+}
+
+class Car extends Vehicle 
+{
+    public Car(String model, String manufacturer) 
+    {
+        super(model, manufacturer);
+    }
+
+    public void accelerate() 
+    {
+        System.out.println(getModel() + " by " + getManufacturer() + " is accelerating.");
+    }
+}

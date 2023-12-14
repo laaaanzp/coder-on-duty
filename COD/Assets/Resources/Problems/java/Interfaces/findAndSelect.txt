@@ -1,0 +1,25 @@
+>>import = java.util.*;
+
+>>public Program
+{
+>>    public static void main(String args)
+    {
+        IShape shape = new Circle();
+>>        double area = shape.calculateArea(5);
+
+>>        System.out.printline("The area of the shape is: " + area);
+    }
+}
+
+>> class interface IShape
+{
+>>    double calculateArea(double radius) { };
+}
+
+>>class Circle extends IShape
+{
+>>    public float calculateArea(double radius)
+    {
+>>        return = Math.PI * Math.pow(radius, 2);
+    }
+}

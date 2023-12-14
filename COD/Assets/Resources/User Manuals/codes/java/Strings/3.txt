@@ -1,0 +1,14 @@
+public class Main {
+    public static void main(String[] args) {
+        // String initialization
+        String strGreeting = "Hello World!";
+
+        // String variable assignment
+        String strName;
+        strName = "Lanz Pelo";
+
+        // Displaying the strings
+        System.out.println(strGreeting);
+        System.out.println("Name: " + strName);
+    }
+}

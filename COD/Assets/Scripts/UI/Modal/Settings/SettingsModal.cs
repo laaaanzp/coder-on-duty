@@ -8,6 +8,7 @@ public class SettingsModal : MonoBehaviour
 {
     [Header("Volume")]
     [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private Slider sfxVolumeSlider;
 
     [Header("Video")]
     [SerializeField] private TMP_Dropdown resolutionDropdown;
@@ -28,7 +29,10 @@ public class SettingsModal : MonoBehaviour
     private void SaveVolumeSettings()
     {
         PlayerPrefs.SetFloat("music-volume", musicVolumeSlider.value);
-        AudioController.SetVolume(musicVolumeSlider.value);
+        PlayerPrefs.SetFloat("sfx-volume", sfxVolumeSlider.value);
+
+        AudioController.SetMusicVolume(musicVolumeSlider.value);
+        AudioController.SetSfxVolume(sfxVolumeSlider.value);
     }
 
     private void SaveVideoSettings()
@@ -96,8 +100,9 @@ public class SettingsModal : MonoBehaviour
 
     void OnEnable()
     {
-        // TODO: Music
+        // Music
         musicVolumeSlider.value = PlayerPrefs.GetFloat("music-volume", 1f);
+        sfxVolumeSlider.value = PlayerPrefs.GetFloat("sfx-volume", 1f);
 
         // Video
         LoadResolutions();
@@ -105,6 +110,6 @@ public class SettingsModal : MonoBehaviour
         vSyncToggle.isOn = QualitySettings.vSyncCount > 0;
 
         // Mouse
-        mouseSensitivitySlider.value = MouseLook.sensitivity;
+        mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouse-sensitivity", 100f);
     }
 }

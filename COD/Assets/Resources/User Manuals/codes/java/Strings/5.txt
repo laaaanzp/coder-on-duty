@@ -1,0 +1,24 @@
+public class Main {
+    public static void main(String[] args) {
+        // String declarations
+        String str1 = "Computer";
+        String str2 = "Computer";
+        String str3 = new String("Computer");
+        String str4 = new String("Computer");
+
+        // Compare references, should return true
+        System.out.println(str1 == str2);
+
+        // Compare references, should return false
+        System.out.println(str1 == str3);
+
+        // Compare contents, should return true
+        System.out.println(str1.equals(str3));
+
+        // Compare references, should return false
+        System.out.println(str3 == str4);
+
+        // Compare contents, should return true
+        System.out.println(str3.equals(str4));
+    }
+}

@@ -4,32 +4,30 @@ string
 double
 int
 ##############################
-using System;
-
 public class Program
 {
-	public static (NODE_SLOT:int) GetValue(int value)
+	public static (NODE_SLOT:int) getValue(int value)
 	{
-	    Console.WriteLine("Int Method");
+	    System.out.println("Int Method");
 		return value;
 	}
 
-	public static (NODE_SLOT:string) GetValue(string value)
+	public static (NODE_SLOT:String) getValue(String value)
 	{
-	    Console.WriteLine((NODE_SLOT:"String Method"));
+	    System.out.println((NODE_SLOT:"String Method"));
 		return value;
 	}
 
-	public static (NODE_SLOT:double) GetValue(double value)
+	public static (NODE_SLOT:double) getValue(double value)
 	{
-	    Console.WriteLine((NODE_SLOT:"Double Method"));
+	    System.out.println((NODE_SLOT:"Double Method"));
 		return value;
 	}
 
-	public static void Main(string[] args)
+	public static void main(String[] args)
 	{
-	    double value1 = GetValue(5d);
-		int value2 = GetValue(10);
+	    double value1 = getValue(5d);
+		int value2 = getValue(10);
 	}
 }
 ##############################

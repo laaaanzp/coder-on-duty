@@ -1,0 +1,28 @@
+using System;
+
+public class FullTimeEmployee : Employee
+{
+    public static void Main(string[] args)
+    {
+        FullTimeEmployee fullTimeEmployee = new FullTimeEmployee();
+
+        decimal monthlySalary = fullTimeEmployee.CalculateSalary(5000.00m);
+        decimal hourlySalary = fullTimeEmployee.CalculateSalary(20.00m, 40);
+
+        Console.WriteLine($"Monthly Salary: {monthlySalary}");
+        Console.WriteLine($"Hourly Salary: {hourlySalary}");
+    }
+}
+
+public class Employee
+{
+    public decimal CalculateSalary(decimal monthlySalary)
+    {
+        return monthlySalary;
+    }
+
+    public decimal CalculateSalary(decimal hourlyRate, int hoursWorked)
+    {
+        return hourlyRate * hoursWorked;
+    }
+}

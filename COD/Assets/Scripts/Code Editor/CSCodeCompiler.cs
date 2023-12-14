@@ -9,6 +9,7 @@ using System.ComponentModel;
 public class CSCodeCompiler : MonoBehaviour
 {
     public TMP_InputField codeInputField;
+    public ModalControl codeModalControl;
     public ModalControl consoleModalControl;
     public TypeChooser typeChooser;
 
@@ -24,6 +25,8 @@ public class CSCodeCompiler : MonoBehaviour
 
     private int currentLineCount;
 
+    private static CSCodeCompiler instance;
+
 
     #region fileName fix for editor and actual build
 #if UNITY_EDITOR
@@ -35,14 +38,17 @@ public class CSCodeCompiler : MonoBehaviour
 #endif
     #endregion
 
+    public void Init()
+    {
+        instance = this;
+    }
+
     public async void ExecuteCode()
     {
         outputTMPText.text = "Compiling...";
 
         justStarted = true;
         await CompileAndExecuteViaOutsideProcess();
-
-        // CompileAndExecuteCode();
     }
 
     public void StopCurrentExecution()
@@ -134,5 +140,11 @@ public class CSCodeCompiler : MonoBehaviour
     public void SetCode(string code)
     {
         codeInputField.text = code;
+    }
+
+    public static void Open(string code)
+    {
+        instance.SetCode(code);
+        instance.codeModalControl.Open();
     }
 }

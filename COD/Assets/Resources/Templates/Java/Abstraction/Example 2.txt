@@ -1,0 +1,35 @@
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        Vehicle bike = new Bike();
+        Vehicle car = new Car();
+
+        System.out.println("Bike speed is " + bike.getSpeed());
+        System.out.println("Car speed is " + car.getSpeed());
+    }
+}
+
+abstract class Vehicle 
+{
+    public abstract int getSpeed();
+}
+
+class Bike extends Vehicle 
+{
+    @Override
+    public int getSpeed() 
+    {
+        return 20;
+    }
+}
+
+class Car extends Vehicle
+{
+    @Override
+    public int getSpeed()
+    {
+        return 70;
+    }
+}
+

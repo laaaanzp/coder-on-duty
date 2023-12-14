@@ -1,0 +1,46 @@
+using System;
+
+public class Employee
+{
+    public string Name { get; set; }
+    public int EmployeeId { get; set; }
+
+    public virtual decimal CalculateSalary()
+    {
+        return 0; 
+    }
+
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"Employee - Name: {Name}, Employee ID: {EmployeeId}");
+    }
+}
+
+public class FullTimeEmployee : Employee
+{
+    public decimal MonthlySalary { get; set; }
+
+    public override decimal CalculateSalary()
+    {
+        return MonthlySalary;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"Full-Time Employee - Name: {Name}, Employee ID: {EmployeeId}, Monthly Salary: {MonthlySalary}");
+    }
+
+    public static void Main(string[] args)
+    {
+        FullTimeEmployee fullTimeEmployee = new FullTimeEmployee()
+        {
+            Name = "John Doe",
+            EmployeeId = 101,
+            MonthlySalary = 5000.00m
+        };
+
+        Console.WriteLine("Full-Time Employee Information:");
+        fullTimeEmployee.DisplayInfo();
+        Console.WriteLine($"Calculated Salary: {fullTimeEmployee.CalculateSalary()}");
+    }
+}

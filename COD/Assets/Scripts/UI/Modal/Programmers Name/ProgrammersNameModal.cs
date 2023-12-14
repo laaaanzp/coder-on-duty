@@ -24,7 +24,7 @@ public class ProgrammersNameModal : MonoBehaviour
     {
         string programmersName = programmersNameInputField.text;
 
-        if (programmersName.Length < 4 || programmersName.Length > 16)
+        if (programmersName.Length < 4 || programmersName.Length > 16 || string.IsNullOrWhiteSpace(programmersName))
         {
             MessageBoxControl.ShowOk("ERROR", "The name should be 4 to 16 characters long.");
         }

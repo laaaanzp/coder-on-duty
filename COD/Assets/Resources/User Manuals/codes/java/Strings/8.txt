@@ -1,0 +1,18 @@
+public class Main {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 20;
+        int c = x + y;
+        System.out.println(c);
+
+        String d = "10";
+        String e = "20";
+        String f = x + y;
+        System.out.println(f);
+
+		String g = "10";
+        int h = 20;
+        String i = x + y;
+        System.out.println(i);
+    }
+}

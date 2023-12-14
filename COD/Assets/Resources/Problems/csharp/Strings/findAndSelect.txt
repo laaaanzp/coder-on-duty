@@ -1,0 +1,16 @@
+using System;
+
+>>public Program
+{
+    public static void Main(string[] args)
+>>    (
+        string strA = "Programming is";
+>>        string strB = "fun."
+>>        string strC = strA * strB;
+
+>>        if (strC = "Programming isfun.")
+        {
+>>            Console.WriteLine("The length of the final string is " + strC.length);
+        }
+>>    )
+}

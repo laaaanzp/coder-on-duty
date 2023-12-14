@@ -4,6 +4,7 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public static int score = 0;
+    public static int additionalScore = 0;
     [SerializeField] private TextMeshProUGUI totalScoreText;
 
     private static ScoreManager instance;
@@ -25,6 +26,7 @@ public class ScoreManager : MonoBehaviour
 
     void Awake()
     {
+        additionalScore = 0;
         instance = this;
         score = 0;
         totalCorrect = 0;
@@ -48,6 +50,12 @@ public class ScoreManager : MonoBehaviour
         });
 
         score = newScore;
+    }
+
+    public static void AddAdditionalScore(int additionalScore)
+    {
+        AddScore(additionalScore);
+        additionalScore += additionalScore;
     }
 
     private void UpdateScoreDisplay(int score)

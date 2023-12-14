@@ -1,0 +1,48 @@
+public class Program
+{
+    public static void main(String[] args)
+    {
+        IVehicle car = new Car();
+        IVehicle motorcycle = new Motorcycle();
+
+        System.out.println("Car Information:");
+        car.start();
+        car.stop();
+
+        System.out.println("\nMotorcycle Information:");
+        motorcycle.start();
+        motorcycle.stop();
+    }
+}
+
+interface IVehicle
+{
+    void start();
+    void stop();
+}
+
+class Car implements IVehicle
+{
+    public void start()
+    {
+        System.out.println("Car started.");
+    }
+
+    public void stop()
+    {
+        System.out.println("Car stopped.");
+    }
+}
+
+class Motorcycle implements IVehicle
+{
+    public void start()
+    {
+        System.out.println("Motorcycle started.");
+    }
+
+    public void stop()
+    {
+        System.out.println("Motorcycle stopped.");
+    }
+}

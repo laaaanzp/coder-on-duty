@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static bool canMove;
     [SerializeField] private CharacterController characterController;
 
     [SerializeField] private float footstepDelay = 0.75f;
@@ -26,10 +27,14 @@ public class PlayerMovement : MonoBehaviour
     {
         currentSpeed = normalSpeed;
         normalSpeedFOV = Camera.main.fieldOfView;
+        canMove = false;
     }
 
     void Update()
     {
+        if (!canMove)
+            return;
+
         if (Cursor.lockState != CursorLockMode.Locked) 
             return;
 

@@ -1,0 +1,37 @@
+import java.util.*;
+
+>>public class Program
+{
+    public static void main(String[] args)
+    {
+        IVehicle vehicle1 = new Car();
+        IVehicle vehicle2 = new Tricycle();
+
+>>        vehicle1.start();
+>>        vehicle2.start();
+    }
+}
+
+>>interface IVehicle
+{
+>>    void Start();
+}
+
+>>class Car implements IVehicle
+{
+>>    public void start()
+    {
+>>        System.out.println("Starting car...");
+    }
+}
+
+>>class Tricycle implements IVehicle
+{
+>>    public void start()
+    {
+        System.out.println("Starting tricycle...";
+    }
+}
+##############################
+Starting car...
+Starting tricycle...

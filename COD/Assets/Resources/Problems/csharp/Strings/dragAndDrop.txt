@@ -1,0 +1,33 @@
+Hello
+, World!
+Add
+Insert
+Result
+GetValue
+Upper
+Lower
+toUpper
+toLower
+##############################
+using System;
+using System.Text;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        StringBuilder sb = new (NODE_SLOT:StringBuilder)((NODE_SLOT:"Hello"));
+
+        sb.(NODE_SLOT:Append)((NODE_SLOT:", World!"));
+
+        string result = sb.(NODE_SLOT:ToString)();
+
+        Console.WriteLine(result);
+        Console.WriteLine(result.(NODE_SLOT:ToLower)());
+        Console.WriteLine(result.(NODE_SLOT:ToUpper)());
+    }
+}
+##############################
+Hello, World!
+hello, world!
+HELLO, WORLD!

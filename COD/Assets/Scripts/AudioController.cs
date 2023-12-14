@@ -1,73 +1,93 @@
+using System;
 using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
     public static AudioController instance;
-    [SerializeField] private AudioSource audioSource;
-
-    [Header("Problem Solving")]
+    [SerializeField] private AudioSource sfxAudioSource;
+    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource menuBGMAudioSource;
     [SerializeField] private AudioClip nodeSlotCorrect;
     [SerializeField] private AudioClip nodeSlotIncorrect;
-
-    [Header("Result")]
     [SerializeField] private AudioClip fixedDevice;
     [SerializeField] private AudioClip unfixedDevice;
-
-    [Header("Footstep")]
     [SerializeField] private AudioClip footstepLeft;
     [SerializeField] private AudioClip footstepRight;
     private bool isLeftFootstep;
-
-    [Header("Door")]
     [SerializeField] private AudioClip doorInteract;
-
-    [Header("Door")]
     [SerializeField] private AudioClip beepSound;
+    [SerializeField] private AudioClip typingSound;
+    [SerializeField] private AudioClip buttonHoverSound;
+    [SerializeField] private AudioClip buttonClickSound;
 
     void Awake()
     {
         instance = this;
-        audioSource.volume = PlayerPrefs.GetFloat("music-volume", 1f);
+        float musicVolume = PlayerPrefs.GetFloat("music-volume", 1f);
+        musicAudioSource.volume = musicVolume;
+        menuBGMAudioSource.volume = musicVolume * 0.65f;
+        sfxAudioSource.volume = PlayerPrefs.GetFloat("sfx-volume", 1f);
     }
 
-    public static void SetVolume(float volume)
+    public static void SetSfxVolume(float volume)
     {
-        instance.audioSource.volume = volume;
+        instance.sfxAudioSource.volume = volume;
+    }
+
+    public static void SetMusicVolume(float volume)
+    {
+        instance.musicAudioSource.volume = volume;
+        instance.menuBGMAudioSource.volume = volume * 0.65f;
     }
 
     public static void PlayNodeSlotCorrect()
     {
-        instance.audioSource.PlayOneShot(instance.nodeSlotCorrect);
+        instance.sfxAudioSource.PlayOneShot(instance.nodeSlotCorrect);
     }
 
     public static void PlayNodeSlotIncorrect()
     {
-        instance.audioSource.PlayOneShot(instance.nodeSlotIncorrect);
+        instance.sfxAudioSource.PlayOneShot(instance.nodeSlotIncorrect);
     }
 
     public static void PlayFixedDevice()
     {
-        instance.audioSource.PlayOneShot(instance.fixedDevice);
+        instance.sfxAudioSource.PlayOneShot(instance.fixedDevice);
     }
 
     public static void PlayUnfixedDevice()
     {
-        instance.audioSource.PlayOneShot(instance.unfixedDevice);
+        instance.sfxAudioSource.PlayOneShot(instance.unfixedDevice);
     }
 
     public static void PlayFootstep()
     {
-        instance.audioSource.PlayOneShot(instance.isLeftFootstep ? instance.footstepLeft : instance.footstepRight);
+        instance.sfxAudioSource.PlayOneShot(instance.isLeftFootstep ? instance.footstepLeft : instance.footstepRight);
         instance.isLeftFootstep = !instance.isLeftFootstep;
     }
 
     public static void PlayDoorInteract()
     {
-        instance.audioSource.PlayOneShot(instance.doorInteract);
+        instance.sfxAudioSource.PlayOneShot(instance.doorInteract);
     }
 
     public static void PlayBeep()
     {
-        instance.audioSource.PlayOneShot(instance.beepSound);
+        instance.sfxAudioSource.PlayOneShot(instance.beepSound);
+    }
+
+    public static void PlayTyping()
+    {
+        instance.sfxAudioSource.PlayOneShot(instance.typingSound);
+    }
+
+    public static void PlayButtonHover()
+    {
+        instance.sfxAudioSource.PlayOneShot(instance.buttonHoverSound, 0.25f);
+    }
+
+    internal static void PlayButtonClick()
+    {
+        instance.sfxAudioSource.PlayOneShot(instance.buttonClickSound, 0.5f);
     }
 }

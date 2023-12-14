@@ -1,0 +1,10 @@
+public class Main {
+    public static void main(String[] args) {
+        if (score >= 60) {
+            System.out.println("The student passed.");
+        } else {
+            System.out.println("The student failed.");
+        }
+    }
+
+}

@@ -1,34 +1,40 @@
 using System;
 
-interface IAnimal
+public class Animal
 {
-    public void MakeNoise();
-}
+    public string Name { get; set; }
+    public int Age { get; set; }
 
-class Dog : IAnimal
-{
-    public void MakeNoise()
+    public virtual void DisplayInfo()
     {
-        Console.WriteLine("Bark...");
+        Console.WriteLine($"Animal - Name: {Name}, Age: {Age}");
     }
 }
 
-class Cat : IAnimal
+public class Cat : Animal
 {
-    public void MakeNoise()
-    {
-        Console.WriteLine("Meow...");
-    }
-}
+    public string Breed { get; set; }
 
-public class Program
-{
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"Cat - Name: {Name}, Age: {Age}, Breed: {Breed}");
+    }
+
+    public void Meow()
+    {
+        Console.WriteLine($"{Name} says 'Meow!'");
+    }
+
     public static void Main(string[] args)
     {
-        IAnimal dog = new Dog();
-        IAnimal cat = new Cat();
+        Cat myCat = new Cat
+        {
+            Name = "Whiskers",
+            Age = 3,
+            Breed = "Siamese"
+        };
 
-        dog.MakeNoise();
-        cat.MakeNoise();
+        myCat.DisplayInfo();
+        myCat.Meow();
     }
 }

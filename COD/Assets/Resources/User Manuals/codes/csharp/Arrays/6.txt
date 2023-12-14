@@ -1,0 +1,18 @@
+using System;
+
+public class Program {
+    public static void Main(string[] args) {
+        int[, ] table = {
+            { 2, 3 },
+            { 12, 5 },
+            { 3, 8 },
+            { 18, 3 }
+        };
+
+        Console.WriteLine(table[0, 0]);
+        Console.WriteLine(table[0, 1]);
+        Console.WriteLine(table[1, 0]);
+        Console.WriteLine(table[1, 1]);
+
+    }
+}

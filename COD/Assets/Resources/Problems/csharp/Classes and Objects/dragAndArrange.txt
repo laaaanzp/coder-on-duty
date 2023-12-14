@@ -1,0 +1,31 @@
+using System;
+
+public class Product
+{
+    public string Name { get; set; }
+    public double Price { get; set; }
+
+>>    public Product(string name, double price)
+    {
+        Name = name;
+>>        Price = price;
+    }
+
+>>    public double DiscountedPrice()
+    {
+>>        return Price * 0.75d;
+    }
+
+>>    public static void Main(string[] args)
+    {
+>>        Product product = new Product("Mobile", 1000.0d);
+
+>>        Console.WriteLine("Name: " + product.Name);
+>>        Console.WriteLine("Price: " + product.Price);
+>>        Console.WriteLine("Discounted Price: " + product.DiscountedPrice());
+    }
+}
+##############################
+Name: Mobile
+Price: 1000
+Discounted Price: 750

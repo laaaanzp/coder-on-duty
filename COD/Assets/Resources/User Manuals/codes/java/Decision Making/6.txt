@@ -1,0 +1,12 @@
+public class Main {
+    public static void main(String[] args) {
+        if (price >= 500.00) {
+            discount = price * 0.10;
+            salePrice = price - discount;
+            System.out.println("The discounted price is " + salePrice);
+        } else {
+            System.out.println("No discount.");
+            System.out.println("The price is " + price);
+        }
+    }
+}

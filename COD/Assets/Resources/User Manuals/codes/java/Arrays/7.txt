@@ -1,0 +1,21 @@
+public class Main {
+    public static void main(String[] args) {
+        int rowSize = 5; // Replace with your desired row size
+        int[][] matrix = new int[rowSize][3]; // Assuming 3 columns
+
+        // Assuming your matrix has been initialized properly
+
+        // Set values in the third column based on the row index
+        for (int row = 0; row < matrix.length; row++) {
+            matrix[row][2] = row * 3;
+        }
+
+        // Calculate the sum of all elements in column index 2
+        int sum = 0;
+        for (int row = 0; row < matrix.length; row++) {
+            sum = sum + matrix[row][2];
+        }
+
+        System.out.println("Sum of elements in column index 2: " + sum);
+    }
+}
