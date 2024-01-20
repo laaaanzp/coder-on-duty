@@ -1,11 +1,13 @@
 using System;
 
-namespace HelloWorld {
-    class Program {
-        public static void Main(string[] args) {
-            int a = 3;
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        int a = 3;
 
-            switch (a) {
+        switch (a) 
+        {
             case 1:
                 Console.WriteLine("The value is 1.");
                 break;
@@ -18,10 +20,6 @@ namespace HelloWorld {
             default:
                 Console.WriteLine("The value is unknown.");
                 break;
-            }
-
-            // Outputs The value is 3.
-
         }
     }
 }

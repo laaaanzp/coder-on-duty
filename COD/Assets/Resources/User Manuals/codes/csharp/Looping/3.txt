@@ -1,10 +1,13 @@
 using System;
 
-public class Program {
-    public static void Main(string[] args) {
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
         int i = 0;
 
-        while (i < 5) {
+        while (i < 5) 
+        {
             Console.Write(i + " ");
             i++; // increment
         }

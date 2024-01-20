@@ -21,7 +21,7 @@ public class DecisionMaking
             }
             else
             {
-                System.out.println(third + " is the largest");
+                System.out.println((NODE_SLOT:third) + " is the largest");
             }
         }
 

@@ -2,7 +2,7 @@ using System;
 
 public class DecisionMaking
 {
-    public static void Main(String[] args)
+    public static void Main(string[] args)
     {
         bool hasEngine = true;
         bool hasWheels = true;

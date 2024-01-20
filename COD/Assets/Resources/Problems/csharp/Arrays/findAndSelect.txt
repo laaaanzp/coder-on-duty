@@ -10,7 +10,7 @@ using System;
 >>        myArray[5] = 100;
 >>        myArray.Last = 100;
 
-        Console.WriteLine("The third element is: " + myArray[2]));
+        Console.WriteLine("The third element is: " + myArray[2]);
 
 >>        for (int index = 0; index < myArray.length; index++)
         {

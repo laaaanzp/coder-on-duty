@@ -6,7 +6,8 @@ class Vehicle // base class (parent)
     public string type = "Car"; // Fixed quotes
 
     // Vehicle method
-    public void honk() {
+    public void honk() 
+    {
         Console.WriteLine("Tuut, tuut!");
     }
 }
@@ -16,8 +17,10 @@ class Car: Vehicle // derived class (child)
     public string modelName = "Mustang";
 }
 
-public class Program {
-    public static void Main(string[] args) {
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
         // Create a myCar object
         Car mustangCar = new Car(); // Corrected class name to 'Car'
 

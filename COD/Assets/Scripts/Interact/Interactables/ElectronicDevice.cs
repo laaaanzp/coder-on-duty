@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,21 +57,27 @@ public class ElectronicDevice : MonoBehaviour
     {
         names = new List<string>();
 
-        randomGreeting = greetings[Random.Range(0, greetings.Length)];
-        randomMessage = messages[Random.Range(0, messages.Length)];
-        randomProblemMessage = problemMessages[Random.Range(0, problemMessages.Length)];
-        randomThankYouMessage = randomThankYouMessages[Random.Range(0, randomThankYouMessages.Length)];
-        randomThankYouMessage2 = randomThankYouMessages2[Random.Range(0, randomThankYouMessages2.Length)];
+        randomGreeting = greetings[UnityEngine.Random.Range(0, greetings.Length)];
+        randomMessage = messages[UnityEngine.Random.Range(0, messages.Length)];
+        randomProblemMessage = problemMessages[UnityEngine.Random.Range(0, problemMessages.Length)];
+        randomThankYouMessage = randomThankYouMessages[UnityEngine.Random.Range(0, randomThankYouMessages.Length)];
+        randomThankYouMessage2 = randomThankYouMessages2[UnityEngine.Random.Range(0, randomThankYouMessages2.Length)];
     }
 
-    private void SetTyping()
+    public void SetTyping()
     {
         animator?.SetBool("Typing", true);
     }    
 
-    private void SetAngry()
+    public void SetAngry()
     {
         animator?.SetBool("Typing", false);
+    }
+
+    IEnumerator InvokeAsync(Action action, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        action?.Invoke();
     }
 
     public void Initialize()
@@ -77,16 +85,17 @@ public class ElectronicDevice : MonoBehaviour
         float delay;
         if (puzzleModal == null)
         {
-            delay = Random.Range(0f, 5f);
-            Invoke(nameof(SetTyping), delay);
+            delay = UnityEngine.Random.Range(0.9f, 1.5f);
+            animator.speed = delay;
+            StartCoroutine(InvokeAsync(SetTyping, delay));
             deviceScreen.ChangeScreen(fixedScreenMaterial);
             Destroy(outline);
             interactable.interactionEvent.AddListener(InteractDefault);
             return;
         }
 
-        delay = Random.Range(0f, 2f);
-        Invoke(nameof(SetAngry), delay);
+        delay = UnityEngine.Random.Range(0, 2f);
+        StartCoroutine(InvokeAsync(SetAngry, delay));
 
         names.Add(name);
 
@@ -95,31 +104,138 @@ public class ElectronicDevice : MonoBehaviour
         ticket = TicketManager.RegisterTask(gameObject, $"Fix {name}'s computer");
         puzzleModal.onSubmitOrFinish += OnFinish;
         puzzleModal.SetTicket(ticket);
+
+        CheckIfFinished();
     }
 
     private void InteractDefault()
     {
         NPCDialogue dialogue = new NPCDialogue(new string[] { randomGreeting, randomMessage });
-
         DialogueManager.StartDialogue(name, dialogue);
     }
 
     private void InteractPositive()
     {
+        if (DatabaseManager.instance.currentLanguage.currentLevel == 2)
+        {
+            switch (gameObject.name)
+            {
+                case "Naym":
+                    randomThankYouMessage = "Oh, it was a syntax error that's causing me the troubles. Thank you for your help.";
+                    break;
+                case "Matthew":
+                    randomThankYouMessage = "Wow! You managed to fix and open my code editor. I've been trying to do that for an hour now. Thank you!";
+                    break;
+                case "Arian":
+                    randomThankYouMessage = "Thank You! My computer now runs smoother. I just hope none of my applications crashes again.";
+                    break;
+            }
+        }
+
         NPCDialogue dialogue = new NPCDialogue(new string[] { randomThankYouMessage });
         DialogueManager.StartDialogue(name, dialogue);
     }
 
     private void InteractNegative()
     {
+        if (DatabaseManager.instance.currentLanguage.currentLevel == 2)
+        {
+            switch (gameObject.name)
+            {
+                case "Naym":
+                    randomThankYouMessage2 = "I'll just recode everything. Thank you for helping!";
+                    break;
+                case "Matthew":
+                    randomThankYouMessage2 = "I guess I need to change my code editor now. Thank you for trying to help me.";
+                    break;
+                case "Arian":
+                    randomThankYouMessage2 = "I'll just request for a new computer. Thanks for the help though.";
+                    break;
+            }
+        }
+
         NPCDialogue dialogue = new NPCDialogue(new string[] { randomThankYouMessage2 });
         DialogueManager.StartDialogue(name, dialogue);
     }
 
     private void Interact()
     {
+        if (DatabaseManager.instance.currentLanguage.currentLevel == 2)
+        {
+            switch (gameObject.name)
+            {
+                case "Naym":
+                    randomGreeting = "Hi there. You're the new trainee right?";
+                    randomProblemMessage = "I need your assistance. My IDE has been throwing a lot of errors suddenly and I couldn't find the cause of it. Can you help me?";
+                    break;
+                case "Matthew":
+                    randomGreeting = "Oh hi! It's the new trainee.";
+                    randomProblemMessage = "Quick! I need help. I am unable to do anything for an hour now because I am unable to open my code editor.";
+                    break;
+                case "Arian":
+                    randomGreeting = "Hi, new trainee.";
+                    randomProblemMessage = "Will you be able to help me with my computer? It became slower suddenly and it sometimes crashes my applications.";
+                    break;
+            }
+        }
+        else if (DatabaseManager.instance.currentLanguage.currentLevel == 3)
+        {
+            switch (gameObject.name)
+            {
+                case "Naym":
+                    randomGreeting = "Hi there. You're the new trainee right?";
+                    randomProblemMessage = "I need your assistance. My IDE has been throwing a lot of errors suddenly and I couldn't find the cause of it. Can you help me?";
+                    break;
+                case "Matthew":
+                    randomGreeting = "Oh hi! It's the new trainee.";
+                    randomProblemMessage = "Quick! I need help. I am unable to do anything for an hour now because I am unable to open my code editor.";
+                    break;
+                case "Arian":
+                    randomGreeting = "Hi, new trainee.";
+                    randomProblemMessage = "Will you be able to help me with my computer? It became slower suddenly and it sometimes crashes my applications.";
+                    break;
+            }
+        }
+
+
         NPCDialogue dialogue = new NPCDialogue(new string[] { randomGreeting, randomProblemMessage });
         DialogueManager.StartDialogue(name, dialogue, OpenComputer);
+    }
+
+    private void CheckIfFinished()
+    {
+        return;
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string type = puzzleModal.GetType().ToString();
+
+        if (PlayerPrefs.GetInt($"{languageName}-{type}-total-correct", -1) <= -1)
+        {
+            return;
+        }
+
+        puzzleModal.totalCorrect = PlayerPrefs.GetInt($"{languageName}-{type}-total-correct");
+        puzzleModal.timeRemaining = PlayerPrefs.GetInt($"{languageName}-{type}-time-remaining");
+        puzzleModal.totalSlots = PlayerPrefs.GetInt($"{languageName}-{type}-total-slots");
+
+        TicketManager.OnFinish(ticket);
+
+        Destroy(outline);
+
+        ticket.isFixed = puzzleModal.totalCorrect > (float)puzzleModal.totalSlots / 2;
+
+        if (ticket.isFixed)
+        {
+            SetTyping();
+            deviceScreen.ChangeScreen(fixedScreenMaterial);
+            interactable.interactionEvent.RemoveAllListeners();
+            interactable.interactionEvent.AddListener(InteractPositive);
+
+        }
+        else
+        {
+            interactable.interactionEvent.RemoveAllListeners();
+            interactable.interactionEvent.AddListener(InteractNegative);
+        }
     }
 
     private void OpenComputer()
@@ -128,18 +244,28 @@ public class ElectronicDevice : MonoBehaviour
         {
             if (!currentlyOpen)
             {
-                string challengeType;
+                string challengeInformation;
 
                 if (puzzleModal is DragAndArrangePuzzle)
-                    challengeType = "Drag and Arrange";
+                    challengeInformation = "Drag and Arrange</b>\n\nDrag and arrange the pieces to their correct order.";
 
                 else if (puzzleModal is DragAndDropPuzzle)
-                    challengeType = "Drag and Drop";
+                    challengeInformation = "Drag and Drop</b>\n\nDrag the correct pieces to the slot.";
+
+                else if (puzzleModal is Crossword)
+                    challengeInformation = "Crossword</b>\n\nFind answers inside the crossword and type it inside the input field.";
+
+                else if (puzzleModal is WordSearch)
+                    challengeInformation = "Word Search</b>\n\nFind and mark all the words hidden inside the box.";
+
+                else if (puzzleModal is MatchingType)
+                    challengeInformation = "Matching Type</b>\n\nMatch the left with the corresponding definition in the right side.";
 
                 else
-                    challengeType = "Find and Select bugs";
+                    challengeInformation = "Find and Select bugs</b>\n\nLocate and select all the bugs inside the code.";
 
-                MessageBoxControl.ShowYesNo("INSTRUCTIONS", $"Challenge: <b>{challengeType}</b>\nTotal Answers: {puzzleModal.totalSlots}\n\nYou have 180 seconds to solve the problem. Do you want to proceed?",
+
+                MessageBoxControl.ShowYesNo("INSTRUCTIONS", $"Challenge: <b>{challengeInformation}</b>\nTotal Answers: {puzzleModal.totalSlots}\n\nYou have 180 seconds to solve the problem. Do you want to proceed?",
                     () =>
                     {
                         puzzleModal.Open();
@@ -165,6 +291,15 @@ public class ElectronicDevice : MonoBehaviour
         int totalCorrect = puzzleModal.totalCorrect;
         int timeRemaining = puzzleModal.timeRemaining;
         int totalSlots = puzzleModal.totalSlots;
+
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string type = puzzleModal.GetType().ToString();
+
+
+        PlayerPrefs.SetInt($"{languageName}-{type}-total-correct", totalCorrect);
+        PlayerPrefs.SetInt($"{languageName}-{type}-time-remaining", timeRemaining);
+        PlayerPrefs.SetInt($"{languageName}-{type}-total-slots", totalSlots);
+        PlayerPrefs.Save();
 
         TicketManager.OnFinish(ticket);
         

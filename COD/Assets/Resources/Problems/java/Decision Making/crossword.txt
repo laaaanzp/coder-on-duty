@@ -1,0 +1,15 @@
+-----------
+--S--------
+--E--------
+--L--------
+--E--------
+E-C--------
+L-T--------
+SWITCH-----
+E-O--------
+--N--------
+-----------
+####################
+[(5,0)|(6,0)|(7,0)|(8,0)] : ELSE : It is a reserved word, which executes when the given expression of if statement evaluates to false.
+[(1,2)|(2,2)|(3,2)|(4,2)|(5,2)|(6,2)|(7,2)|(8,2)|(9,2)] : SELECTION : This structure alters the flow of program execution by making a selection or choice.
+[(7,0)|(7,1)|(7,2)|(7,3)|(7,4)|(7,5)] : SWITCH : This statement is used to test a single variable against a series of values.

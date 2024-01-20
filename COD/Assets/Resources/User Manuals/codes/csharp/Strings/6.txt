@@ -1,8 +1,10 @@
 using System;
 using System.Text;
 
-public class Program {
-    public static void Main(string[] args) {
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
         StringBuilder strComputer = new StringBuilder("Computer");
         strComputer.Append(" is a great invention.");
 
@@ -10,7 +12,8 @@ public class Program {
         word[0] = '#'; // change the character at index 0 to '#'
 
         // Outputs # o m p u t e r 
-        for (int index = 0; index < word.Length; index++) {
+        for (int index = 0; index < word.Length; index++) 
+        {
             Console.Write(word[index] + " ");
         }
     }

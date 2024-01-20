@@ -1,0 +1,32 @@
+Hello
+, World!
+add
+insert
+result
+getValue
+upper
+lower
+ToUpperCase
+ToLowerCase
+##############################
+import java.util.*;
+
+public class Program
+{
+    public static void main(String[] args)
+    {
+        StringBuilder sb = new (NODE_SLOT:StringBuilder)((NODE_SLOT:"Hello"));
+
+        sb.(NODE_SLOT:append)((NODE_SLOT:", World!"));
+
+        String result = sb.(NODE_SLOT:toString)();
+
+        System.out.println(result);
+        System.out.println(result.(NODE_SLOT:toLowerCase)());
+        System.out.println(result.(NODE_SLOT:toUpperCase)());
+    }
+}
+##############################
+Hello, World!
+hello, world!
+HELLO, WORLD!

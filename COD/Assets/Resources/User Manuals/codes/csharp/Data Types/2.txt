@@ -1,12 +1,12 @@
 using System;
 
-namespace HelloWorld {
-    public class Program {
-        public static void Main(string[] args) {
-            string name = "Lanz";
-            int age = 21;
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        string name = "Lanz";
+        int age = 21;
 
-            Console.WriteLine("Hi! My name is " + name + ", I am " + age + " year(s) old.");
-        }
+        Console.WriteLine("Hi! My name is " + name + ", I am " + age + " year(s) old.");
     }
 }

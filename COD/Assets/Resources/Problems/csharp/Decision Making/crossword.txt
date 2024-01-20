@@ -1,0 +1,17 @@
+---ELSE----
+-----W-----
+-----I-----
+--T--T-----
+-SELECTION-
+--R--H-F---
+--N--------
+--A--------
+--R--------
+--Y--------
+-----------
+####################
+[(3,2)|(4,2)|(5,2)|(6,2)|(7,2)|(8,2)|(9,2)] : TERNARY : This is an operator which can be used to replace multiple lines of code with a single line. 
+[(0,5)|(1,5)|(2,5)|(3,5)|(4,5)|(5,5)] : SWITCH : This statement is used  to select one of many code blocks to be executed.
+[(4,7)|(5,7)] : IF : This statement is used to specify a block of C# code to be executed if a condition is true.
+[(0,3)|(0,4)|(0,5)|(0,6)] : ELSE : This statement is used to specify a block of C# code to be executed if a condition is false.
+[(4,1)|(4,2)|(4,3)|(4,4)|(4,5)|(4,6)|(4,7)|(4,8)|(4,9)] : SELECTION : These statements or selection structures are used to execute particular statements whether the value of the given condition evaluates to true or false. 

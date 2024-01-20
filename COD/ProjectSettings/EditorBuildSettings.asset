@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: 0e175978eb7c5a74695c221238b1548c
+  - enabled: 1
+    path: Assets/Scenes/Spectate.unity
+    guid: df31a55c69e3e7d41805df9f719df25b
   m_configObjects: {}

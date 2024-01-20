@@ -12,24 +12,24 @@ public class Program
         (NODE_SLOT:Dog) dog = new (NODE_SLOT:Dog)();
 
         dog.(NODE_SLOT:name) = "Gorou";
-        dog.(NODE_SLOT:display)();
+        ((Animal)dog).display();
         dog.(NODE_SLOT:displayName)();
     }
 }
 
 class Animal 
 { 
-    public String name;
+    public string (NODE_SLOT:name);
 
-    public void display() 
+    public void (NODE_SLOT:display)() 
     {
         System.out.println("I am an animal");
     }
 }
   
-class Dog extends Animal 
+class (NODE_SLOT:Dog) extends (NODE_SLOT:Animal) 
 {
-    public void displayName() 
+    public void (NODE_SLOT:displayName)() 
     {
         System.out.println("My name is " + name);
     }

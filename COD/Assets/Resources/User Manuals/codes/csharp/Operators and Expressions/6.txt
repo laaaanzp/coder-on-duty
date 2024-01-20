@@ -1,0 +1,13 @@
+using System;
+
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        int a = 10 + 5 * 2; // Evaluates to 20
+        Console.WriteLine(a);
+
+        double y = 10 + 5 * 2.0; // Evaluates to 20.0
+        Console.WriteLine(y);
+    }
+}

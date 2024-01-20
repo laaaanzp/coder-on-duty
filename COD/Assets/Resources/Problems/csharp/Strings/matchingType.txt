@@ -1,0 +1,5 @@
+The StringBuilder Class: Class represents a mutable string of characters that allows the user to expand the number of characters in the string object without allocating additional memory space.
+Length: A string in C# is actually an object, which contain properties and methods that can perform certain operations on strings. 
+Strings: It is a sequential collection of characters that is used to represent text. 
+bool Equals: This determines whether the specified substring has the same value with the string object. 
+int IndexOf: This returns the index position value of the first occurrence of the specified character within the string object if that character is found; otherwise, it returns -1 if not found.

@@ -1,0 +1,5 @@
+Property: Can access a private data member of the class.
+Class: A data structure or a blueprint that defines data and action in a single unit.
+Interface: Only contains the signature of methods, properties, and events as its members.
+Get: This is a accessor to read.
+Set: This is a accessor to write.

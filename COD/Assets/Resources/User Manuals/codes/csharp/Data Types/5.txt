@@ -1,17 +1,17 @@
 using System;
 
-namespace HelloWorld {
-    public class Program {
-        public static void Main(string[] args) {
-            int score, age;
-            score = 85;
-            age = 24;
-            int length = 8, width = 5;
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        int score, age;
+        score = 85;
+        age = 24;
+        int length = 8, width = 5;
 
-            Console.WriteLine(score);
-            Console.WriteLine(age);
-            Console.WriteLine(length);
-            Console.WriteLine(width);
-        }
+        Console.WriteLine(score);
+        Console.WriteLine(age);
+        Console.WriteLine(length);
+        Console.WriteLine(width);
     }
 }

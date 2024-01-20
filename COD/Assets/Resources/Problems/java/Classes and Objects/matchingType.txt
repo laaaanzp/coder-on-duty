@@ -1,0 +1,5 @@
+Strings: Java provides the String class from the java.lang package to create and manipulate strings. 
+StringBuilder: A class specialized for creating a mutable string. 
+equals: A string method that compares a string to another, and returns true if the strings are equal, and false if not.
+Concatenation: The + operator can be used between strings to combine them.
+length: It is a string method that returns the length of the string.

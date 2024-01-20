@@ -1,0 +1,29 @@
+public class Program
+{
+    public static int getValue(int value)
+    {
+>>        System.out.println("Int Method");
+>>        return value;
+    }
+
+    public static String getValue(String value)
+    {
+>>        System.out.println("String Method");
+>>        return value;
+    }
+
+    public static double getValue(double value)
+    {
+>>        System.out.println("Double Method");
+        return value;
+    }
+
+    public static void main(String[] args)
+    {
+>>        double value1 = getValue(5d);
+>>        int value2 = getValue(10);
+    }
+}
+##############################
+Double Method
+Int Method

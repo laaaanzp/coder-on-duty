@@ -1,0 +1,16 @@
+-----------
+S----------
+T----------
+R----------
+I-REPLACE--
+N--Q-------
+G--U-------
+---A-------
+---LENGTH--
+---S-------
+-----------
+####################
+[(1,0)|(2,0)|(3,0)|(4,0)|(5,0)|(6,0)] : STRING : It is an object of class string in the System namespace.
+[(4,2)|(4,3)|(4,4)|(4,5)|(4,6)|(4,7)|(4,8)] : REPLACE : This replaces all occurrence of a specified old character of the StringBuilder object with a new character.
+[(4,W)|(5,3)|(6,3)|(7,3)|(8,3)|(9,3)] : EQUALS : This returns true if the specified substring is equal to the StringBuilder object; otherwise, it returns false.
+[(8,3)|(8,4)|(8,5)|(8,6)|(8,7)|(8,8)] : LENGTH : This returns the length of the string.

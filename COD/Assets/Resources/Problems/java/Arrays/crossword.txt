@@ -1,0 +1,16 @@
+-----------
+-----------
+--B-A------
+--R-R------
+--ARRAYLIST
+--C-A------
+--E-Y------
+LIST-------
+-----------
+-----------
+-----------
+####################
+[(2,2)|(3,2)|(4,2)|(5,2)|(6,2)|(7,2)] : BRACES : Elements in a two-dimensional array is enclosed with this and separated by commas.
+[(2,4)|(3,4)|(4,4)|(5,4)|(6,4)] : ARRAY : It is a collection or sequence of a fixed number of variables called elements, wherein all the elements are of the same data type.
+[(4,2)|(4,3)|(4,4)|(4,5)|(4,6)|(4,7)|(4,8)|(4,9)|(4,10)|(4,11)] : ARRAYLIST : It is a resizable array, which can be found in the java.util package.
+[(7,0)|(7,1)|(7,2)|(7,3)] : LIST : In what form does one-dimensional array is arranged

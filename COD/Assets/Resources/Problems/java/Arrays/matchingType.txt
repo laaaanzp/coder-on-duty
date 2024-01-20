@@ -1,0 +1,5 @@
+Multidimensional: Are arrays where the elements are arrays themselves.
+ArrayList: Is a resizable array, which can be found in the java.util package.
+One-dimensional: Is an array in which all the elements are arranged in a list form.
+Index: Each element in an array is accessed by this.
+Braces: This encloses each row of elements in a two-dimensional array.

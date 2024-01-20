@@ -711,11 +711,12 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 86941c8c3d6a4ee4c9a0bae6d9f141bb, type: 3}
     transitionImage: 0
   - name: Interviewee
-    message: Okay, you're hired.
+    message: Okay, you're in.
     image: {fileID: 21300000, guid: 0788b54692b2e254eb6ad62f2f9092ff, type: 3}
     transitionImage: 0
   - name: Interviewee
-    message: You can start your training tomorrow.
+    message: You can start your training tomorrow. You will be assisted by someone
+      on that day.
     image: {fileID: 0}
     transitionImage: 0
   inputDelay: 1

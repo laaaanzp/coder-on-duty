@@ -1,14 +1,9 @@
 using System;
 
-namespace HelloWorld {
-    public class Program {
-        public static void Main(string[] args) {
-            Console.WriteLine("Hello, World"); // This is a comment.
-        }
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        Console.WriteLine("Hello, World");
     }
 }
-
-
-//
-output:
-Hello, World

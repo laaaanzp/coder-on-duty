@@ -1,10 +1,14 @@
-Object
 return
+Lanz
+Person
 create
 Lanz
 Entity
-age
-name
+Age
+Age
+Name
+Name
+Name
 ##############################
 public class Program
 {
@@ -12,15 +16,15 @@ public class Program
     {
         (NODE_SLOT:Person) person = (NODE_SLOT:new) Person();
         person.(NODE_SLOT:name) = (NODE_SLOT:"Lanz");
-        person.age = 21;
+        person.(NODE_SLOT:age) = 21;
 
-        System.out.println("My age is " + person.(NODE_SLOT:age));
+        System.out.println((NODE_SLOT:person).name + " age: " + (NODE_SLOT:person).(NODE_SLOT:age));
     }
 }
 
 class Person
 {
-    public String name;
+    public String (NODE_SLOT:name);
     public int age;
 }
 

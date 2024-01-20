@@ -46,21 +46,27 @@ public class MinigameDevice : MonoBehaviour
         {
             if (!currentlyOpen)
             {
-                string challengeType;
+                string challengeInformation;
 
                 if (puzzleModal is DragAndArrangePuzzle)
-                    challengeType = "Drag and Arrange";
+                    challengeInformation = "Drag and Arrange</b>\n\nDrag and arrange the pieces to their correct order.";
 
                 else if (puzzleModal is DragAndDropPuzzle)
-                    challengeType = "Drag and Drop";
+                    challengeInformation = "Drag and Drop</b>\n\nDrag the correct pieces to the slot.";
 
                 else if (puzzleModal is Crossword)
-                    challengeType = "Crossword";
+                    challengeInformation = "Crossword</b>\n\nFind answers inside the crossword and type it inside the input field.";
+
+                else if (puzzleModal is WordSearch)
+                    challengeInformation = "Word Search</b>\n\nFind and mark all the words hidden inside the box.";
+
+                else if (puzzleModal is MatchingType)
+                    challengeInformation = "Matching Type</b>\n\nMatch the left with the corresponding definition in the right side.";
 
                 else
-                    challengeType = "Find and Select bugs";
+                    challengeInformation = "Find and Select bugs</b>\n\nLocate and select all the bugs inside the code.";
 
-                MessageBoxControl.ShowYesNo("INSTRUCTIONS", $"Challenge: <b>{challengeType}</b>\nTotal Answers: {puzzleModal.totalSlots}\n\nYou have 180 seconds to solve the problem. Do you want to proceed?",
+                MessageBoxControl.ShowYesNo("INSTRUCTIONS", $"Challenge: <b>{challengeInformation}</b>\n\nTotal Answers: {puzzleModal.totalSlots}\n\nProceed?",
                     () =>
                     {
                         puzzleModal.Open();
@@ -88,6 +94,7 @@ public class MinigameDevice : MonoBehaviour
         int totalSlots = puzzleModal.totalSlots;
 
         Destroy(outline);
+        interactable.isInteractable = false;
 
         if (ticket.isFixed)
         {

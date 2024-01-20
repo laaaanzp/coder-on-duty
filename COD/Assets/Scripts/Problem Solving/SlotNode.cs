@@ -62,8 +62,6 @@ public class SlotNode : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // FixSize();
-
         Unhighlight();
     }
 

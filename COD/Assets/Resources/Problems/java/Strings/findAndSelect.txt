@@ -1,0 +1,14 @@
+>>public Program
+{
+    public static void main(String[] args)
+>>    (
+        String strA = "Programming is";
+>>        String strB = "fun."
+>>        String strC = strA * strB;
+
+>>        if (strC = "Programming isfun.")
+        {
+>>            System.out.println("The length of the final string is " + strC.Length);
+        }
+>>    )
+}

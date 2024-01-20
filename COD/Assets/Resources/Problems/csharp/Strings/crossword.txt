@@ -1,0 +1,15 @@
+-----------
+-----------
+-----------
+--REPLACE--
+---Q-------
+---U-------
+---A-------
+---LENGTH--
+---S-------
+-----------
+-----------
+####################
+[(3,2)|(3,3)|(3,4)|(3,5)|(3,6)|(3,7)|(3,8)] : REPLACE : This replaces all occurrence of a specified old characters from a string with a new set of characters.
+[(3,3)|(4,3)|(5,3)|(6,3)|(7,3)|(8,3)] : EQUALS : This string method returns true if the specified substring is equal to the current string; otherwise, it returns false.
+[(7,3)|(7,4)|(7,5)|(7,6)|(7,7)|(7,8)] : LENGTH : A string method that returns the length of the string.

@@ -28,6 +28,17 @@ public class EndScreen : MonoBehaviour
 
     public void ShowGameOver(TaskScoreModel[] taskScores)
     {
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string[] types = { "DragAndArrangePuzzle", "DragAndDropPuzzle", "FindAndSelect" };
+        foreach (string type in types)
+        {
+            PlayerPrefs.SetInt($"{languageName}-{type}-total-correct", -1);
+            PlayerPrefs.SetInt($"{languageName}-{type}-time-remaining", -1);
+            PlayerPrefs.SetInt($"{languageName}-{type}-total-slots", -1);
+        }
+
+        PlayerPrefs.Save();
+
         modalControl.Open();
         titleText.text = "GAME OVER!";
         titleShadowText.text = "GAME OVER!";
@@ -57,6 +68,17 @@ public class EndScreen : MonoBehaviour
 
     public void Restart()
     {
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string[] types = { "DragAndArrangePuzzle", "DragAndDropPuzzle", "FindAndSelect" };
+        foreach (string type in types)
+        {
+            PlayerPrefs.SetInt($"{languageName}-{type}-total-correct", -1);
+            PlayerPrefs.SetInt($"{languageName}-{type}-time-remaining", -1);
+            PlayerPrefs.SetInt($"{languageName}-{type}-total-slots", -1);
+        }
+
+        PlayerPrefs.Save();
+
         SceneSwitcher.Restart();
     }
 
@@ -67,6 +89,17 @@ public class EndScreen : MonoBehaviour
 
     public void Proceed()
     {
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string[] types = { "DragAndArrangePuzzle", "DragAndDropPuzzle", "FindAndSelect" };
+        foreach (string type in types)
+        {
+            PlayerPrefs.SetInt($"{languageName}-{type}-total-correct", -1);
+            PlayerPrefs.SetInt($"{languageName}-{type}-time-remaining", -1);
+            PlayerPrefs.SetInt($"{languageName}-{type}-total-slots", -1);
+        }
+
+        PlayerPrefs.Save();
+
         DatabaseManager.instance.currentLanguage.SetCurrentLevelData(totalScore, stars, totalCorrectAnswers, totalAnswers);
 
         if (DatabaseManager.instance.currentLanguage.isPlayingTheLastLevel)
@@ -110,6 +143,8 @@ public class EndScreen : MonoBehaviour
 
             yield return new WaitForSeconds(0.75f);
         }
+
+        totalScore += ScoreManager.additionalScore;
 
         float overallAccuracy = ((float)totalCorrectAnswers / (float)totalAnswers) * 100;
 

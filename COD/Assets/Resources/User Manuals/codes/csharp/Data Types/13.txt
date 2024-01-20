@@ -1,20 +1,20 @@
 using System;
 
-namespace HelloWorld {
-    public class Program {
-        public static void Main(string[] args) {
-            //first example
-            int num = 25;
-            byte b = (byte) num;
+public class Program
+{
+    public static void Main(string[] args) 
+    {
+        //first example
+        int num = 25;
+        byte b = (byte) num;
 
-            //second example
-            double price = 75.5;
-            int varA = (int) price; //the value of variable a will be 75
+        //second example
+        double price = 75.5;
+        int varA = (int) price; //the value of variable a will be 75
 
-            Console.WriteLine(num);
-            Console.WriteLine(b);
-            Console.WriteLine(price);
-            Console.WriteLine(varA);
+        Console.WriteLine(num);
+        Console.WriteLine(b);
+        Console.WriteLine(price);
+        Console.WriteLine(varA);
         }
-    }
 }

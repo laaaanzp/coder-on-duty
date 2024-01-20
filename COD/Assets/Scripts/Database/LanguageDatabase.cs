@@ -82,7 +82,7 @@ public class LanguageDatabase : MonoBehaviour
     void Awake()
     {
         instances.TryAdd(languageName, this);
-        connectionString = $"URI=file:{Application.dataPath}/{languageName}.db";
+        connectionString = $"URI=file:{Application.persistentDataPath}/{languageName}.db";
     }
 
     void Start()
@@ -157,7 +157,7 @@ public class LanguageDatabase : MonoBehaviour
             {
                 float result = ((float)currentLevel - 1) / levelNames.Length;
 
-                if (float.IsNaN(result) || result == float.NegativeInfinity ||  result == float.PositiveInfinity)
+                if (float.IsNaN(result) || result == float.NegativeInfinity || result == float.PositiveInfinity)
                 {
                     result = 0f;
                 }
@@ -168,7 +168,7 @@ public class LanguageDatabase : MonoBehaviour
             { return 0f; }
         }
     }
-    
+
     public static void Play(string languageName)
     {
         LanguageDatabase languageDatabase = GetInstance(languageName);
@@ -272,7 +272,7 @@ public class LanguageDatabase : MonoBehaviour
         int totalStars = 0;
         int totalCorrectAnswers = 0;
         int totalAnswers = 0;
-        
+
         foreach (LevelData levelData in levelDatas)
         {
             totalScore += levelData.score;

@@ -1,4 +1,4 @@
->>impoort java.util.*;
+>>import java.util.*;
 
 >>public class Program
 {

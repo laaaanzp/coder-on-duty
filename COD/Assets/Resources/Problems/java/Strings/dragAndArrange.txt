@@ -1,0 +1,23 @@
+>>public class Program
+{
+>>    public static void main(String[] args)
+    {
+        String varB = ", World!";
+        String varA = "Hello";
+>>        String varC = varA + varB;
+
+        System.out.println(varC);
+
+>>        if (varC.equals("Hello, World!"))
+        {
+>>            System.out.println("The strings are equal.");
+        }
+>>        else
+        {
+>>            System.out.println("The strings are not equal.");
+        }
+    }
+}
+##############################
+Hello, World!
+The strings are equal.

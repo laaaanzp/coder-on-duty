@@ -1,6 +1,7 @@
-public class MyClass {
-    public static void main(String args[]) {
-
+public class MyClass 
+{
+    public static void main(String[] args) 
+    {
         int x = 11;
         double y = 3;
         System.out.println(x / y);

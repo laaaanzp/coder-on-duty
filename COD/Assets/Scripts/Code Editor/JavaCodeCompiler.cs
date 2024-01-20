@@ -9,6 +9,7 @@ using System.ComponentModel;
 public class JavaCodeCompiler : MonoBehaviour
 {
     public TMP_InputField codeInputField;
+    public ModalControl codeModalControl;
     public ModalControl consoleModalControl;
     public TypeChooser typeChooser;
 
@@ -24,6 +25,7 @@ public class JavaCodeCompiler : MonoBehaviour
 
     private int currentLineCount;
 
+    private static JavaCodeCompiler instance;
 
     #region fileName fix for editor and actual build
 #if UNITY_EDITOR
@@ -32,6 +34,11 @@ public class JavaCodeCompiler : MonoBehaviour
     private string javaCompilerPath = $"{Path.GetDirectoryName(Application.dataPath)}/Compilers/Java/JavaCodeCompiler.exe";
 #endif
     #endregion
+
+    public void Init()
+    {
+        instance = this;
+    }
 
     public async void ExecuteCode()
     {
@@ -132,5 +139,11 @@ public class JavaCodeCompiler : MonoBehaviour
     public void SetCode(string code)
     {
         codeInputField.text = code;
+    }
+
+    public static void Open(string code)
+    {
+        instance.SetCode(code);
+        instance.codeModalControl.Open();
     }
 }

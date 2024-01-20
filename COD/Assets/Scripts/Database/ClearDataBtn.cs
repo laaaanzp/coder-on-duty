@@ -18,7 +18,17 @@ public class ClearDataBtn : MonoBehaviour
                 SecurePlayerPrefs.SetInt("csharp-time", 0);
                 SecurePlayerPrefs.SetInt("csharp-accuracy", 0);
                 SecurePlayerPrefs.SetInt("csharp-stars", 0);
-                SecurePlayerPrefs.Save();
+
+                string[] types = { "DragAndArrangePuzzle", "DragAndDropPuzzle", "FindAndSelect" };
+
+                foreach (string type in types)
+                {
+                    PlayerPrefs.SetInt($"csharp-{type}-total-correct", -1);
+                    PlayerPrefs.SetInt($"csharp-{type}-time-remaining", -1);
+                    PlayerPrefs.SetInt($"csharp-{type}-total-slots", -1);
+                }
+
+                PlayerPrefs.Save();
 
                 LanguageDatabase.GetInstance("csharp").ResetProgress();
             });
@@ -38,7 +48,17 @@ public class ClearDataBtn : MonoBehaviour
                 SecurePlayerPrefs.SetInt("java-time", 0);
                 SecurePlayerPrefs.SetInt("java-accuracy", 0);
                 SecurePlayerPrefs.SetInt("java-stars", 0);
-                SecurePlayerPrefs.Save();
+
+                string[] types = { "DragAndArrangePuzzle", "DragAndDropPuzzle", "FindAndSelect" };
+
+                foreach (string type in types)
+                {
+                    PlayerPrefs.SetInt($"java-{type}-total-correct", -1);
+                    PlayerPrefs.SetInt($"java-{type}-time-remaining", -1);
+                    PlayerPrefs.SetInt($"java-{type}-total-slots", -1);
+                }
+
+                PlayerPrefs.Save();
 
                 LanguageDatabase.GetInstance("java").ResetProgress();
             });

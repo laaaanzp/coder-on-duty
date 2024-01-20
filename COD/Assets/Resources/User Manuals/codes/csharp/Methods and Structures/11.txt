@@ -1,12 +1,14 @@
 using System;
 
-public class DemoStruct {
-    public static void Main(string[] args) {
+public class DemoStruct 
+{
+    public static void Main(string[] args) 
+    {
         // Initializing struct members
         Book book1 = new Book {
             Title = "Object-Oriented Programming",
-                Author = "John Doe",
-                BookId = 20190001
+            Author = "John Doe",
+            BookId = 20190001
         };
 
         // Accessing struct members
@@ -21,20 +23,23 @@ public class DemoStruct {
     }
 }
 
-public struct Book {
+public struct Book 
+{
     public string Title;
     public string Author;
     public int BookId;
 
     // Mutator method that sets values of the struct fields
-    public void SetValues(string newTitle, string newAuthor, int newBookId) {
+    public void SetValues(string newTitle, string newAuthor, int newBookId) 
+    {
         Title = newTitle;
         Author = newAuthor;
         BookId = newBookId;
     }
 
     // Method that displays the values of struct fields
-    public void DisplayValues() {
+    public void DisplayValues() 
+    {
         Console.WriteLine("Book title: " + Title);
         Console.WriteLine("Book author: " + Author);
         Console.WriteLine("Book ID: " + BookId);

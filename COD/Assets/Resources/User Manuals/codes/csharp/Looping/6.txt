@@ -1,15 +1,13 @@
 using System;
 
-public class Program {
-    public static void Main(string[] args) {
-        string[] cars = {
-            "Volvo",
-            "BMW",
-            "Ford",
-            "Mazda"
-        };
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        string[] cars = { "Volvo", "BMW", "Ford", "Mazda" };
 
-        foreach(string car in cars) {
+        foreach(string car in cars) 
+        {
             Console.WriteLine(car);
         }
     }

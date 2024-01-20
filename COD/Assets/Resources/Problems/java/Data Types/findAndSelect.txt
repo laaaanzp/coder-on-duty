@@ -2,7 +2,7 @@
 
 >>public clss Program
 {
-    public static void nain(String[] args)
+    public static void main(String[] args)
     {
 >>        string a = "Hello, World";
 >>        bool b = true;

@@ -1,0 +1,27 @@
+##############################
+public class Program
+{
+    public static void main(String[] args)
+    {
+        int num1 = 10;
+        int num2 = 5;
+
+        boolean isNotEqual = (num1 (NODE_SLOT:!=) num2);
+        boolean isGreater = (num1 (NODE_SLOT:>) num2);
+        boolean isLess = (num1 (NODE_SLOT:<) num2);
+        boolean isGreaterOrEqual = (num1 (NODE_SLOT:>=) num2);
+        boolean isLessOrEqual = (num1 (NODE_SLOT:<=) num2);
+
+        System.out.println("Is num1 not equal to num2? " + isNotEqual);
+        System.out.println("Is num1 greater than num2? " + isGreater);
+        System.out.println("Is num1 less than num2? " + isLess);
+        System.out.println("Is num1 greater than or equal to num2? " + isGreaterOrEqual);
+        System.out.println("Is num1 less than or equal to num2? " + isLessOrEqual);
+    }
+}
+##############################
+Is num1 not equal to num2? True
+Is num1 greater than num2? True
+Is num1 less than num2? False
+Is num1 greater than or equal to num2? True
+Is num1 less than or equal to num2? False

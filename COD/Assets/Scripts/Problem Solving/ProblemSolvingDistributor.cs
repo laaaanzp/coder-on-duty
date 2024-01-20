@@ -8,10 +8,19 @@ public class ProblemSolvingDistributor : MonoBehaviour
     [SerializeField] private DragAndDropPuzzle dragAndDropPuzzle;
     [SerializeField] private FindAndSelect findAndSelectPuzzle;
     [SerializeField] private Crossword crosswordPuzzle;
+    [SerializeField] private WordSearch wordSearchPuzzle;
+    [SerializeField] private MatchingType matchingTypePuzzle;
     [SerializeField] private MinigameDevice minigamesElectronicDevice;
 
     [Header("Training Computers - Level 1")]
     [SerializeField] private ElectronicDeviceTraining[] trainingComputers;
+
+    [Header("Developer Computers - Level 2")]
+    [SerializeField] private ElectronicDevice[] developerComputers;
+
+    [Header("Random Computers - Level 3")]
+    [SerializeField] private ElectronicDevice[] randomComputers;
+
     public static List<IPuzzle> puzzleSolvings;
     private GameObject[] computerObjects;
 
@@ -22,6 +31,7 @@ public class ProblemSolvingDistributor : MonoBehaviour
         computerObjects = GameObject.FindGameObjectsWithTag("Computer");
         computerObjects = Tools.ShuffleArray(computerObjects);
 
+
         if (DatabaseManager.instance.currentLanguage.currentLevel == 1)
         {
             DistributeDragAndDrop(trainingComputers[0]);
@@ -30,22 +40,39 @@ public class ProblemSolvingDistributor : MonoBehaviour
         }
         else if (DatabaseManager.instance.currentLanguage.currentLevel == 2)
         {
-            DistributeDragAndDrop(computerObjects[0].GetComponent<ElectronicDevice>());
-            DistributeDragAndArrange(computerObjects[1].GetComponent<ElectronicDevice>());
-            DistributeFindAndSelect(computerObjects[2].GetComponent<ElectronicDevice>());
+            DistributeDragAndDrop(developerComputers[0].GetComponent<ElectronicDevice>());
+            DistributeDragAndArrange(developerComputers[1].GetComponent<ElectronicDevice>());
+            DistributeFindAndSelect(developerComputers[2].GetComponent<ElectronicDevice>());
         }
         else if (DatabaseManager.instance.currentLanguage.currentLevel == 3)
         {
-            DistributeDragAndDrop(computerObjects[0].GetComponent<ElectronicDevice>());
-            DistributeDragAndArrange(computerObjects[1].GetComponent<ElectronicDevice>());
-            DistributeFindAndSelect(computerObjects[2].GetComponent<ElectronicDevice>());
+            DistributeDragAndDrop(randomComputers[0].GetComponent<ElectronicDevice>());
+            DistributeDragAndArrange(randomComputers[1].GetComponent<ElectronicDevice>());
+            DistributeFindAndSelect(randomComputers[2].GetComponent<ElectronicDevice>());
         }
         else 
         {
             DistributeDragAndDrop(computerObjects[0].GetComponent<ElectronicDevice>());
             DistributeDragAndArrange(computerObjects[1].GetComponent<ElectronicDevice>());
             DistributeFindAndSelect(computerObjects[2].GetComponent<ElectronicDevice>());
-            DistributeCrossword(minigamesElectronicDevice);
+        }
+
+        switch (DatabaseManager.instance.currentLanguage.currentLevel)
+        {
+            case 4:
+            case 7:
+            case 10:
+                DistributeCrossword(minigamesElectronicDevice);
+                break;
+            case 5:
+            case 8:
+            case 11:
+                DistributeWordSearch(minigamesElectronicDevice);
+                break;        
+            case 6:
+            case 9:
+                DistributeMatchingType(minigamesElectronicDevice);
+                break;
         }
 
         InitializeDevices();
@@ -64,6 +91,33 @@ public class ProblemSolvingDistributor : MonoBehaviour
         crosswordPuzzle.Initialize(crosswordText, crosswordClues);
 
         minigameDevice.puzzleModal = crosswordPuzzle;
+    }
+
+    void DistributeWordSearch(MinigameDevice minigameDevice)
+    {
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string levelName = DatabaseManager.instance.currentLanguage.currentLevelName;
+        TextAsset problemTextAsset = Resources.Load<TextAsset>($"Problems/{languageName}/{levelName}/crossword");
+
+        string[] problemSplitted = problemTextAsset.text.Split("####################");
+        string crosswordText = problemSplitted[0];
+        string crosswordClues = problemSplitted[1];
+
+        wordSearchPuzzle.Initialize(crosswordText, crosswordClues);
+
+        minigameDevice.puzzleModal = wordSearchPuzzle;
+    }
+
+
+    void DistributeMatchingType(MinigameDevice minigameDevice)
+    {
+        string languageName = DatabaseManager.instance.currentLanguage.languageName;
+        string levelName = DatabaseManager.instance.currentLanguage.currentLevelName;
+        TextAsset problemTextAsset = Resources.Load<TextAsset>($"Problems/{languageName}/{levelName}/matchingType");
+
+        matchingTypePuzzle.Initialize(problemTextAsset.text);
+
+        minigameDevice.puzzleModal = matchingTypePuzzle;
     }
 
     void DistributeDragAndDrop(ElectronicDevice electronicDevice)

@@ -1,13 +1,16 @@
 using System;
 
-public struct Book {
+public struct Book 
+{
     public string title;
     public string author;
     public long book_id;
 }
 
-public class Program {
-    public static void Main(string[] args) {
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
         Book book1 = new Book();
 
         // Initializing struct members

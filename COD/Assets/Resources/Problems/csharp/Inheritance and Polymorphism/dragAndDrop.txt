@@ -17,14 +17,14 @@ public class Program
         (NODE_SLOT:Dog) dog = new (NODE_SLOT:Dog)();
 
         dog.(NODE_SLOT:Name) = "Gorou";
-        ((Animal)dog).(NODE_SLOT:Display)();
+        ((Animal)dog).Display();
         dog.(NODE_SLOT:DisplayName)();
     }
 }
 
 class Animal 
 { 
-    public string Name;
+    public string (NODE_SLOT:Name);
 
     public void (NODE_SLOT:Display)() 
     {

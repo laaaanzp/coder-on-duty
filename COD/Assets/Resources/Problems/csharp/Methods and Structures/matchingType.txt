@@ -1,0 +1,5 @@
+Method Overloading: Means that methods of the same name can be declared in the same class as long as they have different sets of parameters which are determined by the number, types, and order of the parameters. It is used to create several methods with the same name that perform the same or similar task, but on different types or different numbers of arguments.
+Methods: It is a block of code which only runs when it is called.
+Create a Method: A method is defined with the name of the method, followed by parentheses (). 
+Structures: C# provides a value type data type called structure.
+Call a Method: To call (execute) a method, write the method's name followed by two parentheses () and a semicolon;

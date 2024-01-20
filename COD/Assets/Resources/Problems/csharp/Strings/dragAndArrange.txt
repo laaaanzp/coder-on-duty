@@ -1,11 +1,11 @@
-using System;
+>>using System;
 
-public class Program
+>>public class Program
 {
     public static void Main(string[] args)
     {
->>        string varB = ", World!";
->>        string varA = "Hello";
+        string varB = ", World!";
+        string varA = "Hello";
 >>        string varC = varA + varB;
 
         Console.WriteLine(varC);

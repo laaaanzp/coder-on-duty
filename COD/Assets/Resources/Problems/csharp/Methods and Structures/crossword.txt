@@ -1,0 +1,15 @@
+-----------
+-----------
+M----------
+E----------
+T----------
+H----------
+OVERLOADING
+D----------
+STRUCTURES-
+-----------
+-----------
+####################
+[(2,0)|(3,0)|(4,0)|(5,0)|(6,0)|(7,0)|(8,0)] : METHODS : It is a block of code which only runs when it is called.
+[(6,0)|(6,1)|(6,2)|(6,3)|(6,4)|(6,5)|(6,6)|(6,7)|(6,8)|(6,9)|(6,10)] : OVERLOADING : Means that methods of the same name can be declared in the same class as long as they have different sets of parameters which are determined by the number, types, and order of the parameters. It is used to create several methods with the same name that perform the same or similar task, but on different types or different numbers of arguments.
+[(8,0)|(8,1)|(8,2)|(8,3)|(8,4)|(8,5)|(8,6)|(8,7)|(8,8)|(8,9) : STRUCTURES : C# provides a value type data type called structure.

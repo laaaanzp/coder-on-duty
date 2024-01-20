@@ -1,13 +1,16 @@
 using System;
 
-public class Program {
+public class Program 
+{
     // This method computes and prints the area of a rectangle given its width and height
-    public static void PrintRectArea(int width, int height) {
+    public static void PrintRectArea(int width, int height) 
+    {
         int area = width * height;
         Console.WriteLine($"The area of the rectangle is {area}");
     }
 
-    public static void Main(string[] args) {
+    public static void Main(string[] args) 
+    {
         // Example usage
         PrintRectArea(5, 8);
     }

@@ -1,0 +1,48 @@
+##############################
+public class Program
+{
+    public static int add(int a, int b)
+    {
+        System.out.println((NODE_SLOT:"Method D"));
+        return a + b;
+    }
+
+    public static (NODE_SLOT:float) add(float a, float b)
+    {
+        System.out.println((NODE_SLOT:"Method C"));
+        return a + b;
+    }
+
+    public static (NODE_SLOT:double) add(double a, double b)
+    {
+        System.out.println((NODE_SLOT:"Method B"));
+        return a + b;
+    }
+    
+    public static String add(String a, String b)
+    {
+        System.out.println((NODE_SLOT:"Method A"));
+        return a + b;
+    }
+    
+    public static String add(char a, char b)
+    {
+        System.out.println((NODE_SLOT:"Method E"));
+        return a.toString() + b.toString();
+    }
+
+    public static void main(String[] args)
+    {
+        add(1f, 1f);
+        add(1d, 1d);
+        add('a', 'b');
+        add("a", "b");
+        add(1, 1);
+    }
+}
+##############################
+Method C
+Method B
+Method E
+Method A
+Method D

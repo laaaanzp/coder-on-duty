@@ -1,0 +1,17 @@
+----I------
+----N------
+----H----D-
+--OVERRIDE-
+----R----R-
+----I----I-
+----THIS-V-
+----A----E-
+----N----D-
+----C------
+---METHOD--
+####################
+[(3,2)|(3,3)|(3,4)|(3,5)|(3,6)|(3,7)|(3,8)|(3,9)] : Override : Occurs when a subclass (child class) has the same method as the parent class.
+[(6,4)|(6,5)|(6,6)|(6,7)] : This : It is a keyword for the default constructor call another in that class.
+[(10,3)|(10,4)|(10,5)|(10,6)|(10,7)|(10,8)] : Method : A block of code that, when called, performs specific actions mentioned in it.
+[(0,4)|(1,4)|(2,4)|(3,4)|(4,4)|(5,4)|(6,4)|(7,4)|(8,4)|(9,4)] : Inheritance : Enables the use of existing class to define a new class.
+[(2,9)|(3,9)|(4,9)|(5,9)|(6,9)|(7,9)(8,9)] : Derived : Defined by adding instance variables and methods to an existing class.

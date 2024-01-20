@@ -1,0 +1,6 @@
+Repetition Structure: The program repeats particular statements a certain number of times, depending on the given condition. This alters the flow of program execution by the repetition of one (1) or more statements.
+Control structure: This is a statement that is used to control the flow of a program.
+Compound statements: These are any kind of statements grouped together within curly braces.
+Short-circuit evaluation: It is a process in which the computer evaluates a logical expression from left to right and stops as
+soon as the value of the expression is determined. 
+Case: The variable being switched on and checked for in a switch statement.

@@ -1,0 +1,5 @@
+Inheritance: A concept that acquires the properties from one class to other classes.
+Override: Occurs when a subclass has the same method as the parent class.  
+Parent Class: The class from which the subclass is derived.
+Polymorphism: The task that performs a single action in different ways. 
+Dynamic Building: It's called "runtime polymorphism."

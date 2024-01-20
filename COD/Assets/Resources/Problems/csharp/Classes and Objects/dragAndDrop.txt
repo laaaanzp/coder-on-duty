@@ -20,7 +20,7 @@ public class Program
         person.(NODE_SLOT:Name) = (NODE_SLOT:"Lanz");
         person.(NODE_SLOT:Age) = 21;
 
-        Console.WriteLine((NODE_SLOT:person).Name  + " age: " + (NODE_SLOT:person).(NODE_SLOT:Age));
+        Console.WriteLine((NODE_SLOT:person).Name + " age: " + (NODE_SLOT:person).(NODE_SLOT:Age));
     }
 }
 

@@ -89,6 +89,36 @@ public class DebugConsole : MonoBehaviour
         Log(sb.ToString());
     }
 
+    [Command("Loads spectator mode.")]
+    public void SpectatorView(string[] parameters)
+    {
+        SceneSwitcher.LoadScene(4);
+    }
+
+
+    [Command("Sets spectator mode movement speed.")]
+    public void SetSpectatorViewSpeed(string[] parameters)
+    {
+        if (parameters.Length == 1)
+        {
+            LogError("Error. Missing 1 argument with float type.");
+            return;
+        }
+
+        if (float.TryParse(parameters[1], out float cameraSpeed))
+        {
+            if (SpectatorCamera.SetSpeed(cameraSpeed))
+                LogSuccess($"Camera speed set to {cameraSpeed}.");
+
+            else
+                LogError(":/");
+        }
+        else
+        {
+            LogError($"Error. Invalid argument ({parameters[1]}). It should be a type of float.");
+        }
+    }
+
     [Command()]
     public void ClearData(string[] parameters)
     {

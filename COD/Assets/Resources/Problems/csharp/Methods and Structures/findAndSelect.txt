@@ -35,9 +35,9 @@ public class Program
         return value; 
     }
 
->>    public static int MyFunction(int v)
+    public static int MyFunction(int v)
     {
         Console.WriteLine("Int Function");
-        return value;
+>>        return value;
     }
 }

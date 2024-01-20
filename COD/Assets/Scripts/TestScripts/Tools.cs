@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public static class Tools
 {
@@ -28,5 +29,12 @@ public static class Tools
         }
 
         return array;
+    }
+
+    public static string ReverseString(string value)
+    {
+        char[] charArray = value.ToCharArray();
+        System.Array.Reverse(charArray);
+        return new string(charArray);
     }
 }

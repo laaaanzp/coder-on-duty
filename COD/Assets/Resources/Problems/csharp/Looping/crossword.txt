@@ -1,0 +1,18 @@
+-----------
+--F--------
+LOOP-------
+--R--------
+BREAK-W----
+--A---H-J--
+--CONTINUE-
+--H---L-M--
+------E-P--
+-----------
+-----------
+####################
+[(1,2)|(2,2)|(3,2)|(4,2)|(5,2)|(6,2)|(7,2)] : FOREACH : Used to iterate through items of an iterable object like arrays. 
+[(4,6)|(5,6)|(6,6)|(7,6)|(8,6)] : WHILE : A loop that repeats a block of statements as long as a given condition evaluates to true. It evaluates the condition first before executing the loop body.
+[(5,8)|(6,8)|(7,8)|(8,8)] : JUMP : Statements are used to change the flow of control of a looping structure.
+[(2,0)|(2,1)|(2,2)|(2,3)] : LOOP : Used when an operation needs to repeat multiple times.
+[(4,0)|(4,1)|(4,2)|(4,3)|(4,4)] : BREAK : Terminates a loop or a switch statement and transfers the flow of program execution to the statements following the enclosing loop or switch statement.
+[(6,2)|(6,3)|(6,4)|(6,5)|(6,6)|(6,7)|(6,8)|(6,9)] : CONTINUE : Statement is used to skip the remaining statements in the loop body

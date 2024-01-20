@@ -1,0 +1,5 @@
+Class: Is a data structure or a blueprint that defines data and actions in a single unit.
+Encapsulation: The process of hiding or encapsulating data from the outside world.
+This: Keyword refers to the object or the current instance of the class.
+Constructors: A special method where its name is the same as the name of its type (class or structure).
+Namespace: Provides a logical grouping to organize related classes, structures, interfaces, and other types.

@@ -1,25 +1,30 @@
 using System;
 
-public class AreaCalculator {
+public class AreaCalculator 
+{
     // This method computes the area of a square
-    public int GetSquareArea(int side) {
+    public int GetSquareArea(int side) 
+    {
         int area = side * side;
         return area;
     }
 
     // This method computes the area of a rectangle with integer dimensions
-    public int GetRectangleArea(int width, int height) {
+    public int GetRectangleArea(int width, int height) 
+    {
         int area = width * height;
         return area;
     }
 
     // This method computes the area of a rectangle with double dimensions
-    public double GetRectangleArea(double width, double height) {
+    public double GetRectangleArea(double width, double height) 
+    {
         double area = width * height;
         return area;
     }
 
-    public static void Main(string[] args) {
+    public static void Main(string[] args) 
+    {
         // Example usage
         AreaCalculator calculator = new AreaCalculator();
         int squareArea = calculator.GetSquareArea(5);

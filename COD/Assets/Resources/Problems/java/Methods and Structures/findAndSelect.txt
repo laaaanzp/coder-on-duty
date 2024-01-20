@@ -1,0 +1,41 @@
+public class Program
+{
+    public static void main(String[] args)
+    {
+        boolean a = myFunction(true);
+>>        char b = myFunction("c");
+        String c = myFunction("str");
+        int d = myFunction(25);
+>>        float e = myFunction(2.3d);
+    }
+
+    public static float myFunction(float value)
+    {
+        System.out.println("Float Function");
+        return value;
+    }
+
+    public static string myFunction(string value)
+    {
+>>        System.out.printline("String Function");
+>>        return value
+    }
+
+    public static char myFunction(char value)
+    {
+        System.out.println("Char Function");
+>>        return val;
+    }
+
+    public static bool myFunction(bool value)
+    {
+>>        System.out.printline("Bool Function");
+        return value; 
+    }
+
+    public static int myFunction(int v)
+    {
+        System.out.println("Int Function");
+>>        return value;
+    }
+}

@@ -1,0 +1,5 @@
+Nested loop: It is placing a loop inside another loop.
+For-each loop: It is used exclusively to loop through elements in an array.
+Break: It is used to "jump out" of a switch statement.
+Continue: This statement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.
+While loop: Loops through a block of code as long as a specified condition is true.

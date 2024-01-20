@@ -1,0 +1,25 @@
+public class Program
+{
+    public static void main(String[] args)
+    {
+>>        for (int count = 1; count <= 10; count++)
+        {
+>>            if (count % 3 == 0)
+            {
+>>                if (count == 6)
+                {
+>>                    continue;
+                }
+
+>>                System.out.print(count + " ");
+            }
+
+>>            if (count == 9)
+            {
+>>                break;
+            }
+        }
+    }
+}
+##############################
+3 9

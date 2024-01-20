@@ -13,6 +13,10 @@ public class NPCBoss : MonoBehaviour
 
     [Header("Camera Positions")]
     [SerializeField] private Transform threeComputersScene;
+    [SerializeField] private Transform developersScene;
+    [SerializeField] private Transform aScene;
+    [SerializeField] private Transform bScene;
+    [SerializeField] private Transform minigameScene;
 
     private static NPCBoss instance;
 
@@ -23,13 +27,22 @@ public class NPCBoss : MonoBehaviour
 
     void Start()
     {
-        if (DatabaseManager.instance.currentLanguage.currentLevel == 1)
+        int currentLevel = DatabaseManager.instance.currentLanguage.currentLevel;
+
+        switch (currentLevel)
         {
-            Invoke(nameof(TrainingDialogue1), 1);
-        }
-        else
-        {
-            Invoke(nameof(FirstDialogue), 1);
+            case 1:
+                Invoke(nameof(TrainingDialogue1), 1);
+                break;
+            case 2:
+                Invoke(nameof(TrainingDialogue2), 1);
+                break;
+            case 3:
+                Invoke(nameof(TrainingDialogue3), 1);
+                break;
+            default:
+                Invoke(nameof(FirstDialogue), 1);
+                break;
         }
     }
 
@@ -72,6 +85,7 @@ public class NPCBoss : MonoBehaviour
             scenematicCamera.transform.localPosition = threeComputersScene.localPosition;
             scenematicCamera.transform.localRotation = threeComputersScene.localRotation;
             scenematicCamera.SetActive(true);
+            LeanTween.move(scenematicCamera, scenematicCamera.transform.position - scenematicCamera.transform.TransformDirection(Vector3.forward * 0.3f), 10.0f).setIgnoreTimeScale(true);
 
             dialogue = new NPCDialogue(new[] { 
                 "Located at your back, there are 3 computers with problems. Try to fix all of them.",
@@ -99,7 +113,104 @@ public class NPCBoss : MonoBehaviour
                 });
             });
         });
-    }    
+    }
+
+    void TrainingDialogue2()
+    {
+        string[] sentences = {
+            "Welcome on your 2nd day of training, Trainee.",
+        };
+        NPCDialogue dialogue = new NPCDialogue(sentences);
+
+        DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+        {
+            scenematicCamera.transform.localPosition = developersScene.localPosition;
+            scenematicCamera.transform.localRotation = developersScene.localRotation;
+            scenematicCamera.SetActive(true);
+            LeanTween.move(scenematicCamera, scenematicCamera.transform.position - scenematicCamera.transform.TransformDirection(Vector3.forward * 0.3f), 10.0f).setIgnoreTimeScale(true);
+
+            dialogue = new NPCDialogue(new[] {
+                "Today, 3 of our developers encountered a problem with their computers.",
+                "As a part of your test, try to fix their computers.",
+                "Remember to use your manual if you need a guide."
+            });
+
+            DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+            {
+                LeanTween.cancel(scenematicCamera);
+                scenematicCamera.transform.localPosition = aScene.localPosition;
+                scenematicCamera.transform.localRotation = aScene.localRotation;
+                LeanTween.move(scenematicCamera, scenematicCamera.transform.position - scenematicCamera.transform.TransformDirection(Vector3.forward * 0.3f), 10.0f).setIgnoreTimeScale(true);
+
+                dialogue = new NPCDialogue(new[] {
+                    "If you managed to pass the todays training. You will be able to access the bigger rooms."
+                });
+
+                DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+                {
+                    scenematicCamera.SetActive(false);
+                    dialogue = new NPCDialogue(new[] {
+                        "Come back to me once you are done.",
+                        "Goodluck!"
+                    });
+
+                    DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+                    {
+                        PlayerMovement.canMove = true;
+                    });
+                });
+            });
+        });
+    }
+
+    void TrainingDialogue3()
+    {
+        string[] sentences = {
+            "Welcome on your last day of training, Trainee.",
+            "Todays training will decide your promotion."
+        };
+        NPCDialogue dialogue = new NPCDialogue(sentences);
+
+        DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+        {
+            scenematicCamera.transform.localPosition = aScene.localPosition;
+            scenematicCamera.transform.localRotation = aScene.localRotation;
+            scenematicCamera.SetActive(true);
+            LeanTween.move(scenematicCamera, scenematicCamera.transform.position - scenematicCamera.transform.TransformDirection(Vector3.forward * 0.3f), 10.0f).setIgnoreTimeScale(true);
+
+            dialogue = new NPCDialogue(new[] {
+                "Since now you have access to the bigger rooms, help someone who needs your help from there.",
+                "Navigate and find them and try to help them."
+            });
+
+            DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+            {
+                LeanTween.cancel(scenematicCamera);
+                scenematicCamera.transform.localPosition = minigameScene.localPosition;
+                scenematicCamera.transform.localRotation = minigameScene.localRotation;
+                LeanTween.move(scenematicCamera, scenematicCamera.transform.position - scenematicCamera.transform.TransformDirection(Vector3.forward * 0.3f), 10.0f).setIgnoreTimeScale(true);
+
+                dialogue = new NPCDialogue(new[] {
+                    "If you managed to pass your final training, you will be able to access the special room.",
+                    "With the special room, you will be able to access a computer where you can learn additional knowledge by trying to fix that computer."
+                });
+
+                DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+                {
+                    scenematicCamera.SetActive(false);
+                    dialogue = new NPCDialogue(new[] {
+                        "After that, come back here and we will decide for your promotion.",
+                        "Goodluck!"
+                    });
+
+                    DialogueManager.StartDialogue(gameObject.name, dialogue, () =>
+                    {
+                        PlayerMovement.canMove = true;
+                    });
+                });
+            });
+        });
+    }
 
     void FirstDialogue()
     {

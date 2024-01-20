@@ -85,7 +85,14 @@ public class UserManualControl : MonoBehaviour
 
     public void TryCode()
     {
-        CSCodeCompiler.Open(code);
+        if (DatabaseManager.instance.currentLanguage.languageName == "java")
+        {
+            JavaCodeCompiler.Open(code);
+        }
+        else
+        {
+            CSCodeCompiler.Open(code);
+        }
     }
 }
 

@@ -1,8 +1,10 @@
 using System;
 
-public class Program {
-    public static void Main(string[] args) {
-        int[, ] table = {
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        int[,] table = {
             { 2, 3 },
             { 12, 5 },
             { 3, 8 },

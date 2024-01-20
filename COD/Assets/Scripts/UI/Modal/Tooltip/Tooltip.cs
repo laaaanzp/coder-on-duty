@@ -23,7 +23,7 @@ public class Tooltip : MonoBehaviour
 
     public void Open(string title, string description)
     {
-        this.title.text = title;
+        this.title.text = title.Trim();
         this.title.gameObject.SetActive(!string.IsNullOrEmpty(title));
 
         this.description.text = description;

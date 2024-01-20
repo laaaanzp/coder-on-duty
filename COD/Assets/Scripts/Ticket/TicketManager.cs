@@ -53,6 +53,7 @@ public class TicketManager : MonoBehaviour
         Ticket task = taskInstance.GetComponent<Ticket>();
 
         task.Initialize(owner, ticketTitle, null);
+        taskInstance.SetActive(false);
 
         return task;
     }

@@ -1,6 +1,6 @@
 import java.util.*;
 
->>public class Program
+>>public Program
 {
 >>    public static main(String[] args)
     {

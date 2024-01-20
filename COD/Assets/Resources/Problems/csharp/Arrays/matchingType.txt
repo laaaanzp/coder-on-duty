@@ -1,0 +1,5 @@
+Array: It is a set of fixed number of values called elements that can be accessed using integer index.
+One-dimensional array:  It is an array in which all elements are arranged like a list. 
+Two-dimensional array: The array elements on this array are arranged in rows and columns.
+Index: Elements in an array that starts with 0.
+Add(): This method is used to add an element to the list.

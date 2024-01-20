@@ -1,0 +1,6 @@
+Looping: It is used when an operation needs to repeat multiple times.
+Do-While: Similar with while loop, except that it executes the block of statements before evaluating the given condition regardless if it evaluates to true or false.
+Condition: Is a Boolean expression, It is responsible for terminating the loop if the condition is no longer met.
+Initialization: Executed first and only once. This is where usually a variable is declared and initialized.
+Iterator: Is executed every iteration which is usually used to change the value of the initialized variable.
+Jump: These statements are used to change the flow of control of a looping structure.

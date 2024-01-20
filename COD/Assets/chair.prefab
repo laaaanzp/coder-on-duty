@@ -2595,7 +2595,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 897b34267f422c1499700402763d096e, type: 3}
   m_Controller: {fileID: 9100000, guid: 8952742daa31c0948ab9b47bdc841a58, type: 2}
   m_CullingMode: 1
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -2620,7 +2620,6 @@ MonoBehaviour:
   deviceScreen: {fileID: 0}
   interactable: {fileID: 8674387037871356869}
   outline: {fileID: 1174131286653349718}
-  cameraPosition: {fileID: 8798552246252662067}
   animator: {fileID: 1367996036325150786}
 --- !u!114 &8674387037871356869
 MonoBehaviour:
@@ -2683,7 +2682,6 @@ MonoBehaviour:
     sentences:
     - Hello there!
     - Can you help me with my computer? I don't know what is wrong with it.
-    cameraPosition: {fileID: 8798552246252662067}
   onFinish:
     m_PersistentCalls:
       m_Calls:

@@ -1,0 +1,5 @@
+Methods: A method is a block of code which only runs when it is called.
+Create A Method: A method must be declared within a class. It is defined with the name of the method, followed by parentheses (). 
+Parameters / Arguments: Information can be passed to methods.
+Multiple Parameters: You can have as many parameters as you like.
+Method Scope: In Java, variables are only accessible inside the region they are created.

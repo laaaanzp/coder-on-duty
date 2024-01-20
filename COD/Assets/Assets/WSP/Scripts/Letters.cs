@@ -9,30 +9,30 @@ public class Letters : MonoBehaviour {
 	public int gridX, gridY;
 
     void Start() {
-        GetComponent<Renderer>().materials[0].color = WordSearch.Instance.defaultTint;
+        GetComponent<Renderer>().materials[0].color = WordSearch2.Instance.defaultTint;
     }
     
     void Update() {
-        if (WordSearch.Instance.ready) {
-            if (!utilized && WordSearch.Instance.current == gameObject) {
-                WordSearch.Instance.selected.Add(this.gameObject);
-                GetComponent<Renderer>().materials[0].color = WordSearch.Instance.mouseoverTint;
-                WordSearch.Instance.selectedString += letter.text;
+        if (WordSearch2.Instance.ready) {
+            if (!utilized && WordSearch2.Instance.current == gameObject) {
+                WordSearch2.Instance.selected.Add(this.gameObject);
+                GetComponent<Renderer>().materials[0].color = WordSearch2.Instance.mouseoverTint;
+                WordSearch2.Instance.selectedString += letter.text;
                 utilized = true;
             }
         }
 
         if (identified) {
-			if (GetComponent<Renderer>().materials[0].color != WordSearch.Instance.identifiedTint) {
-				GetComponent<Renderer>().materials[0].color = WordSearch.Instance.identifiedTint;
+			if (GetComponent<Renderer>().materials[0].color != WordSearch2.Instance.identifiedTint) {
+				GetComponent<Renderer>().materials[0].color = WordSearch2.Instance.identifiedTint;
 			} 
 			return;
         }
 
         if (Input.GetMouseButtonUp(0)) {
             utilized = false;
-			if (GetComponent<Renderer>().materials[0].color != WordSearch.Instance.defaultTint) {
-				GetComponent<Renderer>().materials[0].color = WordSearch.Instance.defaultTint;
+			if (GetComponent<Renderer>().materials[0].color != WordSearch2.Instance.defaultTint) {
+				GetComponent<Renderer>().materials[0].color = WordSearch2.Instance.defaultTint;
 			}
         }
     }

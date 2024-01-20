@@ -1,9 +1,13 @@
 using System;
 
-public class Program {
-    public static void Main(string[] args) {
-        for (int num = 1; num <= 10; num++) {
-            if (num == 5) {
+public class Program 
+{
+    public static void Main(string[] args) 
+    {
+        for (int num = 1; num <= 10; num++) 
+        {
+            if (num == 5) 
+            {
                 break; // if this statement is executed the loop will stop
             }
 
